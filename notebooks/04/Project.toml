@@ -1,2 +1,6 @@
 [deps]
+BoundaryValueDiffEq = "764a87c0-6b3e-53db-9096-fe964310641d"
+DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
+GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
 IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
