@@ -23,8 +23,8 @@ chapters:
 
 
 - file: notebooks/04/script/04.00.md
-  sections:
-  - file: notebooks/04/script/01-Three Body Problem.ipynb
+  # sections:
+  # - file: notebooks/04/script/01-Three Body Problem.ipynb
 
 - file: notebooks/appendix/appendix.md
   sections:
