@@ -17,10 +17,10 @@ only_build_toc_files: true
 # # Parse and render settings
 parse:
    myst_enable_extensions:  # default extensions to enable in the myst parser. See https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html
-       - html_image
-       - colon_fence
        - amsmath
        - dollarmath
+       - html_image
+       - colon_fence
 
 sphinx:
   extra_extensions:
@@ -53,5 +53,5 @@ html:
   use_issues_button: true
   use_repository_button: true
   use_multitoc_numbering: true   # Continuous numbering across parts/chapters
-  google_analytics_id: G-DVQ7NZ8CYZ
+  analytics.google_analytics_id: G-DVQ7NZ8CYZ
   
