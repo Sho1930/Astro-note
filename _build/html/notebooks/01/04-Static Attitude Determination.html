@@ -1,0 +1,2182 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>姿勢決定（Attitude Determination） &#8212; Hands-On Astrodynamics tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-DVQ7NZ8CYZ"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-DVQ7NZ8CYZ');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/01/04-Static Attitude Determination';</script>
+    <link rel="shortcut icon" href="../../_static/rocket.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Appendix" href="../appendix/appendix.html" />
+    <link rel="prev" title="剛体のキネマティクス II" href="03-Rigid%20Body%20Kinematics%20II.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Hands-On Astrodynamics tutorial - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Hands-On Astrodynamics tutorial - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    はじめに
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01.00.html">1. キネマティクス（Kinematics）</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="test.html">Test MyST</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="01-Introduction%20to%20Kinematics.html">キネマティクスの基礎</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="02-Rigid%20Body%20Kinematics%20I.html">剛体のキネマティクス I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03-Rigid%20Body%20Kinematics%20II.html">剛体のキネマティクス II</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">姿勢決定（Attitude Determination）</a></li>
+
+
+
+
+
+
+
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/quotes.html">名言集</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/Sho1930/Astro-book/blob/main/notebooks/01/04-Static Attitude Determination.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Sho1930/Astro-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Sho1930/Astro-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/01/04-Static Attitude Determination.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/01/04-Static Attitude Determination.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>姿勢決定（Attitude Determination）</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">姿勢決定（Attitude Determination）</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">4.1) 姿勢決定問題の定式化</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#triad-method">4.2) TRIAD Method</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wahba-s-problem-defintion">4.3) Wahba’s Problem Defintion</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#devenport-s-q-method">4.4) Devenport’s q-Method</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#quest">4.5) QUEST</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#olae">4.6) OLAE</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kinematics-final-assignment">4.7) Kinematics Final Assignment</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="attitude-determination">
+<h1>姿勢決定（Attitude Determination）<a class="headerlink" href="#attitude-determination" title="Permalink to this heading">#</a></h1>
+<p>いよいよ、<strong>姿勢決定</strong>の分野に足を踏み入れていく。ここでは、太陽の方向、磁場の向き、星の位置など、方向を表す複数の観測量を取得し、宇宙機の3次元姿勢を算出することに焦点を当てる。つまり、宇宙機座標系と基準座標系の両方で既知のベクトルを活用し、「宇宙機が基準座標系から見て、どの方向を向いているか？」を特定する手法である。</p>
+<p>本記事では、姿勢決定分野の基礎となる古典的および最新のアルゴリズムを紹介する。扱う内容は以下の通り。</p>
+<div class="note admonition">
+<p class="admonition-title">項目</p>
+<ul class="simple">
+<li><p><strong>TRIAD法</strong>:
+2つのベクトル観測に基づいて姿勢を算出する、基本的かつ直感的な手法。</p></li>
+<li><p><strong>Devenportのq-Method</strong>:
+コスト関数を最小化し、クォータニオンを回転表現として用いることで姿勢を推定する手法。</p></li>
+<li><p><strong>QUEST (QUaternion ESTimator)</strong>:
+q-Methodを最適化し、リアルタイム処理と高速計算に特化した手法。</p></li>
+<li><p><strong>OLAE (Optimal Linear Attitude Estimation)</strong>:
+線形化によって計算を簡略化し、特に複数の観測データを扱う際に有用な手法。</p></li>
+</ul>
+</div>
+<p>本記事を通じて、これらの手法の仕組みを詳しく解説するとともに、計算効率や精度の観点から、それぞれの利点と欠点についても議論する。</p>
+<div class="tip admonition">
+<p class="admonition-title">目的</p>
+<ul class="simple">
+<li><p><strong>一連の方位測定から姿勢を決定する</strong>:
+複数の方向観測を統合し、3次元空間で信頼性の高い姿勢を算出する方法を学ぶ。</p></li>
+<li><p><strong>姿勢決定に用いられる古典的および最新のアルゴリズムを解説する</strong>:
+理論と実践の両面で使用される主要な手法について理解を深める。</p></li>
+<li><p><strong>剛体の基本的な姿勢座標特性を導出する</strong>:
+宇宙空間における剛体の回転運動を支配する数学的性質を習得する。</p></li>
+</ul>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import Relevant Libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">init_notebook_mode</span><span class="p">,</span> <span class="n">iplot</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;../&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">AttitudeKinematicsLib</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>4.1) 姿勢決定問題の定式化<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
+<p><strong>姿勢決定</strong>とは、特定の基準方向の瞬時測定を利用して、宇宙機などの物体の空間における向きを求めることである。本稿では、動的フィルタリングやレート測定（e.g. <a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AD%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97">ジャイロスコープ</a>）に依存せずに姿勢を決定する手法に焦点を当てる。これらの高度な手法（e.g. <a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%AB%E3%83%9E%E3%83%B3%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC">カルマンフィルタ</a>）は推定理論を必要とし、別のトピックで扱うこととする。つまり本稿の目的は、直接観測されたデータのみを用いて姿勢を決定することである。</p>
+<p><strong><ins>Understanding Attitude Determination</ins></strong></p>
+<ul class="simple">
+<li><p><strong>Objective</strong>: The goal of attitude determination is to compute the orientation (attitude) of a spacecraft by aligning measured body-frame vectors with their corresponding known inertial-frame references. This orientation is typically represented as a Direction Cosine Matrix (DCM), <span class="math notranslate nohighlight">\([\mathbf{B}\mathbf{N}]\)</span>, which maps vectors in the inertial frame (<span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}\)</span>) to the body frame (<span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}\)</span>).</p></li>
+<li><p><strong>Challenge</strong>: Each sensor measurement provides partial information about the spacecraft’s 3D attitude. To resolve the full attitude, multiple independent observations are required. The problem involves relating noisy body-frame sensor measurements to accurate, well-known inertial-frame vectors.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong><ins>Inertial and Body Frame Vectors</ins></strong></p>
+<ul class="simple">
+<li><p><strong>Inertial Frame Vectors (<span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}\)</span>)</strong>:</p>
+<ul>
+<li><p>These are <strong>known reference directions</strong> in an inertial coordinate system, such as the Sun’s direction, Earth’s magnetic field, or positions of stars.</p></li>
+<li><p>They are computed using:</p>
+<ol class="arabic simple">
+<li><p><strong>Position in Orbit</strong>: Derived from GPS or ground-based tracking systems.</p></li>
+<li><p><strong>Time in Orbit</strong>: Provided by onboard clocks or ground communication.</p></li>
+</ol>
+</li>
+<li><p>Using position and time, precise models (e.g., solar ephemeris, magnetic field models like IGRF) yield these vectors in the inertial frame.</p></li>
+</ul>
+</li>
+</ul>
+<br>
+<ul class="simple">
+<li><p><strong>Body Frame Vectors (<span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}\)</span>)</strong>:</p>
+<ul>
+<li><p>These are <strong>measured directions</strong> relative to the spacecraft’s body, obtained via onboard sensors:</p>
+<ul>
+<li><p><strong>Sun Sensors</strong>: Measure the Sun’s direction.</p></li>
+<li><p><strong>Magnetometers</strong>: Detect the Earth’s magnetic field.</p></li>
+<li><p><strong>Star Trackers</strong>: Determine the positions of stars.</p></li>
+</ul>
+</li>
+<li><p>Each sensor provides a body-frame vector pointing to a known reference object.</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong><ins>Relating Inertial and Body Vectors</ins></strong></p>
+<ul class="simple">
+<li><p>The relationship between measured body-frame vectors and their known inertial counterparts is described by the DCM:
+$<span class="math notranslate nohighlight">\(
+\mathbf{^B}\hat{v}_k = [\mathbf{B}\mathbf{N}] \mathcal{^N}\hat{v}_k, \quad k = 1, \dots, N
+\)</span>$
+where:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}_k\)</span>: Known inertial-frame vector, derived from position, time, and reference models.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}_k\)</span>: Measured body-frame vector, obtained from sensors.</p></li>
+</ul>
+</li>
+<li><p>Conversely, the inverse DCM maps vectors from the body frame back to the inertial frame:
+$<span class="math notranslate nohighlight">\(
+\mathcal{^N}\hat{v}_k = [\mathbf{B}\mathbf{N}]^T \mathbf{^B}\hat{v}_k
+\)</span>$</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong><ins>Key Insight</ins></strong></p>
+<ul class="simple">
+<li><p><strong>Why Are Vectors Different?</strong>:</p>
+<ul>
+<li><p>The difference between body and inertial vectors reflects the spacecraft’s orientation in space.</p></li>
+<li><p>If the body and inertial vectors match, it means the spacecraft’s body and inertial frames coincide, i.e., no rotation.</p></li>
+</ul>
+</li>
+</ul>
+<br>
+<ul class="simple">
+<li><p><strong>Orientation Representation</strong>:</p>
+<ul>
+<li><p>The DCM, <span class="math notranslate nohighlight">\([\mathbf{B}\mathbf{N}]\)</span>, represents how the body is oriented with respect to the inertial frame.</p></li>
+<li><p>In practice, the spacecraft estimates <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span>, an approximation of <span class="math notranslate nohighlight">\([\mathbf{B}\mathbf{N}]\)</span>, based on body-frame sensor measurements and inertial-frame references.</p></li>
+<li><p>This estimate allows us to determine how the body is oriented relative to the inertial frame, enabling precise navigation and control.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="triad-method">
+<h1>4.2) TRIAD Method<a class="headerlink" href="#triad-method" title="Permalink to this heading">#</a></h1>
+<p>The Vector Triad Method is a deterministic approach to estimate a spacecraft’s attitude at a given instant using two vector observations. This method introduces an intermediate frame, or “triad” frame, to simplify the problem. By aligning a third frame with both the inertial frame (e.g., stars or magnetic field) and the body frame (sensor measurements), the method allows a straightforward matrix solution to attitude estimation. Here’s an overview of the method and its key steps.</p>
+<p><strong><ins>Why Use the Vector Triad Method?</ins></strong></p>
+<ul class="simple">
+<li><p><strong>Simple and Efficient</strong>: The triad method is computationally inexpensive, making it suitable for missions with limited processing power.</p></li>
+<li><p><strong>Reliable for Limited Measurements</strong>: When only two measurements are available (e.g., sun and magnetic field directions), this method provides a quick way to estimate attitude.</p></li>
+<li><p><strong>Optimal Choice of Measurement</strong>: For the triad method, the measurement with the highest accuracy (usually the sun heading) is assigned as the primary reference axis. Less accurate measurements, such as the magnetic field, are used as secondary references.
+le.</p></li>
+</ul>
+<p><strong><ins>Steps in the Vector Triad Method</ins></strong></p>
+<ol class="arabic simple">
+<li><p><strong>Define Two Frames</strong>:</p>
+<ul class="simple">
+<li><p><strong>Inertial Frame</strong>: Denoted as the <span class="math notranslate nohighlight">\(N\)</span> frame, representing known directions in space, such as the position of the sun or Earth’s magnetic field. These directions are assumed to be known because we generally know the satellite or spacecraft’s position in its orbit relative to the Earth.</p></li>
+<li><p><strong>Body Frame</strong>: Denoted as the <span class="math notranslate nohighlight">\(B\)</span> frame, representing measurements in the body’s coordinate system, such as sensor readings of the sun and magnetic field. Both the sun sensor and the magnetometer (MTM) provide vectors known in both the body frame and the inertial frame.</p></li>
+<li><p><strong>Triad Frame</strong>: An intermediate frame denoted as <span class="math notranslate nohighlight">\(T\)</span>, introduced to mitigate the effects of sensor noise. Determining the body frame attitude directly from noisy sensor data can lead to inaccuracies. Instead, the triad frame serves as a bridge between the inertial and body frames, stabilizing the attitude estimation process.</p></li>
+</ul>
+</li>
+</ol>
+<br>
+<ol class="arabic" start="2">
+<li><p><strong>Align the Primary Axis</strong>:</p>
+<ul>
+<li><p>Select the most accurate measurement (e.g., the sun heading) and align it with the first axis (<span class="math notranslate nohighlight">\(\mathbf{t}_1\)</span>) of the triad frame. The sun sensor typically provides a more precise measurement than the magnetic field sensor due to the variability of the Earth’s magnetic field.</p></li>
+<li><p>If the sun vector in the body frame is <span class="math notranslate nohighlight">\(\mathbf{s}_b\)</span> and the sun vector in the inertial frame is <span class="math notranslate nohighlight">\(\mathbf{s}_n\)</span>, then:</p>
+<div class="math notranslate nohighlight">
+\[ 
+     \mathbf{t}_1 = \mathbf{s} 
+     \]</div>
+</li>
+</ul>
+</li>
+</ol>
+<br>
+<ol class="arabic">
+<li><p><strong>Calculate the Orthogonal Vector for the Second Axis</strong>:</p>
+<ul>
+<li><p>Use the secondary measurement (e.g., magnetic field) to define a second axis orthogonal to the first axis.</p></li>
+<li><p>For example, if <span class="math notranslate nohighlight">\(\mathbf{m}_b\)</span> is the magnetic field in the body frame and <span class="math notranslate nohighlight">\(\mathbf{m}_n\)</span> is the magnetic field in the inertial frame, calculate <span class="math notranslate nohighlight">\(\mathbf{t}_2\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[ 
+     \mathbf{t}_2 = \frac{\mathbf{s} \times \mathbf{m}}{|\mathbf{s} \times \mathbf{m}|} 
+     \]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{t}_2\)</span> is normalized to make it a unit vector, preseriving the directionality of the vector only.</p></li>
+</ul>
+</li>
+</ol>
+<br>
+<ol class="arabic">
+<li><p><strong>Define the Third Axis</strong>:</p>
+<ul>
+<li><p>Complete the triad by defining the third axis as the cross product of the first two:</p>
+<div class="math notranslate nohighlight">
+\[ 
+     \mathbf{t}_3 = \mathbf{t}_1 \times \mathbf{t}_2 
+     \]</div>
+</li>
+</ul>
+</li>
+</ol>
+<br>
+<ol class="arabic">
+<li><p><strong>Construct Transformation Matrices</strong>:</p>
+<ul>
+<li><p>The <strong>T frame direction axes</strong> can be computed using both <strong>B</strong> (body frame) and <strong>N</strong> (inertial frame) components:</p>
+<p><strong>Body Frame Triad Vectors</strong></p>
+<div class="math notranslate nohighlight">
+\[
+     \mathbf{^B}\hat{t}_1 = \mathbf{^B}\hat{s}
+     \]</div>
+<div class="math notranslate nohighlight">
+\[
+     \mathbf{^B}\hat{t}_2 = \frac{\mathbf{^B}\hat{s} \times \mathbf{^B}\hat{m}}{|\mathbf{^B}\hat{s} \times \mathbf{^B}\hat{m}|}
+     \]</div>
+<div class="math notranslate nohighlight">
+\[
+     \mathbf{^B}\hat{t}_3 = \mathbf{^B}\hat{t}_1 \times \mathbf{^B}\hat{t}_2
+     \]</div>
+<p><strong>Inertial Frame Triad Vectors</strong></p>
+<div class="math notranslate nohighlight">
+\[
+     \mathcal{^N}\hat{t}_1 = \mathcal{^N}\hat{s}
+     \]</div>
+<div class="math notranslate nohighlight">
+\[
+     \mathcal{^N}\hat{t}_2 = \frac{\mathcal{^N}\hat{s} \times \mathcal{^N}\hat{m}}{|\mathcal{^N}\hat{s} \times \mathcal{^N}\hat{m}|}
+     \]</div>
+<div class="math notranslate nohighlight">
+\[
+     \mathcal{^N}\hat{t}_3 = \mathcal{^N}\hat{t}_1 \times \mathcal{^N}\hat{t}_2
+     \]</div>
+</li>
+<li><p>In the absence of measurement errors, both sets of <strong>Triad frame representations</strong> should be identical.</p></li>
+<li><p>Construct the <strong>Body to Triad Matrix</strong> (<span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{T}]\)</span>) and <strong>Inertial to Triad Matrix</strong> (<span class="math notranslate nohighlight">\([\mathcal{N}\mathbf{T}]\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+     [\bar{\mathbf{B}}\mathbf{T}] = \begin{bmatrix} \mathbf{^B}\hat{t}_1 &amp; \mathbf{^B}\hat{t}_2 &amp; \mathbf{^B}\hat{t}_3 \end{bmatrix}
+     \]</div>
+<div class="math notranslate nohighlight">
+\[
+     [\mathcal{N}\mathbf{T}] = \begin{bmatrix} \mathcal{^N}\hat{t}_1 &amp; \mathcal{^N}\hat{t}_2 &amp; \mathcal{^N}\hat{t}_3 \end{bmatrix}
+     \]</div>
+</li>
+</ul>
+</li>
+</ol>
+<br>
+<ol class="arabic">
+<li><p><strong>Calculate the Attitude Matrix</strong>:</p>
+<ul>
+<li><p>The final step is to compute the attitude matrix, <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span>, that transforms from the inertial frame to the body frame:</p>
+<div class="math notranslate nohighlight">
+\[
+     \bar{\mathbf{B}}\mathbf{N} = [\bar{\mathbf{B}}\mathbf{T}] \cdot [\mathcal{N}\mathbf{T}]^T
+     \]</div>
+</li>
+<li><p>This product provides the full attitude matrix, which can then be used to extract desired attitude parameters (Euler angles, MRPs, etc.).</p></li>
+</ul>
+</li>
+</ol>
+<br>
+<p><strong>Estimation Error Assessment</strong>:</p>
+<ul>
+<li><p>If the <strong>actual orientation</strong> (<span class="math notranslate nohighlight">\([\mathbf{B}\mathbf{N}]\)</span>) is known, the estimation error can be computed as:</p>
+<div class="math notranslate nohighlight">
+\[
+     [\bar{\mathbf{B}}\mathbf{B}] = [\bar{\mathbf{B}}\mathbf{N}] \cdot ([\mathbf{B}\mathbf{N}])^T
+     \]</div>
+</li>
+<li><p>Here, <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{B}]\)</span> represents the error matrix. If the estimation is perfect, <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{B}]\)</span> will be the identity matrix.</p></li>
+<li><p>To quantify the error, you can use <strong>axis-angle formalism</strong> to extract the rotation axis and angle from <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{B}]\)</span>. This will give a measure of how far the estimated body frame is from the true body frame in terms of rotation angle (radians or degrees).</p></li>
+<li><p>This process allows for a precise evaluation of the accuracy of the attitude estimation.</p></li>
+</ul>
+<p><strong><ins>Important Considerations</ins></strong></p>
+<ul class="simple">
+<li><p><strong>Measurement Accuracy</strong>: The triad method assumes that the first measurement vector (e.g., sun heading) is more accurate. Aligning this vector with the primary axis (<span class="math notranslate nohighlight">\(\mathbf{t}_1\)</span>) uses its full information, while the secondary measurement provides additional orientation constraints.</p></li>
+<li><p><strong>Non-Collinearity of Measurements</strong>: The two measurement vectors must not be collinear, as this would fail to constrain the third axis. For example, if the sun vector and magnetic field vector are aligned, the system would lose orientation around that axis.</p></li>
+</ul>
+<p><strong><ins>Practical Usage and Limitations</ins></strong></p>
+<ul class="simple">
+<li><p><strong>Efficiency</strong>: This method is fast and computationally light, making it suitable for real-time systems or constrained spacecraft systems.</p></li>
+<li><p><strong>Usage on Spacecraft</strong>: The triad method has been implemented on various spacecraft where simplicity is prioritized, particularly for missions without advanced filtering methods.</p></li>
+<li><p><strong>Accuracy and Redundancy</strong>: While effective, the method does not use all available data when only two measurements are used. As missions typically involve more sensors, more advanced algorithms like QUEST or Kalman filters can be employed to improve attitude estimation accuracy and handle dynamic environments.</p></li>
+</ul>
+<p><strong><ins>Summary</ins></strong></p>
+<p>The vector triad method is a foundational approach in attitude determination, especially valuable for its simplicity and direct use of two sensor measurements. It is a fundamental tool in aerospace engineering for quick and reliable orientation estimation when minimal data is available.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">triad_estimation</span><span class="p">(</span><span class="n">r1_b</span><span class="p">,</span> <span class="n">r1_i</span><span class="p">,</span> <span class="n">r2_b</span><span class="p">,</span> <span class="n">r2_i</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements the TRIAD algorithm to compute the rotation matrix from the inertial frame to the body frame.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        r1_b (array-like): First reference vector measured in the body frame (3-element array).</span>
+<span class="sd">        r1_i (array-like): First reference vector in the inertial frame (3-element array).</span>
+<span class="sd">        r2_b (array-like): Second reference vector measured in the body frame (3-element array).</span>
+<span class="sd">        r2_i (array-like): Second reference vector in the inertial frame (3-element array).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: Rotation matrix from the inertial frame to the body frame (3x3 matrix).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Validate input vectors</span>
+    <span class="n">validate_vec3</span><span class="p">(</span><span class="n">r1_b</span><span class="p">)</span>
+    <span class="n">validate_vec3</span><span class="p">(</span><span class="n">r1_i</span><span class="p">)</span>
+    <span class="n">validate_vec3</span><span class="p">(</span><span class="n">r2_b</span><span class="p">)</span>
+    <span class="n">validate_vec3</span><span class="p">(</span><span class="n">r2_i</span><span class="p">)</span>
+    
+    <span class="c1"># Convert inputs to NumPy arrays and normalize the vectors</span>
+    <span class="n">r1_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r1_b</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">r1_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r1_i</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">r2_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r2_b</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">r2_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">r2_i</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="n">r1_b</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r1_b</span><span class="p">)</span>
+    <span class="n">r1_i</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r1_i</span><span class="p">)</span>
+    <span class="n">r2_b</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r2_b</span><span class="p">)</span>
+    <span class="n">r2_i</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">r2_i</span><span class="p">)</span>
+
+    <span class="c1"># Construct the body-frame TRIAD vectors (estimated)</span>
+    <span class="n">t1_b</span> <span class="o">=</span> <span class="n">r1_b</span>
+    <span class="n">t2_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">r1_b</span><span class="p">,</span> <span class="n">r2_b</span><span class="p">)</span>
+    <span class="n">t2_b</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">t2_b</span><span class="p">)</span>
+    <span class="n">t3_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">t1_b</span><span class="p">,</span> <span class="n">t2_b</span><span class="p">)</span>
+
+    <span class="c1"># Construct the inertial-frame TRIAD vectors</span>
+    <span class="n">t1_i</span> <span class="o">=</span> <span class="n">r1_i</span>
+    <span class="n">t2_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">r1_i</span><span class="p">,</span> <span class="n">r2_i</span><span class="p">)</span>
+    <span class="n">t2_i</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">t2_i</span><span class="p">)</span>
+    <span class="n">t3_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">t1_i</span><span class="p">,</span> <span class="n">t2_i</span><span class="p">)</span>
+
+    <span class="c1"># Assemble the TRIAD matrices</span>
+    <span class="n">B_bar_T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">t1_b</span><span class="p">,</span> <span class="n">t2_b</span><span class="p">,</span> <span class="n">t3_b</span><span class="p">))</span>  <span class="c1"># Estimated body frame TRIAD matrix</span>
+    <span class="n">N_T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">t1_i</span><span class="p">,</span> <span class="n">t2_i</span><span class="p">,</span> <span class="n">t3_i</span><span class="p">))</span>      <span class="c1"># Inertial frame TRIAD matrix</span>
+
+    <span class="c1"># Compute the rotation matrix from inertial frame to body frame</span>
+    <span class="n">C_BN</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">B_bar_T</span><span class="p">,</span> <span class="n">N_T</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">C_BN</span>
+
+<span class="c1"># Example 3.15 from Textbook</span>
+<span class="n">v1_b</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.8190</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5282</span><span class="p">,</span> <span class="mf">0.2242</span><span class="p">]</span>
+<span class="n">v1_i</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">v2_b</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.3138</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1584</span><span class="p">,</span> <span class="mf">0.9362</span><span class="p">]</span>
+<span class="n">v2_i</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">B_bar_N</span> <span class="o">=</span> <span class="n">triad_estimation</span><span class="p">(</span><span class="n">v1_b</span><span class="p">,</span> <span class="n">v1_i</span><span class="p">,</span> <span class="n">v2_b</span><span class="p">,</span> <span class="n">v2_i</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">B_bar_N</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0.81899104  0.45928237 -0.34396712]
+ [-0.52819422  0.83763943 -0.13917991]
+ [ 0.22419755  0.29566855  0.92860948]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 2 - TRIAD Method, Q1</span>
+<span class="n">v1_b</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.8273</span><span class="p">,</span> <span class="mf">0.5541</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0920</span><span class="p">]</span>
+<span class="n">v1_i</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.1517</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9669</span><span class="p">,</span> <span class="mf">0.2050</span><span class="p">]</span>
+<span class="n">v2_b</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.8285</span><span class="p">,</span> <span class="mf">0.5522</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0955</span><span class="p">]</span>
+<span class="n">v2_i</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.8393</span><span class="p">,</span> <span class="mf">0.4494</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3044</span><span class="p">]</span>
+<span class="n">B_bar_N</span> <span class="o">=</span> <span class="n">triad_estimation</span><span class="p">(</span><span class="n">v1_b</span><span class="p">,</span> <span class="n">v1_i</span><span class="p">,</span> <span class="n">v2_b</span><span class="p">,</span> <span class="n">v2_i</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">B_bar_N</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0.41555875 -0.85509088  0.31004921]
+ [-0.83393237 -0.49427603 -0.24545471]
+ [ 0.36313597 -0.15655922 -0.91848869]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 2 - TRIAD Method, Q2</span>
+
+<span class="c1"># Estimated attitude matrix (B_bar_N)</span>
+<span class="n">B_bar_N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.969846</span><span class="p">,</span>  <span class="mf">0.171010</span><span class="p">,</span>  <span class="mf">0.173648</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.200706</span><span class="p">,</span> <span class="mf">0.964610</span><span class="p">,</span>  <span class="mf">0.171010</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.138258</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.200706</span><span class="p">,</span> <span class="mf">0.969846</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="c1"># True attitude matrix (BN)</span>
+<span class="n">BN</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.963592</span><span class="p">,</span>  <span class="mf">0.187303</span><span class="p">,</span>  <span class="mf">0.190809</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.223042</span><span class="p">,</span> <span class="mf">0.956645</span><span class="p">,</span>  <span class="mf">0.187303</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.147454</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.223042</span><span class="p">,</span> <span class="mf">0.963592</span><span class="p">]</span>
+<span class="p">])</span>
+
+
+<span class="n">B_bar_B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">B_bar_N</span><span class="p">,</span> <span class="n">BN</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">axis</span><span class="p">,</span> <span class="n">phi</span> <span class="o">=</span> <span class="n">DCM_to_PRV</span><span class="p">(</span><span class="n">B_bar_B</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.8349476067250545
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="wahba-s-problem-defintion">
+<h1>4.3) Wahba’s Problem Defintion<a class="headerlink" href="#wahba-s-problem-defintion" title="Permalink to this heading">#</a></h1>
+<p><strong><ins>Wahba’s Problem</ins></strong></p>
+<ul class="simple">
+<li><p><strong>Objective</strong>: To determine the optimal orientation (attitude) of a spacecraft by minimizing the error between measured body-frame vectors and their known inertial-frame counterparts. The orientation is represented as the Direction Cosine Matrix (DCM), <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span>, which relates vectors in the inertial frame (<span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}\)</span>) to the body frame (<span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}\)</span>).</p></li>
+<li><p><strong>Challenge</strong>: Sensor measurements are noisy and provide only partial information about the spacecraft’s 3D attitude. The goal is to compute <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span> that minimizes the mismatch between measured and known vectors while accounting for sensor noise and variability.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong><ins>Mathematical Formulation</ins></strong></p>
+<ol class="arabic">
+<li><p><strong>Mapping from Inertial to Body Frame</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+   \mathbf{^B}\hat{v}_k = [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_k, \quad k = 1, \dots, N
+   \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}_k\)</span>: A known reference vector in the <strong>inertial frame</strong>, derived from models or ephemeris data (e.g., Sun direction, Earth’s magnetic field).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}_k\)</span>: The corresponding vector <strong>measured in the body frame</strong> by onboard sensors (e.g., sun sensors, magnetometers).</p></li>
+<li><p><span class="math notranslate nohighlight">\(N\)</span>: The number of vector pairs (observations) available.</p></li>
+</ul>
+</li>
+</ol>
+<br>
+<ol class="arabic">
+<li><p><strong>Error Minimization</strong>:
+Wahba proposed a least squares approach to solve the attitude determination problem. The goal is to find <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span> that minimizes the cost function:</p>
+<div class="math notranslate nohighlight">
+\[
+   J([\bar{\mathbf{B}}\mathbf{N}]) = \frac{1}{2} \sum_{k=1}^N w_k \| \mathbf{^B}\hat{v}_k - [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_k \|^2
+   \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(w_k\)</span>: Weight assigned to each observation, reflecting its accuracy or reliability.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\|\cdot\|\)</span>: Euclidean norm.</p></li>
+</ul>
+<p>The factor of <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span> simplifies derivative calculations, canceling out a factor of 2 during optimization.</p>
+</li>
+</ol>
+<br>
+<ol class="arabic" start="3">
+<li><p><strong>Perfect Measurements</strong>:
+If all measurements are noise-free, the cost function becomes zero:</p>
+<div class="math notranslate nohighlight">
+\[
+   J = 0
+   \]</div>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Why Multiple Measurements?</ins></strong></p>
+<ul class="simple">
+<li><p>Each measurement vector provides only two independent pieces of information (e.g., azimuth and elevation). Therefore:</p>
+<ul>
+<li><p>A single vector cannot resolve all three degrees of freedom for 3D orientation.</p></li>
+<li><p>At least two independent reference vectors are needed to compute the attitude matrix uniquely.</p></li>
+<li><p>When <span class="math notranslate nohighlight">\(N &gt; 2\)</span>, the problem becomes over-specified, and the least squares approach improves robustness against noise.</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong><ins>Analogy to Least Squares Fitting</ins></strong></p>
+<ul class="simple">
+<li><p>The cost function <span class="math notranslate nohighlight">\(J([\bar{\mathbf{B}}\mathbf{N}])\)</span> resembles the least squares regression problem:</p>
+<ul>
+<li><p>In regression, we minimize the squared error between predicted and observed data.</p></li>
+<li><p>In Wahba’s problem, we minimize the squared angular error between measured body-frame vectors and their corresponding inertial-frame references.</p></li>
+</ul>
+</li>
+</ul>
+<p>Thus, the DCM <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span> is the “best-fit rotation matrix” that aligns the reference vectors with the observations.</p>
+<hr class="docutils" />
+<p><strong><ins>Importance of Weights</ins></strong></p>
+<ul class="simple">
+<li><p>Sensors vary in accuracy:</p>
+<ul>
+<li><p><strong>Sun Sensors</strong>: Typically more accurate and reliable.</p></li>
+<li><p><strong>Magnetometers (MTM)</strong>: More prone to noise due to environmental variations.</p></li>
+</ul>
+</li>
+<li><p>The weights <span class="math notranslate nohighlight">\(w_k\)</span> reflect the reliability of each sensor. Higher weights are assigned to more reliable measurements, ensuring they contribute more to the solution.</p></li>
+<li><p>Scaling all weights <span class="math notranslate nohighlight">\(w_k\)</span> uniformly does not affect the result because the optimization is relative.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong><ins>Estimation Accuracy Check</ins></strong></p>
+<ol class="arabic">
+<li><p><strong>Compute Estimation Error</strong>:
+After estimating <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span>, compare it to the true DCM <span class="math notranslate nohighlight">\([\mathbf{B}\mathbf{N}]\)</span> (if known):</p>
+<div class="math notranslate nohighlight">
+\[
+   [\mathbf{B}\bar{\mathbf{B}}] = [\bar{\mathbf{B}}\mathbf{N}] \cdot [\mathbf{B}\mathbf{N}]^T
+   \]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\([\mathbf{B}\bar{\mathbf{B}}]\)</span>: The “error DCM” quantifies the deviation between estimated and true attitudes.</p></li>
+</ul>
+</li>
+</ol>
+<br>
+<ol class="arabic" start="2">
+<li><p><strong>Error in Terms of Axis-Angle</strong>:</p>
+<ul>
+<li><p>If the estimate is perfect:</p>
+<div class="math notranslate nohighlight">
+\[
+     [\mathbf{B}\bar{\mathbf{B}}] = \mathbf{I}
+     \]</div>
+</li>
+<li><p>Otherwise, compute the axis and angle of rotation using axis-angle formalism. The rotation angle represents the magnitude of the estimation error.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Summary</ins></strong></p>
+<p>Wahba’s problem frames attitude determination as a least squares optimization challenge. The core idea is to compute the norm of the difference between the measured body-frame vectors and the mapped inertial-frame vectors using the DCM <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span>.</p>
+<ul class="simple">
+<li><p>If the norm is <strong>zero</strong>, it indicates perfect alignment: the DCM <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span> has mapped the inertial vectors perfectly onto their body-frame counterparts, and <span class="math notranslate nohighlight">\(J = 0\)</span>.</p></li>
+<li><p>If the norm is <strong>non-zero</strong>, it reflects an error in mapping caused by sensor noise or inaccuracies, resulting in <span class="math notranslate nohighlight">\(J &gt; 0\)</span>.</p></li>
+</ul>
+<p>This interpretation makes Wahba’s problem a direct extension of least squares fitting to attitude determination, where the objective is to minimize this norm and find the best-fit DCM.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="devenport-s-q-method">
+<h1>4.4) Devenport’s q-Method<a class="headerlink" href="#devenport-s-q-method" title="Permalink to this heading">#</a></h1>
+<p>Devenport’s q-Method is a powerful technique for determining the attitude of a spacecraft using quaternions. It reformulates Wahba’s problem into an eigenvalue problem, efficiently finding the optimal quaternion that describes the attitude.</p>
+<p><strong><ins>Objective</ins></strong></p>
+<ul>
+<li><p>The goal is to find the quaternion <span class="math notranslate nohighlight">\(\beta = [\beta_0, \beta_1, \beta_2, \beta_3]^T\)</span>, where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta_0\)</span> is the scalar part.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_1, \beta_2, \beta_3\)</span> form the vector part.</p></li>
+</ul>
+</li>
+<li><p>The quaternion <span class="math notranslate nohighlight">\(\beta\)</span> is a <strong>unit vector</strong> satisfying <span class="math notranslate nohighlight">\(\|\beta\|^2 = 1\)</span>, ensuring it represents a valid rotation.</p></li>
+<li><p>This method minimizes the Wahba cost function:</p>
+<div class="math notranslate nohighlight">
+\[
+  J([\bar{\mathbf{B}}\mathbf{N}]) = \frac{1}{2} \sum_{k=1}^N w_k \| \mathbf{^B}\hat{v}_k - [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_k \|^2
+  \]</div>
+<p>and equivalently maximizes the <strong>gain function</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+  g(\beta) = \beta^T [K] \beta
+  \]</div>
+<p>where <span class="math notranslate nohighlight">\([K]\)</span> is the <strong>gain matrix</strong>, which encodes the relationship between the observed and known reference vectors.</p>
+</li>
+<li><p>Note that <span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}_k\)</span> and <span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}_k\)</span> are vectors in <span class="math notranslate nohighlight">\(\mathcal{i, j, k}\)</span></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong><ins>Re-Writing Wahba Cost Function &amp; Identifying the Gain Function, g</ins></strong></p>
+<ol class="arabic">
+<li><p><strong>Rewriting the Wahba Cost Function</strong>:</p>
+<ul>
+<li><p>The Wahba cost function measures the mismatch between the body-frame vectors <span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}_k\)</span> and the inertial-frame vectors <span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}_k\)</span> mapped via the Direction Cosine Matrix (DCM) <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+     J([\bar{\mathbf{B}}\mathbf{N}]) = \frac{1}{2} \sum_{k=1}^N w_k \| \mathbf{^B}\hat{v}_k - [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_k \|^2
+     \]</div>
+</li>
+<li><p>The cost function can be re-written as:</p>
+<div class="math notranslate nohighlight">
+\[
+     J = \frac{1}{2} \sum_{k=1}^N w_k \left( \mathbf{^B}\hat{v}_k - [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_k \right)^T \left( \mathbf{^B}\hat{v}_k - [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_k \right)
+     \]</div>
+</li>
+<li><p>Further expansion of the inner product:</p>
+<div class="math notranslate nohighlight">
+\[
+     J = \frac{1}{2} \sum_{k=1}^N w_k \left( (\mathbf{^B}\hat{v}_k)^T (\mathbf{^B}\hat{v}_k) + (\mathcal{^N}\hat{v}_k)^T [\bar{\mathbf{B}}\mathbf{N}]^T [\bar{\mathbf{B}}\mathbf{N}] (\mathcal{^N}\hat{v}_k) - 2 (\mathbf{^B}\hat{v}_k)^T [\bar{\mathbf{B}}\mathbf{N}] (\mathcal{^N}\hat{v}_k) \right)
+     \]</div>
+</li>
+<li><p>Since <span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}_k\)</span> and <span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}_k\)</span> are unit vectors:</p>
+<div class="math notranslate nohighlight">
+\[
+     (\mathbf{^B}\hat{v}_k)^T (\mathbf{^B}\hat{v}_k) = 1, \quad (\mathcal{^N}\hat{v}_k)^T (\mathcal{^N}\hat{v}_k) = 1
+     \]</div>
+<p>and,</p>
+<div class="math notranslate nohighlight">
+\[
+     [\bar{\mathbf{B}}\mathbf{N}]^T [\bar{\mathbf{B}}\mathbf{N}] = I
+     \]</div>
+<p>the expression simplifies to:</p>
+<div class="math notranslate nohighlight">
+\[
+     J([\bar{\mathbf{B}}\mathbf{N}]) = \frac{1}{2} \sum_{k=1}^N w_k \left( 2 - 2 \mathbf{^B}\hat{v}_k^T [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_k \right)
+     \]</div>
+</li>
+<li><p>Factoring out <span class="math notranslate nohighlight">\(2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+     J([\bar{\mathbf{B}}\mathbf{N}]) = \sum_{k=1}^N w_k \left( 1 - \mathbf{^B}\hat{v}_k^T [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_k \right)
+     \]</div>
+</li>
+</ul>
+</li>
+<li><p><strong>The Gain Function</strong>:</p>
+<ul>
+<li><p>Since minimizing <span class="math notranslate nohighlight">\(J\)</span> is equivalent to maximizing:</p>
+<div class="math notranslate nohighlight">
+\[
+     g = \sum_{k=1}^N w_k \mathbf{^B}\hat{v}_k^T [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_k
+     \]</div>
+</li>
+<li><p>The gain function <span class="math notranslate nohighlight">\(g\)</span> measures the alignment between the body-frame and inertial-frame vectors.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Gain Function in Terms of Quaternions</ins></strong></p>
+<ol class="arabic">
+<li><p><strong>Expressing the DCM <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span> in Quaternions</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+   [\bar{\mathbf{B}}\mathbf{N}] = (\beta_0^2 - \epsilon^T \epsilon)[I_{3 \times 3}] + 2\epsilon\epsilon^T - 2\beta_0[\tilde{\epsilon}]
+   \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\epsilon = [\beta_1, \beta_2, \beta_3]^T\)</span> is the vector part of the quaternion.</p></li>
+<li><p><span class="math notranslate nohighlight">\([\tilde{\epsilon}]\)</span> is the skew-symmetric matrix of <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p></li>
+</ul>
+</li>
+</ol>
+<br>
+<ol class="arabic">
+<li><p><strong>Simplifying <span class="math notranslate nohighlight">\(g\)</span></strong>:</p>
+<ul>
+<li><p>Substituting the quaternion representation of <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span> into <span class="math notranslate nohighlight">\(g\)</span> gives:</p>
+<div class="math notranslate nohighlight">
+\[
+     g(\beta) = \beta^T [K] \beta
+     \]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\([K]\)</span> is the <strong>gain matrix</strong></p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Constructing the Gain Matrix <span class="math notranslate nohighlight">\([K]\)</span></ins></strong></p>
+<ol class="arabic">
+<li><p>Compute the <strong>Attitude Profile Matrix</strong> <span class="math notranslate nohighlight">\([B]\)</span>:</p>
+<ul>
+<li><p>The matrix <span class="math notranslate nohighlight">\([B]\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+     [B] = \sum_{k=1}^N w_k \mathbf{^B}\hat{v}_k (\mathcal{^N}\hat{v}_k)^T
+     \]</div>
+</li>
+<li><p><strong>What is the Attitude Profile Matrix?</strong><br />
+<span class="math notranslate nohighlight">\([B]\)</span> is called the <strong>Attitude Profile Matrix</strong> because it encapsulates the relationship between the measured body-frame vectors <span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}_k\)</span> and the known inertial-frame vectors <span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}_k\)</span>. It essentially “profiles” or summarizes the rotational alignment between these vectors, weighted by their relative accuracies <span class="math notranslate nohighlight">\(w_k\)</span>.</p>
+<ul class="simple">
+<li><p>The outer product <span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}_k (\mathcal{^N}\hat{v}_k)^T\)</span> aligns the body-frame and inertial-frame vectors for each observation <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+<li><p>Summing over all observations combines these alignments into a single matrix, which serves as the foundation for computing the optimal quaternion or Direction Cosine Matrix (DCM).</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<br>
+<ol class="arabic simple">
+<li><p>Compute <span class="math notranslate nohighlight">\(\sigma\)</span>, <span class="math notranslate nohighlight">\([Z]\)</span>, and <span class="math notranslate nohighlight">\([S]\)</span> using <span class="math notranslate nohighlight">\([B]\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\sigma = \text{tr}([B])\)</span>: The trace of <span class="math notranslate nohighlight">\([B]\)</span>, representing the sum of its diagonal elements.</p></li>
+<li><p><span class="math notranslate nohighlight">\([Z] = [B_{23} - B_{32}, B_{31} - B_{13}, B_{12} - B_{21}]^T\)</span>: A 3D vector derived from the off-diagonal elements of <span class="math notranslate nohighlight">\([B]\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\([S] = [B] + [B]^T\)</span>: The symmetric part of <span class="math notranslate nohighlight">\([B]\)</span>.</p></li>
+</ul>
+</li>
+</ol>
+<br>
+<ol class="arabic" start="3">
+<li><p>Assemble the <strong>Gain Matrix</strong> <span class="math notranslate nohighlight">\([K]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+   [K] = \begin{bmatrix} 
+   \sigma &amp; Z^T \\ 
+   Z &amp; [S] - \sigma [I_{3 \times 3}] 
+   \end{bmatrix}
+   \end{split}\]</div>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Constrained Optimization</ins></strong></p>
+<ol class="arabic">
+<li><p><strong>Unit Quaternion Constraint</strong>:</p>
+<ul>
+<li><p>Quaternions satisfy the holonomic constraint:</p>
+<div class="math notranslate nohighlight">
+\[
+     \|\beta\|^2 = 1 \quad \Rightarrow \quad \beta^T\beta = 1
+     \]</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Optimization Using Lagrange Multipliers</strong>:</p>
+<ul>
+<li><p>A <strong>Lagrange multiplier</strong> is a mathematical tool used in constrained optimization to incorporate constraints into the objective function. By introducing the multiplier <span class="math notranslate nohighlight">\(\lambda\)</span>, we reformulate the optimization problem so that the constraint <span class="math notranslate nohighlight">\(\beta^T\beta = 1\)</span> is explicitly enforced while maximizing the gain function <span class="math notranslate nohighlight">\(g(\beta)\)</span>.</p></li>
+<li><p>In the general case, the Lagrange function is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+     \mathcal{L}(x, \lambda) = f(x) - \lambda h(x)
+     \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x)\)</span> is the objective function to be maximized or minimized.</p></li>
+<li><p><span class="math notranslate nohighlight">\(h(x)\)</span> is the constraint that must be satisfied (e.g., <span class="math notranslate nohighlight">\(h(x) = 0\)</span>).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lambda\)</span> is the Lagrange multiplier.</p></li>
+</ul>
+</li>
+<li><p>Here, the gain function <span class="math notranslate nohighlight">\(g(\beta)\)</span> is maximized under the unit quaternion constraint <span class="math notranslate nohighlight">\(\|\beta\|^2 = 1\)</span>, which can be written as:</p>
+<div class="math notranslate nohighlight">
+\[
+     g'(\beta) = g(\beta) - \lambda(\|\beta\|^2 - 1)
+     \]</div>
+<p>Substituting for <span class="math notranslate nohighlight">\(g(\beta)\)</span>, we get:</p>
+<div class="math notranslate nohighlight">
+\[
+     g'(\beta) = \beta^T[K]\beta - \lambda(\beta^T\beta - 1)
+     \]</div>
+</li>
+<li><p>Differentiating <span class="math notranslate nohighlight">\(g'(\beta)\)</span> with respect to <span class="math notranslate nohighlight">\(\beta\)</span> to find its critical points:</p>
+<div class="math notranslate nohighlight">
+\[
+     \frac{\partial g'}{\partial \beta} = 2[K]\beta - 2\lambda\beta = 0
+     \]</div>
+</li>
+<li><p>Rearranging gives:</p>
+<div class="math notranslate nohighlight">
+\[
+     [K]\beta = \lambda\beta
+     \]</div>
+</li>
+<li><p>This result shows that <span class="math notranslate nohighlight">\(\beta\)</span> must be an eigenvector of the matrix <span class="math notranslate nohighlight">\([K]\)</span>, and <span class="math notranslate nohighlight">\(\lambda\)</span> is the corresponding eigenvalue.</p></li>
+</ul>
+</li>
+<li><p><strong>Eigenvalue Problem</strong>:</p>
+<ul class="simple">
+<li><p>The solution is the eigenvector <span class="math notranslate nohighlight">\(\beta\)</span> corresponding to the largest eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span> of <span class="math notranslate nohighlight">\([K]\)</span>. This eigenvector represents the quaternion that maximizes the gain function <span class="math notranslate nohighlight">\(g(\beta)\)</span> while satisfying the unit norm constraint.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Solution Procedure</ins></strong></p>
+<ol class="arabic simple">
+<li><p>Compute the <span class="math notranslate nohighlight">\([B]\)</span> matrix from measurements.</p></li>
+<li><p>Construct the <span class="math notranslate nohighlight">\([K]\)</span> matrix.</p></li>
+<li><p>Solve the eigenvalue problem <span class="math notranslate nohighlight">\([K]\beta = \lambda\beta\)</span>.</p></li>
+<li><p>Select the eigenvector associated with the largest eigenvalue <span class="math notranslate nohighlight">\(\lambda\)</span>. This is the optimal quaternion <span class="math notranslate nohighlight">\(\beta\)</span>.</p></li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Summary</ins></strong></p>
+<p>Davenport’s Q-Method provides a robust framework for static attitude determination by solving Wahba’s problem through a series of well-defined mathematical steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Wahba’s Problem</strong>: The method starts with the Wahba cost function, which quantifies the mismatch between measured body-frame vectors and corresponding inertial-frame vectors after applying a candidate rotation. The goal is to minimize this cost, which corresponds to finding the optimal alignment.</p></li>
+<li><p><strong>Linear Algebra Insights</strong>: Using properties of linear algebra, the squared error terms in Wahba’s problem are rewritten as inner products. This reformulation simplifies the problem and allows for the identification of the <strong>gain function</strong> <span class="math notranslate nohighlight">\(g(\beta)\)</span>, which is to be maximized.</p></li>
+<li><p><strong>Gain Function in Quaternion Form</strong>: The gain function <span class="math notranslate nohighlight">\(g(\beta) = \beta^T K \beta\)</span> is expressed in terms of quaternions, enabling the use of quaternion algebra to represent the rotation. The focus then shifts to constructing the <strong>gain matrix</strong> <span class="math notranslate nohighlight">\(K\)</span>, which encodes the relationship between the observed vectors and their reference counterparts.</p></li>
+<li><p><strong>Constructing the Gain Matrix <span class="math notranslate nohighlight">\(K\)</span></strong>: The matrix <span class="math notranslate nohighlight">\(K\)</span> is built from the <strong>attitude profile matrix</strong> <span class="math notranslate nohighlight">\(B\)</span>, which is computed as a weighted sum of outer products of the body and inertial vectors. The symmetric properties of <span class="math notranslate nohighlight">\(B\)</span> and its trace (<span class="math notranslate nohighlight">\(\sigma\)</span>) are used to populate the elements of <span class="math notranslate nohighlight">\(K\)</span>.</p></li>
+<li><p><strong>Optimization with Constraints</strong>: To enforce the unit quaternion constraint (<span class="math notranslate nohighlight">\(\|\beta\|^2 = 1\)</span>), the method introduces a Lagrange multiplier. This transforms the problem into an eigenvalue-eigenvector formulation, where the optimal quaternion corresponds to the eigenvector associated with the largest eigenvalue of <span class="math notranslate nohighlight">\(K\)</span>.</p></li>
+<li><p><strong>Solution via Eigenvalue Problem</strong>: Solving the eigenvalue problem yields the optimal quaternion <span class="math notranslate nohighlight">\(\beta\)</span>. The quaternion is normalized to ensure it satisfies the unit constraint.</p></li>
+<li><p><strong>Constructing the Optimal <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span> Matrix</strong>: The optimal quaternion is used to estimate the Direction Cosine Matrix (DCM) <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span>, which represents the best alignment between the body and inertial frames.</p></li>
+</ol>
+<p>Through this sequence of steps, Davenport’s Q-Method elegantly combines linear algebra, quaternion representation, and optimization to solve for the attitude efficiently. It is computationally intensive at step 6, so it might not be efficient for real-time uses, but it lays a solid foundation for advanced attitude determination techniques in aerospace and related fields.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">davenport_q_method</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">N_v_k</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements Davenport&#39;s Q-Method to estimate the rotation matrix (DCM) from inertial frame to body frame.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        B_v_k (numpy.ndarray): Array of shape (N, 3) containing N body-frame vectors \( \mathbf{^B}\hat{v}_k \).</span>
+<span class="sd">                               Each row corresponds to the k-th body-frame vector.</span>
+<span class="sd">        </span>
+<span class="sd">        N_v_k (numpy.ndarray): Array of shape (N, 3) containing N inertial-frame vectors \( \mathcal{^N}\hat{v}_k \).</span>
+<span class="sd">                               Each row corresponds to the k-th inertial-frame vector.</span>
+<span class="sd">        </span>
+<span class="sd">        weights (numpy.ndarray, optional): Array of shape (N,) containing weights \( w_k \) for each vector pair.</span>
+<span class="sd">                                           If None, equal weights are assumed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: Estimated rotation matrix (3x3) \( [\bar{\mathbf{B}}\mathbf{N}] \) from inertial frame to body frame.</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">        - \( N \) is the number of vector observations.</span>
+<span class="sd">        - Each vector is a 3-dimensional vector (size 3).</span>
+<span class="sd">        - The vectors should be provided as NumPy arrays and will be normalized to unit length within the function.</span>
+<span class="sd">        - The function computes the optimal rotation matrix that aligns the inertial-frame vectors \( \mathcal{^N}\hat{v}_k \)</span>
+<span class="sd">          with the body-frame vectors \( \mathbf{^B}\hat{v}_k \) by minimizing Wahba&#39;s cost function.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; B_v_k = np.array([[0.8273, 0.5541, -0.0920],</span>
+<span class="sd">                              [-0.8285, 0.5522, -0.0955],</span>
+<span class="sd">                              [0.5774, 0.5774, 0.5774]])</span>
+<span class="sd">        &gt;&gt;&gt; N_v_k = np.array([[-0.1517, -0.9669, 0.2050],</span>
+<span class="sd">                              [-0.8393, 0.4494, -0.3044],</span>
+<span class="sd">                              [0.5774, 0.5774, 0.5774]])</span>
+<span class="sd">        &gt;&gt;&gt; weights = np.array([1.0, 1.0, 1.0])</span>
+<span class="sd">        &gt;&gt;&gt; C = davenport_q_method(B_v_k, N_v_k, weights)</span>
+<span class="sd">        &gt;&gt;&gt; print(C)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Ensure inputs are lists or arrays</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;B_v_k must be a list or NumPy array of vectors.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">N_v_k</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;N_v_k must be a list or NumPy array of vectors.&quot;</span><span class="p">)</span>
+        
+    <span class="c1"># Validate input dimensions</span>
+    <span class="k">if</span> <span class="n">B_v_k</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">N_v_k</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input vector arrays must have the same shape. The number of vector observations must be the same in body and inertial frame.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Number of vector observations</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">B_v_k</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Cast vectors to float </span>
+    <span class="n">B_v_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">N_v_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">N_v_k</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    
+    <span class="c1"># Validate each vector in B_v_k and N_v_k</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">validate_vec3</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="n">validate_vec3</span><span class="p">(</span><span class="n">N_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    
+    <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">N</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights array must have the same length as the number of vector observations.&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Normalize the input vectors to unit length</span>
+    <span class="n">B_v_k</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">N_v_k</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">N_v_k</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="c1"># Construct the attitude profile matrix B</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">B</span> <span class="o">+=</span> <span class="n">weights</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">N_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    
+    <span class="c1"># Compute the symmetric matrix S</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">B</span> <span class="o">+</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="c1"># Compute the vector sigma</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">B</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                      <span class="n">B</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                      <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+    
+    <span class="c1"># Compute the scalar zeta</span>
+    <span class="n">zeta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+    
+    <span class="c1"># Construct the K matrix</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">K</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">zeta</span>
+    <span class="n">K</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">sigma</span>
+    <span class="n">K</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigma</span>
+    <span class="n">K</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">S</span> <span class="o">-</span> <span class="n">zeta</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    
+    <span class="c1"># Solve for the eigenvector corresponding to the maximum eigenvalue</span>
+    <span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
+    <span class="n">max_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)</span>
+    <span class="n">q_optimal</span> <span class="o">=</span> <span class="n">eigenvectors</span><span class="p">[:,</span> <span class="n">max_index</span><span class="p">]</span>
+    
+    <span class="c1"># Normalize the quaternion</span>
+    <span class="n">q_optimal</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">q_optimal</span><span class="p">)</span>
+    
+    <span class="c1"># Convert quaternion to rotation matrix</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">EP_to_DCM</span><span class="p">(</span><span class="n">q_optimal</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">C</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 3, 4 - Devenport&#39;s q-method</span>
+<span class="n">v_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.8273</span><span class="p">,</span> <span class="mf">0.5541</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0920</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.8285</span><span class="p">,</span> <span class="mf">0.5522</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0955</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">v_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.1517</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9669</span><span class="p">,</span> <span class="mf">0.2050</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.8393</span><span class="p">,</span> <span class="mf">0.4494</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3044</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="c1"># Call the Davenport Q-Method function</span>
+<span class="n">rotation_matrix</span> <span class="o">=</span> <span class="n">davenport_q_method</span><span class="p">(</span><span class="n">v_b</span><span class="p">,</span> <span class="n">v_i</span><span class="p">)</span>
+
+<span class="c1"># Print the resulting Direction Cosine Matrix (DCM)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated Direction Cosine Matrix (DCM):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">rotation_matrix</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated Direction Cosine Matrix (DCM):
+[[ 0.415936 -0.854894  0.310087]
+ [-0.833757 -0.494637 -0.245325]
+ [ 0.363107 -0.156498 -0.918511]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="quest">
+<h1>4.5) QUEST<a class="headerlink" href="#quest" title="Permalink to this heading">#</a></h1>
+<p><strong><ins>Objective</ins></strong></p>
+<ul>
+<li><p>The QUEST (QUaternion ESTimator) method is a faster solution to the Wahba problem compared to Davenport’s Q-Method. It avoids directly solving the computationally intensive eigenvalue-eigenvector problem.</p></li>
+<li><p>The goal is to find the quaternion <span class="math notranslate nohighlight">\(\beta = [\beta_0, \beta_1, \beta_2, \beta_3]^T\)</span>, where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta_0\)</span> is the scalar part.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_1, \beta_2, \beta_3\)</span> form the vector part.</p></li>
+</ul>
+</li>
+<li><p>The quaternion <span class="math notranslate nohighlight">\(\beta\)</span> is a <strong>unit vector</strong> satisfying <span class="math notranslate nohighlight">\(\|\beta\|^2 = 1\)</span>, ensuring it represents a valid rotation.</p></li>
+<li><p>Like Davenport’s Q-Method, QUEST minimizes the Wahba cost function:</p>
+<div class="math notranslate nohighlight">
+\[
+  J([\bar{\mathbf{B}}\mathbf{N}]) = \frac{1}{2} \sum_{k=1}^N w_k \| \mathbf{^B}\hat{v}_k - [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_k \|^2
+  \]</div>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong><ins>Rewriting Wahba’s Cost Function and Introducing the Optimal Eigenvalue</ins></strong></p>
+<ol class="arabic">
+<li><p><strong>Linking Cost and Gain Functions</strong>:</p>
+<ul>
+<li><p>The cost function <span class="math notranslate nohighlight">\(J\)</span> can be rewritten using the gain function <span class="math notranslate nohighlight">\(g\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+     J = \sum_{k=1}^N w_k - g
+     \]</div>
+</li>
+<li><p>From Davenport’s q-method, for the optimal quaternion <span class="math notranslate nohighlight">\(\bar\beta\)</span>, the gain function <span class="math notranslate nohighlight">\(g\)</span> equals the largest eigenvalue <span class="math notranslate nohighlight">\(\lambda_{\text{opt}}\)</span> of the gain matrix <span class="math notranslate nohighlight">\([K]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+     g(\bar\beta) = \lambda_{\text{opt}}
+     \]</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Simplified Cost Function</strong>:</p>
+<ul>
+<li><p>Substituting <span class="math notranslate nohighlight">\(g(\bar\beta) = \lambda_{\text{opt}}\)</span> into the cost function:</p>
+<div class="math notranslate nohighlight">
+\[
+     J = \sum_{k=1}^N w_k - \lambda_{\text{opt}}
+     \]</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Expression for the Optimal Eigenvalue</strong>:</p>
+<ul>
+<li><p>Rearranging for <span class="math notranslate nohighlight">\(\lambda_{\text{opt}}\)</span> gives:</p>
+<div class="math notranslate nohighlight">
+\[
+     \lambda_{\text{opt}} = \sum_{k=1}^N w_k - J
+     \]</div>
+</li>
+<li><p>If the measurement noise is small (as assumed in QUEST), <span class="math notranslate nohighlight">\(J\)</span> is close to zero, so:</p>
+<div class="math notranslate nohighlight">
+\[
+     \lambda_{\text{opt}} \approx \sum_{k=1}^N w_k
+     \]</div>
+</li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Numerical Optimization via Root Solving</ins></strong></p>
+<ol class="arabic">
+<li><p><strong>Avoiding the Eigenvalue Problem</strong>:</p>
+<ul class="simple">
+<li><p>Instead of solving the eigenvalue problem for <span class="math notranslate nohighlight">\([K]\)</span>, QUEST approximates <span class="math notranslate nohighlight">\(\lambda_{\text{opt}}\)</span> using an iterative <strong>root-solving method</strong> (e.g., Newton-Raphson).</p></li>
+</ul>
+</li>
+<li><p><strong>Characteristic Equation</strong>:</p>
+<ul>
+<li><p>The eigenvalues of <span class="math notranslate nohighlight">\([K]\)</span> are roots of the characteristic equation:</p>
+<div class="math notranslate nohighlight">
+\[
+     f(s) = \text{det}([K] - s[I_{4 \times 4}]) = 0
+     \]</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Newton-Raphson Iteration</strong>:</p>
+<ul>
+<li><p>To solve for the largest root <span class="math notranslate nohighlight">\(\lambda_{\text{opt}}\)</span>, Newton-Raphson iteratively refines the estimate:</p>
+<div class="math notranslate nohighlight">
+\[
+     \lambda_{i+1} = \lambda_i - \frac{f(\lambda_i)}{f'(\lambda_i)}
+     \]</div>
+</li>
+<li><p>This method efficiently converges to the largest eigenvalue starting from an initial guess <span class="math notranslate nohighlight">\(\lambda_0 = \sum_{k=1}^N w_k\)</span>.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Rodrigues Parameters and Attitude Reconstruction</ins></strong></p>
+<ol class="arabic">
+<li><p><strong>Classical Rodrigues Parameters (CRPs)</strong>:</p>
+<ul>
+<li><p>To simplify the quaternion representation, QUEST introduces the <strong>Rodrigues parameter vector</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+     \mathbf{q} = \frac{\epsilon}{\beta_0} = \begin{bmatrix} \beta_1 / \beta_0 \\ \beta_2 / \beta_0 \\ \beta_3 / \beta_0 \end{bmatrix}
+     \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\epsilon = [\beta_1, \beta_2, \beta_3]^T\)</span> is the vector part of the quaternion.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Linearized Eigenvector Problem</strong>:</p>
+<ul>
+<li><p>The eigenvector problem <span class="math notranslate nohighlight">\([K] \beta = \lambda_{\text{opt}} \beta\)</span> is rewritten as:</p>
+<div class="math notranslate nohighlight">
+\[
+     \left([S] - \lambda_{\text{opt}} [I_{3 \times 3}] + \sigma\right) \mathbf{q} = [Z]
+     \]</div>
+</li>
+<li><p>Here, <span class="math notranslate nohighlight">\([S]\)</span>, <span class="math notranslate nohighlight">\([Z]\)</span>, and <span class="math notranslate nohighlight">\(\sigma\)</span> are derived from the attitude profile matrix <span class="math notranslate nohighlight">\([B]\)</span>.</p></li>
+</ul>
+</li>
+<li><p><strong>Solving for CRPs</strong>:</p>
+<ul>
+<li><p>The CRPs are obtained by solving:</p>
+<div class="math notranslate nohighlight">
+\[
+     \mathbf{q} = \left((\lambda_{\text{opt}} + \sigma)[I_{3 \times 3}] - [S]\right)^{-1} [Z]
+     \]</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Reconstructing the Quaternion</strong>:</p>
+<ul>
+<li><p>From <span class="math notranslate nohighlight">\(\mathbf{q}\)</span>, the quaternion is reconstructed as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+     \beta = \frac{1}{\sqrt{1 + \mathbf{q}^T \mathbf{q}}} \begin{bmatrix} 1 \\ \mathbf{q} \end{bmatrix}
+     \end{split}\]</div>
+</li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Advantages of QUEST</ins></strong></p>
+<ol class="arabic simple">
+<li><p><strong>Speed</strong>:</p>
+<ul class="simple">
+<li><p>Avoids direct eigenvalue decomposition, making it computationally faster, especially for real-time applications.</p></li>
+</ul>
+</li>
+<li><p><strong>Iterative Precision</strong>:</p>
+<ul class="simple">
+<li><p>Achieves high precision through iterative root solving (e.g., Newton-Raphson).</p></li>
+</ul>
+</li>
+<li><p><strong>Flexibility</strong>:</p>
+<ul class="simple">
+<li><p>Supports various weighting schemes and multiple vector observations.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Summary</ins></strong></p>
+<p>The QUEST method builds on Davenport’s Q-Method to solve Wahba’s problem more efficiently:</p>
+<ol class="arabic simple">
+<li><p><strong>Wahba’s Cost Function</strong>: Minimizes <span class="math notranslate nohighlight">\(J\)</span> while maximizing the gain function <span class="math notranslate nohighlight">\(g\)</span>, which corresponds to the largest eigenvalue of <span class="math notranslate nohighlight">\([K]\)</span>.</p></li>
+<li><p><strong>Avoiding Eigenvalue Decomposition</strong>: Uses Newton-Raphson to iteratively solve for the largest eigenvalue <span class="math notranslate nohighlight">\(\lambda_{\text{opt}}\)</span> instead of direct matrix diagonalization.</p></li>
+<li><p><strong>Attitude Representation</strong>: Employs Classical Rodrigues Parameters (CRPs) to simplify quaternion representation and reconstructs the optimal quaternion <span class="math notranslate nohighlight">\(\beta\)</span>.</p></li>
+<li><p><strong>Practical Advantages</strong>: Combines numerical speed with high accuracy, making it well-suited for spacecraft attitude determination in real-time applications.</p></li>
+</ol>
+<p>QUEST exemplifies an elegant and practical refinement of Davenport’s Q-Method, maintaining accuracy while significantly improving computational efficiency.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">quest_algorithm</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">N_v_k</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements the QUEST algorithm to estimate the rotation matrix (DCM) from inertial frame to body frame.</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        B_v_k (numpy.ndarray): Array of shape (N, 3) containing N body-frame vectors \( \mathbf{^B}\hat{v}_k \).</span>
+<span class="sd">                               Each row corresponds to the k-th body-frame vector.</span>
+<span class="sd">    </span>
+<span class="sd">        N_v_k (numpy.ndarray): Array of shape (N, 3) containing N inertial-frame vectors \( \mathcal{^N}\hat{v}_k \).</span>
+<span class="sd">                               Each row corresponds to the k-th inertial-frame vector.</span>
+<span class="sd">    </span>
+<span class="sd">        weights (numpy.ndarray, optional): Array of shape (N,) containing weights \( w_k \) for each vector pair.</span>
+<span class="sd">                                           If None, equal weights are assumed.</span>
+<span class="sd">    </span>
+<span class="sd">        max_iter (int, optional): Maximum number of iterations for the Newton-Raphson method. Default is 100.</span>
+<span class="sd">    </span>
+<span class="sd">        tol (float, optional): Tolerance for convergence of the eigenvalue. Default is 1e-12.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: Estimated rotation matrix (3x3).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Ensure inputs are NumPy arrays</span>
+    <span class="n">B_v_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">N_v_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">N_v_k</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c1"># Validate input dimensions</span>
+    <span class="k">if</span> <span class="n">B_v_k</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">N_v_k</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input vector arrays must have the same shape.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Number of vector observations</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">B_v_k</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Assign equal weights if none provided</span>
+    <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">N</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights array must have the same length as the number of vector observations.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Normalize the input vectors to unit length</span>
+    <span class="n">B_v_k</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">N_v_k</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">N_v_k</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Construct the attitude profile matrix B</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">B</span> <span class="o">+=</span> <span class="n">weights</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">N_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+
+    <span class="c1"># Compute scalar quantities</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">B</span> <span class="o">+</span> <span class="n">B</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># Symmetric part of B</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">B</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                  <span class="n">B</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+                  <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+    <span class="c1"># Construct the K matrix</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">K</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigma</span>
+    <span class="n">K</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">Z</span>
+    <span class="n">K</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Z</span>
+    <span class="n">K</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">S</span> <span class="o">-</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="c1"># Newton-Raphson for largest eigenvalue</span>
+    <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Characteristic equation f(s) = det(K - s * I).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">K</span> <span class="o">-</span> <span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">f_prime</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Derivative of the characteristic equation f&#39;(s).&quot;&quot;&quot;</span>
+        <span class="n">K_sI</span> <span class="o">=</span> <span class="n">K</span> <span class="o">-</span> <span class="n">s</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">inv_K_sI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">K_sI</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">f</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">inv_K_sI</span><span class="p">)</span>
+
+    <span class="c1"># Initial guess for lambda (the largest eigenvalue)</span>
+    <span class="n">lambda_new</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
+
+    <span class="c1"># Perform Newton-Raphson iteration</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+        <span class="n">f_val</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">lambda_new</span><span class="p">)</span>
+        <span class="n">f_prime_val</span> <span class="o">=</span> <span class="n">f_prime</span><span class="p">(</span><span class="n">lambda_new</span><span class="p">)</span>
+
+        <span class="c1"># Avoid division by zero</span>
+        <span class="k">if</span> <span class="n">f_prime_val</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s2">&quot;Derivative is zero during Newton-Raphson iteration.&quot;</span><span class="p">)</span>
+
+        <span class="n">delta_lambda</span> <span class="o">=</span> <span class="o">-</span><span class="n">f_val</span> <span class="o">/</span> <span class="n">f_prime_val</span>
+        <span class="n">lambda_new</span> <span class="o">+=</span> <span class="n">delta_lambda</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">delta_lambda</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Newton-Raphson did not converge within the maximum number of iterations.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Compute Rodrigues parameter vector (q)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">lambda_new</span> <span class="o">+</span> <span class="n">sigma</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">S</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+
+    <span class="c1"># Construct quaternion</span>
+    <span class="n">beta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">q</span><span class="p">))</span>
+    <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">q</span>
+
+    <span class="c1"># Convert quaternion to DCM</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">EP_to_DCM</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">C</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 5 - QUEST</span>
+<span class="n">v_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.8273</span><span class="p">,</span> <span class="mf">0.5541</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0920</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.8285</span><span class="p">,</span> <span class="mf">0.5522</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0955</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">v_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.1517</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9669</span><span class="p">,</span> <span class="mf">0.2050</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.8393</span><span class="p">,</span> <span class="mf">0.4494</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3044</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="c1"># Call the QUEST function</span>
+<span class="n">DCM_estimated</span> <span class="o">=</span> <span class="n">quest_algorithm</span><span class="p">(</span><span class="n">v_b</span><span class="p">,</span> <span class="n">v_i</span><span class="p">)</span>
+
+<span class="c1"># Print the resulting Direction Cosine Matrix (DCM)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated DCM:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">DCM_estimated</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated DCM:
+[[ 0.415936 -0.854894  0.310087]
+ [-0.833757 -0.494637 -0.245325]
+ [ 0.363107 -0.156498 -0.918511]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># Define the test vectors</span>
+<span class="n">v_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.8273</span><span class="p">,</span> <span class="mf">0.5541</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0920</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.8285</span><span class="p">,</span> <span class="mf">0.5522</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0955</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">v_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.1517</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9669</span><span class="p">,</span> <span class="mf">0.2050</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.8393</span><span class="p">,</span> <span class="mf">0.4494</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3044</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="c1"># Measure time for Davenport&#39;s Q-Method</span>
+<span class="n">start_time_davenport</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">DCM_davenport</span> <span class="o">=</span> <span class="n">davenport_q_method</span><span class="p">(</span><span class="n">v_b</span><span class="p">,</span> <span class="n">v_i</span><span class="p">)</span>
+<span class="n">end_time_davenport</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">time_davenport</span> <span class="o">=</span> <span class="n">end_time_davenport</span> <span class="o">-</span> <span class="n">start_time_davenport</span>
+
+<span class="c1"># Print results for Davenport&#39;s Q-Method</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Davenport&#39;s Q-Method:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated DCM:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">DCM_davenport</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time taken: </span><span class="si">{</span><span class="n">time_davenport</span><span class="si">:</span><span class="s2">.12f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Measure time for QUEST algorithm</span>
+<span class="n">start_time_quest</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">DCM_quest</span> <span class="o">=</span> <span class="n">quest_algorithm</span><span class="p">(</span><span class="n">v_b</span><span class="p">,</span> <span class="n">v_i</span><span class="p">)</span>
+<span class="n">end_time_quest</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">time_quest</span> <span class="o">=</span> <span class="n">end_time_quest</span> <span class="o">-</span> <span class="n">start_time_quest</span>
+
+<span class="c1"># Print results for QUEST algorithm</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;QUEST Algorithm:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated DCM:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">DCM_quest</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time taken: </span><span class="si">{</span><span class="n">time_quest</span><span class="si">:</span><span class="s2">.12f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Davenport&#39;s Q-Method:
+Estimated DCM:
+[[ 0.415936 -0.854894  0.310087]
+ [-0.833757 -0.494637 -0.245325]
+ [ 0.363107 -0.156498 -0.918511]]
+Time taken: 0.000000000000 seconds
+
+QUEST Algorithm:
+Estimated DCM:
+[[ 0.415936 -0.854894  0.310087]
+ [-0.833757 -0.494637 -0.245325]
+ [ 0.363107 -0.156498 -0.918511]]
+Time taken: 0.000000000000 seconds
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="olae">
+<h1>4.6) OLAE<a class="headerlink" href="#olae" title="Permalink to this heading">#</a></h1>
+<p><strong><ins>Objective</ins></strong></p>
+<ul>
+<li><p>The <strong>Optimal Linear Attitude Estimator (OLAE)</strong> provides an alternative framework for spacecraft attitude determination, distinct from solving Wahba’s problem directly.</p></li>
+<li><p>The goal is to estimate the spacecraft’s attitude by leveraging <strong>Classical Rodrigues Parameters (CRPs)</strong> through a <strong>linear least squares formulation</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+  \mathbf{d} = [\mathbf{S}] \mathbf{q}
+  \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{q}\)</span> represents the <strong>CRPs</strong>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{d}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{S}\)</span> encode the relationship between body and inertial frame observations.</p></li>
+</ul>
+</li>
+<li><p>OLAE achieves attitude determination with <strong>computational efficiency</strong>, avoiding eigenvalue decomposition or iterative root-solving methods.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong><ins>Formulation</ins></strong></p>
+<ol class="arabic simple">
+<li><p><strong>Cayley Transform</strong></p></li>
+</ol>
+<ul>
+<li><p>The OLAE method parameterizes the rotation matrix <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span> using the <strong>Cayley transform</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+  [\bar{\mathbf{B}}\mathbf{N}] = \left([\mathbf{I}_{3 \times 3}] + [\mathbf{\tilde{q}}]\right)^{-1} \left([\mathbf{I}_{3 \times 3}] - [\mathbf{\tilde{q}}]\right)
+  \]</div>
+<p>where <span class="math notranslate nohighlight">\([\mathbf{\tilde{q}}]\)</span> is the <strong>skew-symmetric matrix</strong> of the Rodrigues parameters <span class="math notranslate nohighlight">\(\mathbf{q}\)</span>.</p>
+</li>
+</ul>
+<br>
+<ol class="arabic simple">
+<li><p><strong>Linearizing the Problem</strong></p></li>
+</ol>
+<ul>
+<li><p>For a vector <span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}_i\)</span> in the inertial frame, the corresponding vector in the body frame is:</p>
+<div class="math notranslate nohighlight">
+\[
+  \mathbf{^B}\hat{v}_i = [\bar{\mathbf{B}}\mathbf{N}] \mathcal{^N}\hat{v}_i
+  \]</div>
+</li>
+<li><p>Substitute <span class="math notranslate nohighlight">\([\bar{\mathbf{B}}\mathbf{N}]\)</span> using the Cayley transform:</p>
+<div class="math notranslate nohighlight">
+\[
+  \mathbf{^B}\hat{v}_i = \left([\mathbf{I}_{3 \times 3}] + [\mathbf{\tilde{q}}]\right)^{-1} \left([\mathbf{I}_{3 \times 3}] - [\mathbf{\tilde{q}}]\right) \mathcal{^N}\hat{v}_i
+  \]</div>
+</li>
+<li><p>Multiply both sides by <span class="math notranslate nohighlight">\(\left([\mathbf{I}_{3 \times 3}] + [\mathbf{\tilde{q}}]\right)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+  \left([\mathbf{I}_{3 \times 3}] + [\mathbf{\tilde{q}}]\right) \mathbf{^B}\hat{v}_i = \left([\mathbf{I}_{3 \times 3}] - [\mathbf{\tilde{q}}]\right) \mathcal{^N}\hat{v}_i
+  \]</div>
+<p>Explicitly, by expanding the terms:</p>
+<div class="math notranslate nohighlight">
+\[
+  \mathbf{^B}\hat{v}_i + [\mathbf{\tilde{q}}] \mathbf{^B}\hat{v}_i = \mathcal{^N}\hat{v}_i - [\mathbf{\tilde{q}}] \mathcal{^N}\hat{v}_i
+  \]</div>
+</li>
+<li><p>Rearrange to isolate <span class="math notranslate nohighlight">\(\mathbf{^B}\hat{v}_i - \mathcal{^N}\hat{v}_i\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+  \mathbf{^B}\hat{v}_i - \mathcal{^N}\hat{v}_i = -[\mathbf{\tilde{q}}] \left(\mathbf{^B}\hat{v}_i + \mathcal{^N}\hat{v}_i\right)
+  \]</div>
+<p>This form is now linearized for further simplifications.</p>
+</li>
+<li><p>Define:</p>
+<div class="math notranslate nohighlight">
+\[
+  \mathbf{s}_i = \mathbf{^B}\hat{v}_i + \mathcal{^N}\hat{v}_i, \quad \mathbf{d}_i = \mathbf{^B}\hat{v}_i - \mathcal{^N}\hat{v}_i
+  \]</div>
+<p>Note that <span class="math notranslate nohighlight">\(\mathbf{s}_i\)</span> and <span class="math notranslate nohighlight">\(\mathbf{d}_i\)</span> do not hold specific geometric interpretations. Rather, they are just convenient variables describing the sum and difference of vectors.</p>
+</li>
+<li><p>Substituting these definitions into the equation:</p>
+<div class="math notranslate nohighlight">
+\[
+  \mathbf{d}_i = -[\mathbf{\tilde{q}}] \mathbf{s}_i
+  \]</div>
+</li>
+<li><p>Rearrange to align with the desired linearized form:</p>
+<div class="math notranslate nohighlight">
+\[
+  \mathbf{d}_i = [\mathbf{\tilde{s}}_i] \mathbf{q}
+  \]</div>
+<p>where <span class="math notranslate nohighlight">\([\mathbf{\tilde{s}}_i]\)</span> is the skew-symmetric matrix of <span class="math notranslate nohighlight">\(\mathbf{s}_i\)</span>.</p>
+</li>
+</ul>
+<br>
+<ol class="arabic simple">
+<li><p><strong>Matrix Form</strong></p></li>
+</ol>
+<ul>
+<li><p>For <span class="math notranslate nohighlight">\(N\)</span> observations, stack <span class="math notranslate nohighlight">\(\mathbf{d}_i\)</span> and <span class="math notranslate nohighlight">\([\mathbf{\tilde{s}}_i]\)</span> into matrices:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \mathbf{d} = \begin{bmatrix} \mathbf{d}_1 \\ \mathbf{d}_2 \\ \vdots \\ \mathbf{d}_N \end{bmatrix}, \quad
+  [\mathbf{S}] = \begin{bmatrix} [\mathbf{\tilde{s}}_1] \\ [\mathbf{\tilde{s}}_2] \\ \vdots \\ [\mathbf{\tilde{s}}_N] \end{bmatrix}
+  \end{split}\]</div>
+</li>
+<li><p>The linear system becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+  \mathbf{d} = [\mathbf{S}] \mathbf{q}
+  \]</div>
+</li>
+</ul>
+<br>
+<ol class="arabic simple">
+<li><p><strong>Weighted Least Squares Solution</strong></p></li>
+</ol>
+<ul>
+<li><p>Incorporating observation weights <span class="math notranslate nohighlight">\(w_i\)</span>, construct the diagonal weight matrix:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  [\mathbf{W}] = 
+  \begin{bmatrix}
+  w_1 \mathbf{I}_{3 \times 3} &amp; \mathbf{0}_{3 \times 3} &amp; \cdots &amp; \mathbf{0}_{3 \times 3} \\
+  \mathbf{0}_{3 \times 3} &amp; w_2 \mathbf{I}_{3 \times 3} &amp; \cdots &amp; \mathbf{0}_{3 \times 3} \\
+  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+  \mathbf{0}_{3 \times 3} &amp; \mathbf{0}_{3 \times 3} &amp; \cdots &amp; w_N \mathbf{I}_{3 \times 3}
+  \end{bmatrix}
+  \end{split}\]</div>
+<p>Which can be compactly written using the <span class="math notranslate nohighlight">\(\text{diag}\)</span> operator:</p>
+<div class="math notranslate nohighlight">
+\[
+  [\mathbf{W}] = \text{diag}\left(w_1 \mathbf{I}_{3 \times 3}, w_2 \mathbf{I}_{3 \times 3}, \dots, w_N \mathbf{I}_{3 \times 3}\right)
+  \]</div>
+</li>
+<li><p>Solve for the CRPs <span class="math notranslate nohighlight">\(\mathbf{q}\)</span> using the weighted least squares solution:</p>
+<div class="math notranslate nohighlight">
+\[
+  \mathbf{q} = \left([\mathbf{S}]^T [\mathbf{W}] [\mathbf{S}]\right)^{-1} [\mathbf{S}]^T [\mathbf{W}] \mathbf{d}
+  \]</div>
+</li>
+</ul>
+<hr class="docutils" />
+<p><strong><ins>Advantages of OLAE</ins></strong></p>
+<ol class="arabic simple">
+<li><p><strong>Computational Efficiency</strong>:</p>
+<ul class="simple">
+<li><p>Avoids eigenvalue decomposition or iterative root-solving methods.</p></li>
+<li><p>Operates on a fully linearized formulation, involving only matrix multiplications and inversions.</p></li>
+</ul>
+</li>
+<li><p><strong>Flexibility with Weights</strong>:</p>
+<ul class="simple">
+<li><p>Explicitly incorporates <strong>observation weights</strong> to account for sensor accuracy and reliability.</p></li>
+</ul>
+</li>
+<li><p><strong>Simplicity</strong>:</p>
+<ul class="simple">
+<li><p>Straightforward to implement due to its linear least squares formulation.</p></li>
+</ul>
+</li>
+<li><p><strong>Real-Time Applications</strong>:</p>
+<ul class="simple">
+<li><p>Well-suited for real-time attitude determination where computational resources are limited.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p><strong><ins>Comparison with Wahba’s Problem</ins></strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Aspect</strong></p></th>
+<th class="head"><p><strong>Wahba’s Problem (QUEST)</strong></p></th>
+<th class="head"><p><strong>OLAE</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Objective</strong></p></td>
+<td><p>Minimizes a quadratic cost function.</p></td>
+<td><p>Reformulates as a linear least squares problem.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Parameterization</strong></p></td>
+<td><p>Quaternions or Classical Rodrigues Parameters.</p></td>
+<td><p>Classical Rodrigues Parameters (CRPs).</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Solution Method</strong></p></td>
+<td><p>Eigenvalue decomposition or iterative optimization.</p></td>
+<td><p>Weighted least squares solution.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Computational Complexity</strong></p></td>
+<td><p>Higher due to eigenvalue solving.</p></td>
+<td><p>Lower due to linear formulation.</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><strong><ins>Summary</ins></strong></p>
+<ul class="simple">
+<li><p>The <strong>Optimal Linear Attitude Estimator (OLAE)</strong> provides an alternative to solving Wahba’s problem for spacecraft attitude determination.</p></li>
+<li><p>Using the <strong>Cayley transform</strong>, OLAE reformulates the problem linearly in terms of <strong>Classical Rodrigues Parameters (CRPs)</strong>.</p></li>
+<li><p>The solution is obtained via a <strong>weighted least squares formulation</strong>, which minimizes the error between observed body-frame vectors and known inertial-frame vectors.</p></li>
+<li><p>OLAE is computationally efficient, making it well-suited for real-time applications or systems with limited resources.</p></li>
+<li><p>Unlike QUEST or Davenport’s Q-Method, OLAE bypasses nonlinear optimization and eigenvalue decomposition, providing a simpler and faster alternative for attitude determination.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">olae_method</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">N_v_k</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements the Optimal Linear Attitude Estimator (OLAE) to estimate the rotation matrix (DCM)</span>
+<span class="sd">    from inertial frame to body frame using Classical Rodrigues Parameters (CRPs).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        B_v_k (numpy.ndarray): Array of shape (N, 3) containing N body-frame vectors \( \mathbf{^B}\hat{v}_k \).</span>
+<span class="sd">                               Each row corresponds to the k-th body-frame vector.</span>
+
+<span class="sd">        N_v_k (numpy.ndarray): Array of shape (N, 3) containing N inertial-frame vectors \( \mathcal{^N}\hat{v}_k \).</span>
+<span class="sd">                               Each row corresponds to the k-th inertial-frame vector.</span>
+
+<span class="sd">        weights (numpy.ndarray, optional): Array of shape (N,) containing weights \( w_k \) for each vector pair.</span>
+<span class="sd">                                           If None, equal weights are assumed.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: Estimated rotation matrix (3x3).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Ensure inputs are NumPy arrays</span>
+    <span class="n">B_v_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">N_v_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">N_v_k</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="c1"># Validate input dimensions</span>
+    <span class="k">if</span> <span class="n">B_v_k</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">N_v_k</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input vector arrays must have the same shape.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Number of vector observations</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">B_v_k</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Validate each vector in B_v_k and N_v_k</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">validate_vec3</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="n">validate_vec3</span><span class="p">(</span><span class="n">N_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+
+    <span class="c1"># Assign equal weights if none provided</span>
+    <span class="k">if</span> <span class="n">weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">N</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Weights array must have the same length as the number of vector observations.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Normalize the input vectors to unit length</span>
+    <span class="n">B_v_k</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">N_v_k</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">N_v_k</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Initialize lists to collect d_i and S_i</span>
+    <span class="n">d_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">S_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Compute d_i and S_i for each observation</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">d_i</span> <span class="o">=</span> <span class="n">B_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">N_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>  <span class="c1"># Difference vector</span>
+        <span class="n">s_i</span> <span class="o">=</span> <span class="n">B_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">N_v_k</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>  <span class="c1"># Sum vector</span>
+        <span class="n">s_tilde_i</span> <span class="o">=</span> <span class="n">skew_symmetric</span><span class="p">(</span><span class="n">s_i</span><span class="p">)</span>  <span class="c1"># Skew-symmetric matrix of s_i</span>
+        <span class="n">d_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_i</span><span class="p">)</span>
+        <span class="n">S_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s_tilde_i</span><span class="p">)</span>
+
+    <span class="c1"># Stack d_i and S_i to form d and S matrices</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">d_list</span><span class="p">)</span>         <span class="c1"># Shape: (3N,)</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">S_list</span><span class="p">)</span>              <span class="c1"># Shape: (3N, 3)</span>
+
+    <span class="c1"># Construct the weight matrix W as a block diagonal matrix using numpy</span>
+    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="o">*</span><span class="n">N</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">N</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">W</span><span class="p">[</span><span class="n">idx</span><span class="p">,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">weights</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="c1"># Solve for CRP q using the weighted least squares solution</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">multi_dot</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">multi_dot</span><span class="p">((</span><span class="n">S</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">S</span><span class="p">))),</span> <span class="n">S</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">d</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span>
+
+    <span class="c1"># Convert CRP q to DCM</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">CRP_to_DCM</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">C</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 5 - QUEST</span>
+<span class="n">v_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.8273</span><span class="p">,</span> <span class="mf">0.5541</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0920</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.8285</span><span class="p">,</span> <span class="mf">0.5522</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0955</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="n">v_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.1517</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9669</span><span class="p">,</span> <span class="mf">0.2050</span><span class="p">],</span>
+    <span class="p">[</span><span class="o">-</span><span class="mf">0.8393</span><span class="p">,</span> <span class="mf">0.4494</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3044</span><span class="p">]</span>
+<span class="p">])</span>
+
+<span class="c1"># Call the QUEST function</span>
+<span class="n">DCM_estimated</span> <span class="o">=</span> <span class="n">olae_method</span><span class="p">(</span><span class="n">v_b</span><span class="p">,</span> <span class="n">v_i</span><span class="p">)</span>
+
+<span class="c1"># Print the resulting Direction Cosine Matrix (DCM)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated DCM:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">DCM_estimated</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated DCM:
+[[ 0.416219 -0.854762  0.31007 ]
+ [-0.833608 -0.494901 -0.245298]
+ [ 0.363125 -0.156379 -0.918524]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="kinematics-final-assignment">
+<h1>4.7) Kinematics Final Assignment<a class="headerlink" href="#kinematics-final-assignment" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span>
+
+<span class="c1"># Display the PDF in an iframe</span>
+<span class="n">IFrame</span><span class="p">(</span><span class="n">src</span><span class="o">=</span><span class="s2">&quot;Final Assignment/Question 1.pdf&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="s1">&#39;100%&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="s1">&#39;500px&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+        <iframe
+            width="100%"
+            height="500px"
+            src="Final Assignment/Question 1.pdf"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        </div></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/01"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03-Rigid%20Body%20Kinematics%20II.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">剛体のキネマティクス II</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../appendix/appendix.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Appendix</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">姿勢決定（Attitude Determination）</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">4.1) 姿勢決定問題の定式化</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#triad-method">4.2) TRIAD Method</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#wahba-s-problem-defintion">4.3) Wahba’s Problem Defintion</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#devenport-s-q-method">4.4) Devenport’s q-Method</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#quest">4.5) QUEST</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#olae">4.6) OLAE</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kinematics-final-assignment">4.7) Kinematics Final Assignment</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hal Ohki/Yuto Nakagawa/Sho Nishimura
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

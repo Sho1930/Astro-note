@@ -72,12 +72,12 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/01/02-Rigid Body Kinematics I';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/01/02';</script>
     <link rel="shortcut icon" href="../../_static/rocket.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="剛体のキネマティクス II" href="03-Rigid%20Body%20Kinematics%20II.html" />
-    <link rel="prev" title="キネマティクスの基礎" href="01-Introduction%20to%20Kinematics.html" />
+    <link rel="next" title="剛体のキネマティクス II" href="03.html" />
+    <link rel="prev" title="Test MyST" href="test.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -183,13 +183,9 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="01.00.html">1. キネマティクス（Kinematics）</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="test.html">Test MyST</a></li>
 
-<li class="toctree-l2"><a class="reference internal" href="01-Introduction%20to%20Kinematics.html">キネマティクスの基礎</a></li>
-
-
-
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">剛体のキネマティクス I</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03-Rigid%20Body%20Kinematics%20II.html">剛体のキネマティクス II</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04-Static%20Attitude%20Determination.html">姿勢決定（Attitude Determination）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.html">剛体のキネマティクス II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.html">姿勢決定（Attitude Determination）</a></li>
 
 
 
@@ -257,7 +253,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/Sho1930/Astro-book/blob/main/notebooks/01/02-Rigid Body Kinematics I.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/Sho1930/Astro-book/blob/main/notebooks/01/02.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -305,7 +301,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/Sho1930/Astro-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/01/02-Rigid Body Kinematics I.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/Sho1930/Astro-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/01/02.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -335,7 +331,24 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../../_sources/notebooks/01/02-Rigid Body Kinematics I.ipynb" target="_blank"
+      <li><a href="../../_sources/notebooks/01/02.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../../_sources/notebooks/01/02.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -345,7 +358,7 @@ const thebe_selector_output = ".output, .cell_output"
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -429,29 +442,20 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jupytext-formats-md-myst-text-representation-extension-md-format-name-myst-kernelspec-display-name-python-3-language-python-name-python3">jupytext:
-formats: md:myst
-text_representation:
-extension: .md
-format_name: myst
-kernelspec:
-display_name: Python 3
-language: python
-name: python3</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1) 剛体のキネマティクスの概要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1) 剛体のキネマティクスの概要</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dcm">2.2) 方向余弦行列 (DCM)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.2.1) 方向余弦行列（DCM）とは</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2.2) 方向余弦行列(DCM)の性質</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2.1) 方向余弦行列（DCM）とは</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.2.2) 方向余弦行列(DCM)の性質</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kinematic-differential-equation-of-dcm">2.2.3) Kinematic differential equation of DCM</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.2.4) DCM計算の手順</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.2.4) DCM計算の手順</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.3) オイラー角</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.3.1) - オイラー角とは</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.3.2) - 回転行列</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.3) 回転順序</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.4) - 特異点とジンバルロック</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.3.5) - オイラー角の微分方程式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.3) オイラー角</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.3.1) - オイラー角とは</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.2) - 回転行列</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.3) 回転順序</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.3.4) - 特異点とジンバルロック</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.3.5) - オイラー角の微分方程式</a></li>
 </ul>
 </li>
 </ul>
@@ -467,15 +471,30 @@ name: python3</a></li>
                   
   <section class="tex2jax_ignore mathjax_ignore" id="i">
 <h1>剛体のキネマティクス I<a class="headerlink" href="#i" title="Permalink to this heading">#</a></h1>
-<p>本稿では、剛体の姿勢表現について扱う。まずは、<strong>方向余弦行列（DCM）</strong>・<strong>オイラー角</strong>を用いた姿勢表現について学んでいく。まず定義の確認からはじめ、姿勢の加減算などの基本的な操作に加え、姿勢パラメータの変化率と角速度ベクトルの関係を記述する、<strong>キネマティクスの微分方程式</strong>について解説する。</p>
-<div class="note admonition">
-<p class="admonition-title">項目</p>
+<nav class="contents local" id="id1">
+<p class="topic-title">目次</p>
 <ul class="simple">
-<li><p>2.1) 剛体のキネマティクス</p></li>
-<li><p>2.2) 方向余弦行列(DCM)</p></li>
-<li><p>2.3) オイラー角</p></li>
+<li><p><a class="reference internal" href="#id2" id="id12">2.1) 剛体のキネマティクスの概要</a></p></li>
+<li><p><a class="reference internal" href="#dcm" id="id13">2.2) 方向余弦行列 (DCM)</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id14">2.2.1) 方向余弦行列（DCM）とは</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id15">2.2.2) 方向余弦行列(DCM)の性質</a></p></li>
+<li><p><a class="reference internal" href="#kinematic-differential-equation-of-dcm" id="id16">2.2.3) Kinematic differential equation of DCM</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id17">2.2.4) DCM計算の手順</a></p></li>
 </ul>
-</div>
+</li>
+<li><p><a class="reference internal" href="#id6" id="id18">2.3) オイラー角</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id7" id="id19">2.3.1) - オイラー角とは</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id20">2.3.2) - 回転行列</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id21">2.3.3) 回転順序</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id22">2.3.4) - 特異点とジンバルロック</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id23">2.3.5) - オイラー角の微分方程式</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<p>本稿では、剛体の姿勢表現について扱う。まずは、<strong>方向余弦行列（DCM）</strong>・<strong>オイラー角</strong>を用いた姿勢表現について学んでいく。まず定義の確認からはじめ、姿勢の加減算などの基本的な操作に加え、姿勢パラメータの変化率と角速度ベクトルの関係を記述する、<strong>キネマティクスの微分方程式</strong>について解説する。</p>
 <div class="tip admonition">
 <p class="admonition-title">目的</p>
 <ul class="simple">
@@ -485,20 +504,14 @@ name: python3</a></li>
 <li><p>時間経過に伴う姿勢パラメータ変化を数値積分を用いて求める。</p></li>
 </ul>
 </div>
-<hr class="docutils" />
-<section id="jupytext-formats-md-myst-text-representation-extension-md-format-name-myst-kernelspec-display-name-python-3-language-python-name-python3">
-<h2>jupytext:
-formats: md:myst
-text_representation:
-extension: .md
-format_name: myst
-kernelspec:
-display_name: Python 3
-language: python
-name: python3<a class="headerlink" href="#jupytext-formats-md-myst-text-representation-extension-md-format-name-myst-kernelspec-display-name-python-3-language-python-name-python3" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import Relevant Libraries</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import Relevant Libraries</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
@@ -506,10 +519,10 @@ name: python3<a class="headerlink" href="#jupytext-formats-md-myst-text-represen
 </pre></div>
 </div>
 </div>
+</details>
 </div>
-</section>
-<section id="id1">
-<h2>2.1) 剛体のキネマティクスの概要<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<section id="id2">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">2.1) 剛体のキネマティクスの概要</a><a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
 <p>剛体のキネマティクスとは、変形しない物体（剛体）の位置と向き（姿勢）の時間変化を記述する。具体的には、以下の点が重要である。</p>
 <p><strong><ins>平行移動と回転</ins></strong><br>
 物体全体の移動（平行移動）と、物体がどの方向を向いているか（回転）を別々に扱う。平行移動は通常、3次元の座標 <span class="math notranslate nohighlight">\((x,y,z)\)</span> で表され、回転は<strong>方向余弦行列（DCM）</strong>、<strong>オイラー角</strong>、<strong>クォータニオン</strong>などのパラメータで表現される。</p>
@@ -521,9 +534,9 @@ name: python3<a class="headerlink" href="#jupytext-formats-md-myst-text-represen
 <p>本章では、主に 「どの方向を向いているか」（姿勢）について、<strong>方向余弦行列(DCM)</strong>、<strong>オイラー角</strong>の2種類の姿勢パラメータを通じて考えていこう。</p>
 </section>
 <section id="dcm">
-<h2>2.2) 方向余弦行列 (DCM)<a class="headerlink" href="#dcm" title="Permalink to this heading">#</a></h2>
-<section id="id2">
-<h3>2.2.1) 方向余弦行列（DCM）とは<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">2.2) 方向余弦行列 (DCM)</a><a class="headerlink" href="#dcm" title="Permalink to this heading">#</a></h2>
+<section id="id3">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">2.2.1) 方向余弦行列（DCM）とは</a><a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p>右手系の正規直交基底座標系として、座標系 <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> , <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> を考える。
 各座標系の正規直交基底を <span class="math notranslate nohighlight">\(\hat{n}_i\)</span> , <span class="math notranslate nohighlight">\(\hat{b}_i (i=1,2,3)\)</span> として、各座標系を以下のように表現する。</p>
 <div class="math notranslate nohighlight">
@@ -567,8 +580,8 @@ name: python3<a class="headerlink" href="#jupytext-formats-md-myst-text-represen
 \]</div>
 <p>このとき、行列 <span class="math notranslate nohighlight">\(\mathbf{C}\)</span> を座標系 <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> から <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> への座標変換行列または <strong>方向余弦行列（Direction Cosine Matrix(DCM))</strong> と呼ぶ。DCMは9つの成分を持つが、姿勢は本来3つのパラメータで表現できる。したがって、冗長性を持つ姿勢表現と言える。</p>
 </section>
-<section id="id3">
-<h3>2.2.2) 方向余弦行列(DCM)の性質<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<section id="id4">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">2.2.2) 方向余弦行列(DCM)の性質</a><a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>方向余弦行列（DCM）<span class="math notranslate nohighlight">\([C]\)</span> は、その定義および座標系の直交性に起因して、興味深い特徴を持つ。これらの特徴を一つ一つ見ていこう。</p>
 <p><strong>1. 直交性</strong><br>
 まず、式について、座標系を入れ替えて同じことを繰り返してみると、</p>
@@ -664,9 +677,14 @@ name: python3<a class="headerlink" href="#jupytext-formats-md-myst-text-represen
 <ul class="simple">
 <li><p>3-2-1シーケンスの定義に基づいて、各回転行列を組み合わせる。</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dcm_321</span><span class="p">(</span><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dcm_321</span><span class="p">(</span><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span><span class="p">):</span>
     <span class="c1"># ロール (φ) : x軸回り</span>
     <span class="n">R_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">roll</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">roll</span><span class="p">)],</span>
@@ -693,14 +711,7 @@ name: python3<a class="headerlink" href="#jupytext-formats-md-myst-text-represen
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3-2-1シーケンスDCM:
- [[ 0.81379768 -0.46984631  0.34202014]
- [ 0.54383814  0.82317294 -0.16317591]
- [-0.20487413  0.31879578  0.92541658]]
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 <p><strong>問題2. DCMの性質の確認（直交性、行列式）</strong><br>
 問題1で求めたDCMに対し、その転置が逆行列になっているか（直交性）および行列式が+1であるかを確認するコードを書け。</p>
@@ -708,9 +719,14 @@ name: python3<a class="headerlink" href="#jupytext-formats-md-myst-text-represen
 <ul class="simple">
 <li><p>NumPyで転置、逆行列、行列式の計算を行う。</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_dcm_properties</span><span class="p">(</span><span class="n">C</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_dcm_properties</span><span class="p">(</span><span class="n">C</span><span class="p">):</span>
     <span class="c1"># 直交性: C^T * C ≈ I</span>
     <span class="n">orthogonality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">C</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
     
@@ -730,13 +746,7 @@ name: python3<a class="headerlink" href="#jupytext-formats-md-myst-text-represen
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>直交性保持: True
-逆行列が転置と一致: True
-行列式: 1.0
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 <p><strong>問題3. DCMの合成</strong><br>
 2つの回転（それぞれ異なるオイラー角セットで定義）に対するDCMを求め、それらを合成（乗算）して得られる全体のDCMを求めよ。</p>
@@ -745,9 +755,14 @@ name: python3<a class="headerlink" href="#jupytext-formats-md-myst-text-represen
 <li><p>個別のDCMを計算し、行列乗算で合成する。</p></li>
 <li><p>合成後のDCMも直交性と行列式+1を持つことを確認する。</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2組のオイラー角（3-2-1シーケンス）を定義</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2組のオイラー角（3-2-1シーケンス）を定義</span>
 <span class="n">roll1</span><span class="p">,</span> <span class="n">pitch1</span><span class="p">,</span> <span class="n">yaw1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
 <span class="n">roll2</span><span class="p">,</span> <span class="n">pitch2</span><span class="p">,</span> <span class="n">yaw2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">])</span>
 
@@ -767,21 +782,11 @@ name: python3<a class="headerlink" href="#jupytext-formats-md-myst-text-represen
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>合成したDCM:
- [[ 0.64308782 -0.70295768  0.30379032]
- [ 0.74524684  0.48320897 -0.45947387]
- [ 0.17619648  0.52188083  0.83462279]]
-合成後の直交性保持: True
-合成後の逆行列が転置と一致: True
-合成後の行列式: 0.9999999999999996
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 </section>
 <section id="kinematic-differential-equation-of-dcm">
-<h3>2.2.3) Kinematic differential equation of DCM<a class="headerlink" href="#kinematic-differential-equation-of-dcm" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">2.2.3) Kinematic differential equation of DCM</a><a class="headerlink" href="#kinematic-differential-equation-of-dcm" title="Permalink to this heading">#</a></h3>
 <p>Kinematic differential equation of DCMを和訳すると、方向余弦行列の運動学的微分方程式となるだろうか。これは、剛体の回転運動に基づく運動を理解する上で極めて重要である。「キネマティクス」という側面は物体の位置（および姿勢）の記述に関係し、「微分方程式」という部分はその時間変化率を表す。</p>
 <p>DCMを <span class="math notranslate nohighlight">\([C]\)</span> と表すとき、その運動学的微分方程式は、物体の角速度と姿勢変化率との基本的な関係式である。</p>
 <div class="math notranslate nohighlight">
@@ -882,8 +887,8 @@ x_3 &amp; 0 &amp; -x_1 \\
 \]</div>
 <p>が得られる。これにより、DCMの直交性が時間とともに保存されることが示され、剛体運動学において極めて重要な性質である。</p>
 </section>
-<section id="id4">
-<h3>2.2.4) DCM計算の手順<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<section id="id5">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">2.2.4) DCM計算の手順</a><a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
 <p>ここまで、DCMの概要とその性質、運動学微分方程式について扱ってきた。以上をまとめ、実用上の手順をStep by stepで確認していこう。</p>
 <p><strong><em>Step 1: 座標系の定義</em></strong><br></p>
 <ul class="simple">
@@ -942,9 +947,14 @@ x_3 &amp; 0 &amp; -x_1 \\
 <li><p>歪対称行列の生成関数を実装する。</p></li>
 <li><p>小刻みな時間間隔でDCMを更新する。</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">def</span> <span class="nf">skew_symmetric</span><span class="p">(</span><span class="n">omega</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; 3次元ベクトル omega から斜対称行列を作成 &quot;&quot;&quot;</span>
@@ -982,22 +992,14 @@ x_3 &amp; 0 &amp; -x_1 \\
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>積分後のDCM (RK4法):
- [[-0.69492056 -0.19200697  0.69297817]
- [ 0.71352099 -0.30378504  0.6313497 ]
- [ 0.08929286  0.93319235  0.34810748]]
-積分後の行列式: 0.9999999999999616
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 </section>
 </section>
-<section id="id5">
-<h2>2.3) オイラー角<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
 <section id="id6">
-<h3>2.3.1) - オイラー角とは<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<h2><a class="toc-backref" href="#id18" role="doc-backlink">2.3) オイラー角</a><a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<section id="id7">
+<h3><a class="toc-backref" href="#id19" role="doc-backlink">2.3.1) - オイラー角とは</a><a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
 <p>特定の軸周りに3回連続して回転を行うことで、物体の角度位置を表現する手法であり、その名はスイスの数学者<a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%83%AC%E3%82%AA%E3%83%B3%E3%83%8F%E3%83%AB%E3%83%88%E3%83%BB%E3%82%AA%E3%82%A4%E3%83%A9%E3%83%BC">レオンハルト・オイラー</a>に由来する。オイラー角は、ロボット工学、航空宇宙、コンピュータグラフィックス、物理学など、物体の回転や向きを扱う多くの分野で広く利用されている。</p>
 <p>オイラー角は、3次元空間における剛体の向きを表現する方法であり、通常は以下の3つの角度から構成される。</p>
 <ul class="simple">
@@ -1006,8 +1008,8 @@ x_3 &amp; 0 &amp; -x_1 \\
 <li><p>ヨー (<span class="math notranslate nohighlight">\(\psi\)</span>): 	物体の <span class="math notranslate nohighlight">\(Z\)</span> 軸周りの回転を表す。</p></li>
 </ul>
 </section>
-<section id="id7">
-<h3>2.3.2) - 回転行列<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<section id="id8">
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">2.3.2) - 回転行列</a><a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <figure class="align-default" id="ypr">
 <a class="reference internal image-reference" href="../../_images/yaw_pitch_roll.png"><img alt="../../_images/yaw_pitch_roll.png" src="../../_images/yaw_pitch_roll.png" style="height: 400px;" /></a>
 </figure>
@@ -1047,8 +1049,8 @@ R_3(\psi) = \begin{bmatrix}
 各回転シーケンスは固有の最終姿勢を定め、<strong>回転の順序</strong>が非常に重要となる。行列乗算と実際の回転操作の関係を考えてみると、実際の回転操作で「1番目に実施された回転」は行列乗算の際には最後に掛けられ、「3番目に実施された回転」は最初に掛けられる。
 このように、回転行列の積は回転の適用順序の逆順となるため、正しい複合回転行列を得るためには、乗算順序に十分注意する必要がある。具体例を挙げながら、理解を深めていこう。</p>
 </section>
-<section id="id8">
-<h3>2.3.3) 回転順序<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<section id="id9">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">2.3.3) 回転順序</a><a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
 <p>オイラー角の回転シーケンスには対称および非対称の組み合わせがあり、合計で12種類のシーケンスが存在する。</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(X\)</span>軸周りの回転：1</p></li>
@@ -1119,8 +1121,8 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 </div>
 <p>ただし、実用上は逆正接関数の特異点に気をつけて処理する必要がある。</p>
 </section>
-<section id="id9">
-<h3>2.3.4) - 特異点とジンバルロック<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<section id="id10">
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">2.3.4) - 特異点とジンバルロック</a><a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
 <p>剛体の姿勢を 3つの回転角で直感的に表現できるため、航空機、人工衛星、惑星探査機の姿勢制御に広く利用されるオイラー角であるが、大きな制限が存在する。それが、<strong>ジンバルロック</strong>と呼ばれる現象である。ジンバルロックとは、オイラー回転の3つの軸のうち2つが一致し、1つの自由度が失われることで発生する。つまり、本来3自由度あるはずの姿勢が2自由度になっていますことを意味する。この結果、揃った軸まわりの回転を区別できなくなり、実質的にシステムが「ロック」される。</p>
 <p>具体例を挙げると、例えば第2回転角（ピッチ角）が ±90度になると、ロール軸とヨー軸が重なり、独立した回転操作が不可能になる。
 つまり、オイラー角を使う以上、常に特異点（計算が不安定になる状態）から90度以内にいることになる。たとえジンバルロックが発生しても、物体の姿勢自体は正しく表現できる。しかし、特定の回転軸を自由に制御することができなくなるため、実際の制御や操作には大きな制約が生じる。
@@ -1128,8 +1130,8 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 <p>ジンバルロックは、航空宇宙、ロボティクス、コンピュータグラフィックスなど、姿勢制御が重要な分野で大きな問題となる。自由度を失うことで、特定の回転ができなくなり、意図しない挙動を引き起こすことがある。</p>
 <p>この問題を回避するため、クォータニオン（四元数）などの代替的な姿勢表現が広く採用されている。ジンバルロックは、オイラー角が姿勢を最小の3パラメータ用いて表現していることに起因する。正規化された4つのパラメータで姿勢を表現する<strong>クォータニオン</strong>を使えば、ジンバルロックの影響を受けず、スムーズな回転制御が可能になる。クォータニオンについては、別の章で確認しよう。</p>
 </section>
-<section id="id10">
-<h3>2.3.5) - オイラー角の微分方程式<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<section id="id11">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">2.3.5) - オイラー角の微分方程式</a><a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
 <figure class="align-default" id="axis">
 <a class="reference internal image-reference" href="../../_images/3axis.jpg"><img alt="../../_images/3axis.jpg" src="../../_images/3axis.jpg" style="height: 400px;" /></a>
 </figure>
@@ -1242,9 +1244,14 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 各軸（X、Y、Z）に対する回転行列を関数として実装
 3つの回転行列を組み合わせて、オイラー角に基づく回転を実装
 3Dベクトルを与え、その回転後の結果を確認する</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">def</span> <span class="nf">R_x</span><span class="p">(</span><span class="n">phi</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; X軸回りの回転行列を計算 &quot;&quot;&quot;</span>
@@ -1289,11 +1296,7 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.61237244 0.78033009 0.12682648]
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 <p><strong>問題：回転順序の確認</strong><br>
 オイラー角の回転順序（例えば、XYZとZYX）の違いが最終的な回転結果にどのように影響を与えるかを確認してください。異なる回転順序を指定して、同じオイラー角（例えば、30度、45度、60度）で回転したときの最終的な結果を比較してください。</p>
@@ -1302,9 +1305,14 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 <li><p>回転順序を変更できるように関数を改良</p></li>
 <li><p>同じオイラー角で異なる順序（例えばXYZ、ZYX）で回転を適用し、その結果を比較</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">apply_rotation_with_order</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;XYZ&#39;</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">apply_rotation_with_order</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;XYZ&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; 指定された回転順序でベクトルvを回転させる &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="s1">&#39;XYZ&#39;</span><span class="p">:</span>
         <span class="n">R</span> <span class="o">=</span> <span class="n">R_z</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">@</span> <span class="n">R_y</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">@</span> <span class="n">R_x</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
@@ -1326,12 +1334,7 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>XYZ順序で回転後: [ 0.35355339  0.61237244 -0.70710678]
-ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 <p><strong>オイラー角の特異点（ジンバルロック）の確認</strong><br>
 課題内容：
@@ -1342,9 +1345,14 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
 <li><p>その時点でロールとヨーの回転軸が一致することを確認</p></li>
 <li><p>実際に回転した結果が予想通りかどうかを視覚化</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ピッチ角が90度になるとジンバルロックが発生することを確認</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ピッチ角が90度になるとジンバルロックが発生することを確認</span>
 <span class="n">theta</span> <span class="o">=</span> <span class="mi">90</span>  <span class="c1"># ピッチ角を90度に設定</span>
 <span class="n">phi_1</span><span class="p">,</span> <span class="n">psi_1</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span>  <span class="c1"># 和の等しいロール、ヨーのペアを設定</span>
 <span class="n">phi_2</span><span class="p">,</span> <span class="n">psi_2</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span>  
@@ -1356,16 +1364,16 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 5.30287619e-17  9.84807753e-01 -1.73648178e-01]
-[ 5.75395780e-17  9.84807753e-01 -1.73648178e-01]
-</pre></div>
+</details>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># 回転行列を計算する関数</span>
@@ -1491,15 +1499,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../../_images/b16d162ca12a4a241cd1a4d69180d456db7e42f34b35f3489f3652bd3970501e.png" src="../../_images/b16d162ca12a4a241cd1a4d69180d456db7e42f34b35f3489f3652bd3970501e.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>最終DCM行列:
-[[ 0.7763151  -0.47713633  0.41191721]
- [ 0.51409048  0.85739255  0.02426927]
- [-0.3647545   0.19292211  0.91089802]]
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 </section>
 </section>
@@ -1536,16 +1536,16 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="01-Introduction%20to%20Kinematics.html"
+       href="test.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">キネマティクスの基礎</p>
+        <p class="prev-next-title">Test MyST</p>
       </div>
     </a>
     <a class="right-next"
-       href="03-Rigid%20Body%20Kinematics%20II.html"
+       href="03.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
@@ -1568,29 +1568,20 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jupytext-formats-md-myst-text-representation-extension-md-format-name-myst-kernelspec-display-name-python-3-language-python-name-python3">jupytext:
-formats: md:myst
-text_representation:
-extension: .md
-format_name: myst
-kernelspec:
-display_name: Python 3
-language: python
-name: python3</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1) 剛体のキネマティクスの概要</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1) 剛体のキネマティクスの概要</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dcm">2.2) 方向余弦行列 (DCM)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.2.1) 方向余弦行列（DCM）とは</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2.2) 方向余弦行列(DCM)の性質</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2.1) 方向余弦行列（DCM）とは</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.2.2) 方向余弦行列(DCM)の性質</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kinematic-differential-equation-of-dcm">2.2.3) Kinematic differential equation of DCM</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.2.4) DCM計算の手順</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.2.4) DCM計算の手順</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.3) オイラー角</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.3.1) - オイラー角とは</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.3.2) - 回転行列</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.3) 回転順序</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.4) - 特異点とジンバルロック</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.3.5) - オイラー角の微分方程式</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.3) オイラー角</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.3.1) - オイラー角とは</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.2) - 回転行列</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.3) 回転順序</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.3.4) - 特異点とジンバルロック</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.3.5) - オイラー角の微分方程式</a></li>
 </ul>
 </li>
 </ul>
