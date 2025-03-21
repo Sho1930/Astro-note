@@ -476,8 +476,13 @@ document.write(`
 <h3>1.1.1) 状態ベクトル<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>システムの自由度とは，そのシステムが各軸または各次元において持つ最小限の独立した運動能力を意味する。すなわち，システムの挙動を過剰に記述することなく記述するために必要な変数の個数である。
 状態ベクトルは多次元ベクトル</p>
+<<<<<<< HEAD
+<div class="amsmath math notranslate nohighlight" id="equation-3512ec49-f304-4c2c-a22e-a3f394d3fb37">
+<span class="eqno">()<a class="headerlink" href="#equation-3512ec49-f304-4c2c-a22e-a3f394d3fb37" title="Permalink to this equation">#</a></span>\[\begin{align}
+=======
 <div class="amsmath math notranslate nohighlight" id="equation-f8c2ec4d-b58f-4b40-8177-95d17ca88bfd">
 <span class="eqno">(1)<a class="headerlink" href="#equation-f8c2ec4d-b58f-4b40-8177-95d17ca88bfd" title="Permalink to this equation">#</a></span>\[\begin{align}
+>>>>>>> origin/feature/chapter_3bp
 \boldsymbol{x}=\left[x_1, x_2, \ldots x_n\right]^{\top}
 \end{align}\]</div>
 <p>と定義され，各成分は任意の時刻におけるシステムの完全な構成を表す。状態ベクトルはシステムの現在の状態を数値的に表現するものであり，その値が分かれば，微分方程式を積分することによりシステムの時間発展を解析できる。</p>
@@ -486,19 +491,38 @@ document.write(`
 <section id="id4">
 <h3>1.1.2) 状態空間表現<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>状態ベクトルの概念を用いると，非線形動的システムは一般に以下の形で表される。</p>
+<<<<<<< HEAD
+<div class="amsmath math notranslate nohighlight" id="equation-7c9f9af2-1cb8-4149-831c-fac5941bb764">
+<span class="eqno">()<a class="headerlink" href="#equation-7c9f9af2-1cb8-4149-831c-fac5941bb764" title="Permalink to this equation">#</a></span>\[\begin{align}
+=======
 <div class="amsmath math notranslate nohighlight" id="equation-d5656bf7-bc2f-4208-8fff-533bf8969453">
 <span class="eqno">(2)<a class="headerlink" href="#equation-d5656bf7-bc2f-4208-8fff-533bf8969453" title="Permalink to this equation">#</a></span>\[\begin{align}
+>>>>>>> origin/feature/chapter_3bp
 \dot{\boldsymbol{x}}=\boldsymbol{f}(\boldsymbol{x}, t)
 \end{align}\]</div>
 <p>ここで，時刻 <span class="math notranslate nohighlight">\(t\)</span> に明示的に依存する系は<strong>非自律系</strong>であり，時刻により応答が変化するため，たとえば軌道マニューバを伴う小惑星ランデブーなどでは，位置と時刻の両方が安定性の議論に影響を及ぼす。
 一方，本講義では<strong>自律系</strong>，すなわち明示的な時刻依存性を持たないシステムを扱う。自律系の例として，室内で単純振り子の実験を行った場合，実験時刻に依存せず同一の結果が得られることが挙げられる。</p>
 <p>実際，左辺が一階微分のみからなる場合，非自律系の一般形は一階常微分方程式となる。高階微分方程式も，たとえば</p>
+<<<<<<< HEAD
+<div class="amsmath math notranslate nohighlight" id="equation-5b55893e-3cae-4c32-9b4e-3e2439485817">
+<span class="eqno">()<a class="headerlink" href="#equation-5b55893e-3cae-4c32-9b4e-3e2439485817" title="Permalink to this equation">#</a></span>\[\begin{align}
+=======
 <div class="amsmath math notranslate nohighlight" id="equation-a175b292-752e-47be-81d4-80e0ada24654">
 <span class="eqno">(3)<a class="headerlink" href="#equation-a175b292-752e-47be-81d4-80e0ada24654" title="Permalink to this equation">#</a></span>\[\begin{align}
+>>>>>>> origin/feature/chapter_3bp
 \ddot{\theta}+a \sin (\theta)=0&lt;br&gt;
 \text{where}  \quad a=Const.
 \end{align}\]</div>
 <p>のような式は，状態ベクトル</p>
+<<<<<<< HEAD
+<div class="amsmath math notranslate nohighlight" id="equation-9f726ca9-19c0-4f58-a305-0d16c72da53f">
+<span class="eqno">()<a class="headerlink" href="#equation-9f726ca9-19c0-4f58-a305-0d16c72da53f" title="Permalink to this equation">#</a></span>\[\begin{align}
+\boldsymbol{x}=\left[x_1, x_2\right]^{\top}=[\theta, \dot{\theta}]^{\top}
+\end{align}\]</div>
+<p>を導入することにより、以下の状態空間表現に変換できる。</p>
+<div class="amsmath math notranslate nohighlight" id="equation-40f2c840-0bf7-49e7-bdec-12770a11b01f">
+<span class="eqno">()<a class="headerlink" href="#equation-40f2c840-0bf7-49e7-bdec-12770a11b01f" title="Permalink to this equation">#</a></span>\[\begin{align}
+=======
 <div class="amsmath math notranslate nohighlight" id="equation-b920801b-9e07-4233-829d-50ce83cc286e">
 <span class="eqno">(4)<a class="headerlink" href="#equation-b920801b-9e07-4233-829d-50ce83cc286e" title="Permalink to this equation">#</a></span>\[\begin{align}
 \boldsymbol{x}=\left[x_1, x_2\right]^{\top}=[\theta, \dot{\theta}]^{\top}
@@ -506,6 +530,7 @@ document.write(`
 <p>を導入することにより、以下の状態空間表現に変換できる。</p>
 <div class="amsmath math notranslate nohighlight" id="equation-3ef34ef4-b72c-49a3-9a1d-1e46d3ae10f4">
 <span class="eqno">(5)<a class="headerlink" href="#equation-3ef34ef4-b72c-49a3-9a1d-1e46d3ae10f4" title="Permalink to this equation">#</a></span>\[\begin{align}
+>>>>>>> origin/feature/chapter_3bp
 \dot{\boldsymbol{x}}=\left[x_2, a \sin x_1\right]^{\top}
 \end{align}\]</div>
 <p>このようにして，古典的な高階微分方程式は，状態空間表現として一階系に変換可能である。</p>
