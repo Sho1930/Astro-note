@@ -36,6 +36,7 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../../../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/_custom/myfile.css?v=083c036e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -146,7 +147,7 @@
     
   
 
-<a class="navbar-brand logo" href="../../00/index.html">
+<a class="navbar-brand logo" href="../../../index.html">
   
   
   
@@ -178,7 +179,7 @@
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
-                <a class="reference internal" href="../../00/index.html">
+                <a class="reference internal" href="../../../index.html">
                     はじめに
                 </a>
             </li>
@@ -417,19 +418,74 @@ document.write(`
 <h1>4. 多体問題<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <section id="id2">
 <h2>一般三体問題<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<div class="my-note admonition">
+<p class="admonition-title">Third body problem</p>
 <p>第 <span class="math notranslate nohighlight">\(i=1, 2,3\)</span> 体の運動方程式は，その位置ベクトルを<span class="math notranslate nohighlight">\(\boldsymbol{r}_{i}(t)\)</span>，質量を<span class="math notranslate nohighlight">\(m_i\)</span> ，時刻を<span class="math notranslate nohighlight">\(t\)</span>，重力定数を<span class="math notranslate nohighlight">\(G\)</span>とするとき，次式で与えられる．</p>
 <div class="math notranslate nohighlight">
 \[
 m_i \dfrac{d^2\boldsymbol{r}_i}{dt^2} = -\sum_{j \neq i}G m_i m_j \dfrac{\boldsymbol{r}_i-\boldsymbol{r}_j}{|\boldsymbol{r}_i-\boldsymbol{r}_j|^{3}}
 \]</div>
+</div>
 </section>
 <section id="id3">
 <h2>一般三体問題の数値解<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
-<div class="math notranslate nohighlight">
-\[
-My directive contentddd.
-\]</div>
-<p><img alt="数値解" src="../../../_images/3bp_chaos.gif" /></p>
+<div class="my-code admonition">
+<p class="admonition-title">Three Body Problem (Chaos)</p>
+<p>Here’s the code of 3BP function.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Source code</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="k">function</span><span class="w"> </span><span class="n">eom_3bp_IF!</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">)</span>
+<span class="w">    </span><span class="c"># relative position</span>
+<span class="w">    </span><span class="n">r12</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mf">1.5</span>
+<span class="w">    </span><span class="n">r23</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mf">1.5</span>
+<span class="w">    </span><span class="n">r31</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">^</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">^</span><span class="mi">2</span><span class="p">)</span><span class="o">^</span><span class="mf">1.5</span>
+
+<span class="w">    </span><span class="c"># dr/dt = v</span>
+<span class="w">    </span><span class="n">dx</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="mi">6</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">12</span><span class="p">]</span>
+<span class="w">    </span>
+<span class="w">    </span><span class="c"># dv/dt = F/m</span>
+<span class="w">    </span><span class="n">dx</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r12</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r31</span>
+<span class="w">    </span><span class="n">dx</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r12</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r31</span>
+
+<span class="w">    </span><span class="n">dx</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r12</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r23</span>
+<span class="w">    </span><span class="n">dx</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r12</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r23</span>
+
+<span class="w">    </span><span class="n">dx</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r31</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r23</span>
+<span class="w">    </span><span class="n">dx</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r31</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">G</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">m2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="mi">6</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">r23</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+</details></div>
+<div class="my-demo admonition">
+<p class="admonition-title">Demo of 3BP</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Source code</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="c"># 質点の質量</span>
+<span class="n">m1</span><span class="p">,</span><span class="w"> </span><span class="n">m2</span><span class="p">,</span><span class="w"> </span><span class="n">m3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span>
+
+<span class="c"># 重力定数（この問題のために適当に選択）</span>
+<span class="n">G</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+
+<span class="c"># 初期条件の設定</span>
+<span class="n">x0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.7</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.074</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1282</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.074</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.1282</span><span class="p">,</span><span class="w"> </span><span class="mf">0.148</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">]</span><span class="w"> </span>
+
+<span class="c"># 時間範囲の設定</span>
+<span class="n">tspan</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0</span><span class="p">)</span>
+
+<span class="c"># 問題の定義</span>
+<span class="n">prob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ODEProblem</span><span class="p">(</span><span class="n">eom_3bp_IF!</span><span class="p">,</span><span class="w"> </span><span class="n">x0</span><span class="p">,</span><span class="w"> </span><span class="n">tspan</span><span class="p">)</span>
+
+<span class="c"># 解の計算（Runge-Kutta-Fehlberg法）</span>
+<span class="nd">@time</span><span class="w"> </span><span class="n">sol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">solve</span><span class="p">(</span><span class="n">prob</span><span class="p">,</span><span class="w"> </span><span class="n">Vern7</span><span class="p">(),</span><span class="w"> </span><span class="n">reltol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-16</span><span class="p">,</span><span class="w"> </span><span class="n">abstol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details><a class="reference internal image-reference" href="../../../_images/3bp_chaos.gif"><img alt="数値解" class="align-left" src="../../../_images/3bp_chaos.gif" style="width: 800px;" />
+</a>
+</div>
 </section>
 </section>
 

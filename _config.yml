@@ -3,7 +3,7 @@
 
 title: Hands-On Astrodynamics tutorial
 author: Sho Nishimura / Yuto Nakagawa / Haruhito Ohki
-logo: _static/media/logo.png
+logo: _static/_media/config/logo.png
 exclude_patterns: [.DS_Store, "**.ipynb_checkpoints", "**.pytest_cache", "tools"]
 
 # Launch on Google Colab button
@@ -20,11 +20,15 @@ parse:
        - amsmath
        - dollarmath
        - html_image
+       - html_admonition
        - colon_fence
+       - smartquotes
+       - attrs_block
 
 sphinx:
   extra_extensions:
     - sphinx_proof
+    - sphinx_togglebutton
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
@@ -48,7 +52,7 @@ repository:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
-  favicon: "_static/media/rocket.ico"
+  favicon: "_static/_media/config/rocket.ico"
   use_raw_html: true
   use_issues_button: true
   use_repository_button: true

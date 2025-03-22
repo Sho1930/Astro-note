@@ -9,8 +9,8 @@
 宇宙工学の理論と実装を一緒に説明することで、理論の実装や応用に触れるだけでなく、プログラムの実行例を通して理論への理解を深めることができます。
 
 <div style="text-align: center;">
-    <video autoplay loop muted playsinline width="100%" src="_media/starlink.mp4"></video>
-    <video autoplay loop muted playsinline width="100%" src="_media/3bp.mp4"></video>
+    <video autoplay loop muted playsinline width="100%" src="_static/_media/index/starlink.mp4"></video>
+    <video autoplay loop muted playsinline width="100%" src="_static/_media/index/3bp.mp4"></video>
 </div>
 :::
 
@@ -44,7 +44,7 @@ def quaternion_to_DCM(q):
 
 :::{grid-item-card} 宇宙工学の基礎事項を学べる 📖
 *Astro-note*は、キネマティクス、キネティクス、スピン衛星やデュアルスピン衛星の運動、二体問題、Patched conics法、Porkchop Plot、制限三体問題、軌道決定、フィードバック制御、最適制御、凸最適化、カルマンフィルター、画像航法など、宇宙工学における重要事項を広くカバーしています。初学者向けに、その原理や数学的な取り扱いを丁寧に説明します。
-```{figure} _media/porkchop.jpg
+```{figure} _static/_media/index/porkchop.jpg
 ---
 height: 300px
 ---
