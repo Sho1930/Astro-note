@@ -3,7 +3,7 @@
 
 title: Hands-On Astrodynamics tutorial
 author: Sho Nishimura / Yuto Nakagawa / Haruhito Ohki
-logo: media/logo.png
+logo: _static/media/logo.png
 exclude_patterns: [.DS_Store, "**.ipynb_checkpoints", "**.pytest_cache", "tools"]
 
 # Launch on Google Colab button
@@ -48,7 +48,7 @@ repository:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
-  favicon: "rocket.ico"
+  favicon: "_static/media/rocket.ico"
   use_raw_html: true
   use_issues_button: true
   use_repository_button: true

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>1. キネマティクス（Kinematics） &#8212; Hands-On Astrodynamics tutorial</title>
+    <title>はじめに &#8212; Hands-On Astrodynamics tutorial</title>
   
   
   
@@ -60,12 +60,11 @@
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/01/01.00';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/00/index';</script>
     <link rel="icon" href="../../_static/rocket.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="剛体のキネマティクス I" href="02-Rigid%20Body%20Kinematics%20I.html" />
-    <link rel="prev" title="はじめに" href="../00/index.html" />
+    <link rel="next" title="1. キネマティクス（Kinematics）" href="../01/01.00.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -128,6 +127,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -146,7 +147,7 @@
     
   
 
-<a class="navbar-brand logo" href="../00/index.html">
+<a class="navbar-brand logo" href="#">
   
   
   
@@ -177,17 +178,17 @@
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="../00/index.html">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
                     はじめに
                 </a>
             </li>
         </ul>
-        <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">1. キネマティクス（Kinematics）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="02-Rigid%20Body%20Kinematics%20I.html">剛体のキネマティクス I</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03-Rigid%20Body%20Kinematics%20II.html">剛体のキネマティクス II</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04-Static%20Attitude%20Determination.html">姿勢決定（Attitude Determination）</a></li>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01/01.00.html">1. キネマティクス（Kinematics）</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01/02-Rigid%20Body%20Kinematics%20I.html">剛体のキネマティクス I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01/03-Rigid%20Body%20Kinematics%20II.html">剛体のキネマティクス II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01/04-Static%20Attitude%20Determination.html">姿勢決定（Attitude Determination）</a></li>
 
 
 
@@ -276,7 +277,7 @@
       
       
       
-      <li><a href="https://github.com/Sho1930/Astro-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/01/01.00.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/Sho1930/Astro-book/issues/new?title=Issue%20on%20page%20%2Fnotebooks/00/index.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -306,7 +307,7 @@
       
       
       
-      <li><a href="../../_sources/notebooks/01/01.00.md" target="_blank"
+      <li><a href="../../_sources/notebooks/00/index.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -377,9 +378,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -390,19 +389,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>1. キネマティクス（Kinematics）</h1>
+    <h1>はじめに</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">キネマティクスとは?</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -412,16 +403,82 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="kinematics">
-<h1>1. キネマティクス（Kinematics）<a class="headerlink" href="#kinematics" title="Link to this heading">#</a></h1>
-<section id="id1">
-<h2>キネマティクスとは?<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>キネマティクスとは、物体の運動を幾何学的に記述する学問分野であり、力やトルクが作用しない場合の物体の位置や姿勢角、およびそれらの時間的な変化を扱う。この分野の知識は、運動を力学的な観点から理解する前提となる。</p>
-<p>人工衛星の姿勢運動において、キネマティクスは姿勢角と角速度ベクトルの関係を記述する役割を担い、姿勢運動の理解において極めて重要である。本章では、これらの基礎的な概念と応用について順を追って説明する。</p>
-<p>まず、基礎知識として、ベクトルの行列表現、角速度ベクトルの定義、そして輸送定理について解説する。これにより、座標変換における基本的な数学的道具が理解できるようになる。</p>
-<p>次に、人工衛星の姿勢を数学的に記述する方法として、座標変換行列、オイラー角、クォータニオンなどの姿勢パラメータを紹介する。そして、これらのパラメータを用いて姿勢角と角速度ベクトルの関係式を導出する。</p>
-<p>さらに、人工衛星の姿勢決定手法として、TRIAD法やq-methodといったアルゴリズムを取り上げる。</p>
-</section>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>はじめに<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p><em>Astro-note</em>は、宇宙工学(<strong>Astrodynamics</strong>)を学ぶためのノート（<strong>Note</strong>）を、デジタルによる新しいカタチの<strong>学習帳</strong>として実現することを目指しています。<br>
+<a class="reference external" href="https://chokkan.github.io/mlnote/index.html">機械学習帳</a> に多大なinspirationを受け、機械学習帳の宇宙工学verを作成することを目的としています。</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+👩‍💻 理論と実装を一体化した「動く」学習帳 👨‍💻</div>
+<p class="sd-card-text">宇宙工学の理論と実装を一緒に説明することで、理論の実装や応用に触れるだけでなく、プログラムの実行例を通して理論への理解を深めることができます。</p>
+<div style="text-align: center;">
+<video autoplay loop muted playsinline width="100%" src="./_media//starlink.mp4"></video>
+<video autoplay loop muted playsinline width="100%" src="./_media/3bp.mp4"></video>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+プログラミング言語としてPythonを採用 ✨</div>
+<p class="sd-card-text">可読性が高く、かつライセンスの必要がない<a class="reference external" href="https://www.python.org/">Python</a>をプログラミング言語として採用しています。<a class="reference external" href="https://numpy.org/">NumPy</a>, <a class="reference external" href="https://matplotlib.org/">Matplotlib</a>, <a class="reference external" href="https://scipy.org/">scipy</a>, <a class="reference external" href="https://www.cvxpy.org/">cvxpy</a>などのエコシステムとあわせて、宇宙工学の実装を習得できます。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">quaternion_to_DCM</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+    <span class="c1"># Ensure q is a float array to maintain precision</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    
+    <span class="c1"># Check that the holonomic constraint of quaternion is satisfied, else normalize it</span>
+    <span class="n">q_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">q_norm</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">):</span>
+        <span class="n">q</span> <span class="o">/=</span> <span class="n">q_norm</span>
+    
+    <span class="c1"># Extract components</span>
+    <span class="n">q0</span><span class="p">,</span> <span class="n">q1</span><span class="p">,</span> <span class="n">q2</span><span class="p">,</span> <span class="n">q3</span> <span class="o">=</span> <span class="n">q</span>
+    
+    <span class="c1"># Compute the elements of the DCM</span>
+    <span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">q0</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">q1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">q2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">q3</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">q1</span><span class="o">*</span><span class="n">q2</span> <span class="o">+</span> <span class="n">q0</span><span class="o">*</span><span class="n">q3</span><span class="p">),</span>         <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">q1</span><span class="o">*</span><span class="n">q3</span> <span class="o">-</span> <span class="n">q0</span><span class="o">*</span><span class="n">q2</span><span class="p">)],</span>
+        <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">q1</span><span class="o">*</span><span class="n">q2</span> <span class="o">-</span> <span class="n">q0</span><span class="o">*</span><span class="n">q3</span><span class="p">),</span>           <span class="n">q0</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">q1</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">q2</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">q3</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">q2</span><span class="o">*</span><span class="n">q3</span> <span class="o">+</span> <span class="n">q0</span><span class="o">*</span><span class="n">q1</span><span class="p">)],</span>
+        <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">q1</span><span class="o">*</span><span class="n">q3</span> <span class="o">+</span> <span class="n">q0</span><span class="o">*</span><span class="n">q2</span><span class="p">),</span>           <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">q2</span><span class="o">*</span><span class="n">q3</span> <span class="o">-</span> <span class="n">q0</span><span class="o">*</span><span class="n">q1</span><span class="p">),</span>           <span class="n">q0</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">q1</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">q2</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">q3</span><span class="o">**</span><span class="mi">2</span><span class="p">]</span>
+    <span class="p">])</span>
+    
+    <span class="k">return</span> <span class="n">C</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+宇宙工学の基礎事項を学べる 📖</div>
+<p class="sd-card-text"><em>Astro-note</em>は、キネマティクス、キネティクス、スピン衛星やデュアルスピン衛星の運動、二体問題、Patched conics法、Porkchop Plot、制限三体問題、軌道決定、フィードバック制御、最適制御、凸最適化、カルマンフィルター、画像航法など、宇宙工学における重要事項を広くカバーしています。初学者向けに、その原理や数学的な取り扱いを丁寧に説明します。</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="../../_images/porkchop.jpg"><img alt="../../_images/porkchop.jpg" src="../../_images/porkchop.jpg" style="height: 300px;" />
+</a>
+</figure>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+オープンソース・プロジェクト 🎁</div>
+<p class="sd-card-text"><em>Astro-note</em>は、<a class="reference external" href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ja">クリエイティブ・コモンズ 表示 - 非営利 - 改変禁止 4.0 国際 (CC BY-NC-ND 4.0)</a>（プログラム部分以外）および<a class="reference external" href="https://opensource.org/licenses/MIT">MITライセンス</a>（プログラム部分）で公開されているオープンソース・プロジェクトです。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><em>Astro-note</em>は、<a class="reference external" href="https://jupyter.org/#jupyterlab">Jupyter Lab</a>で書かれたコンテンツを<a class="reference external" href="https://jupyterbook.org/">Jupyter Book</a>で変換することで生成されています。</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -439,7 +496,7 @@ document.write(`
         },
         kernelOptions: {
             name: "python3",
-            path: "./notebooks\01"
+            path: "./notebooks\00"
         },
         predefinedOutput: true
     }
@@ -456,21 +513,12 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../00/index.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">はじめに</p>
-      </div>
-    </a>
     <a class="right-next"
-       href="02-Rigid%20Body%20Kinematics%20I.html"
+       href="../01/01.00.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">剛体のキネマティクス I</p>
+        <p class="prev-next-title">1. キネマティクス（Kinematics）</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -480,21 +528,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">キネマティクスとは?</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
