@@ -1,6 +1,5 @@
 # はじめに
 
-
 *Astro-note*は、宇宙工学(**Astrodynamics**)を学ぶためのノート（**Note**）を、デジタルによる新しいカタチの**学習帳**として実現することを目指しています。<br>
 [機械学習帳](https://chokkan.github.io/mlnote/index.html) に多大なinspirationを受け、機械学習帳の宇宙工学verを作成することを目的としています。
 ::::{grid} 2
@@ -10,8 +9,8 @@
 宇宙工学の理論と実装を一緒に説明することで、理論の実装や応用に触れるだけでなく、プログラムの実行例を通して理論への理解を深めることができます。
 
 <div style="text-align: center;">
-<video autoplay loop muted playsinline width="100%" src="./_media//starlink.mp4"></video>
-<video autoplay loop muted playsinline width="100%" src="./_media/3bp.mp4"></video>
+    <video autoplay loop muted playsinline width="100%" src="_media/starlink.mp4"></video>
+    <video autoplay loop muted playsinline width="100%" src="_media/3bp.mp4"></video>
 </div>
 :::
 
