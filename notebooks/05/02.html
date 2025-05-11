@@ -1,0 +1,1101 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>\(J_2\) 摂動加速度はどこから来るのか ― 地球の歪みから重力ポテンシャル展開を経て加速度式へ ― &#8212; Hands-On Astrodynamics tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-DVQ7NZ8CYZ"></script>
+    <script>
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){ dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-DVQ7NZ8CYZ');
+            </script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/05/02';</script>
+    <link rel="shortcut icon" href="../../_static/rocket.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Hands-On Astrodynamics tutorial - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Hands-On Astrodynamics tutorial - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    はじめに
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/quotes.html">名言集</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Sho1930/Astro-note" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Sho1930/Astro-note/issues/new?title=Issue%20on%20page%20%2Fnotebooks/05/02.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/05/02.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>J_2 摂動加速度はどこから来るのか  ― 地球の歪みから重力ポテンシャル展開を経て加速度式へ ―</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><span class="math notranslate nohighlight">\(J_2\)</span> 摂動加速度はどこから来るのか  ― 地球の歪みから重力ポテンシャル展開を経て加速度式へ ―</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">1.  理想球 vs. 扁平地球</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.  重力ポテンシャルの球面調和展開</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.  <span class="math notranslate nohighlight">\(J_2\)</span> 項のみ抽出</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.  勾配を取って加速度へ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.  直感的な影響</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6.  まとめ</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">観測量と観測モデルの定式化</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1. 座標系と記号</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2. 観測モデル</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rho">2.1 レンジ <span class="math notranslate nohighlight">\(\rho\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dot-rho">2.2 レンジレート <span class="math notranslate nohighlight">\(\dot\rho\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3. 線形化と設計行列（偏微分）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.1 位置・速度に関する偏微分</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3.2 地上局座標に関する偏微分</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathbf-h-k">3.3  <span class="math notranslate nohighlight">\(\mathbf H_k\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4. 観測ノイズと共分散</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">5. 実装メモ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">6. まとめ</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <!-- #region -->
+<div class="note admonition">
+<p class="admonition-title">5.1: バッチ推定</p>
+<p class="rubric">5.1.1 目的</p>
+<p>本課題では <strong>バッチ最小二乗法（Batch LS）</strong> を用いて低軌道衛星の軌道を推定し，  力学モデルの精度と観測幾何（地上局配置）が推定結果に与える影響を評価する。<br />
+履修者は以下を達成せよ。</p>
+<ol class="arabic simple">
+<li><p><strong>非線形力学モデル（J2 + 空気抵抗）</strong> を定式化し、与えられた状態変数と対応する<strong>状態遷移行列（STM）</strong> を同時に数値積分する。</p></li>
+<li><p><strong>双方向レンジ／レンジレート観測</strong>をモデル化し、状態変数によるヤコビ行列（<span class="math notranslate nohighlight">\(H\)</span>行列）を導出・実装する。</p></li>
+<li><p>正規方程式を組み立てて、初期状態および物理パラメータの <strong>バッチ推定（Batch LS）</strong> ができる。</p></li>
+<li><p>観測量と推定値の<strong>残差 RMS・共分散</strong> を用いてモデル／幾何の妥当性を判断し、適宜モデルの改善について考察を実施する。</p></li>
+</ol>
+<hr class="docutils" />
+<p class="rubric">5.1.2 前提条件</p>
+<p class="rubric">5.1.2.1 観測量</p>
+<p>観測量は、以下のようにtxtファイル形式で与えられる。</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>ファイル</p></th>
+<th class="head"><p>内容</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">project.txt</span></code></p></td>
+<td><p>観測データ：<br>時刻 (t_k) [s]，地上局 ID (101/337/394)，レンジ [m]，レンジレート [m/s]</p></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><p><strong>注意</strong>：観測レンジ／レンジレートは <em>メートル系</em> で与えられている。</p>
+</div></blockquote>
+<p class="rubric">5.1.2.2 初期状態量 / ECI(Earth Centric Inertial)座標系</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>成分</p></th>
+<th class="head"><p>記号</p></th>
+<th class="head"><p>値</p></th>
+<th class="head"><p>単位</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>位置 <span class="math notranslate nohighlight">\(x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x_0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(757.7000\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([km]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>位置 <span class="math notranslate nohighlight">\(y\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(y_0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(5222.6070\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([km]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>位置 <span class="math notranslate nohighlight">\(z\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(z_0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(4851.5000\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([km]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>速度 <span class="math notranslate nohighlight">\(vx\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\dot x_0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(2.21321\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([km s^{-1}]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>速度 <span class="math notranslate nohighlight">\(vy\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\dot y_0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(4.67834\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([km s^{-1}]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>速度 <span class="math notranslate nohighlight">\(vz\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\dot z_0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(−5.37130\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([km s^{-1}]\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">1.3 物理パラメータ初期値</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>パラメータ</p></th>
+<th class="head"><p>記号</p></th>
+<th class="head text-right"><p>初期値</p></th>
+<th class="head"><p>単位</p></th>
+<th class="head"><p>事前標準偏差（推奨）</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>地球重力定数</p></td>
+<td><p><span class="math notranslate nohighlight">\(\mu\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(398 600.4415\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([km^3 s^{-2}]\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1.0 \times 10^{5}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>J1 項</p></td>
+<td><p><span class="math notranslate nohighlight">\(J_1\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td><p>—</p></td>
+<td><p>固定</p></td>
+</tr>
+<tr class="row-even"><td><p>J2 項</p></td>
+<td><p><span class="math notranslate nohighlight">\(J_2\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(1.082626925638815 × 10^{-3}\)</span></p></td>
+<td><p>—</p></td>
+<td><p><span class="math notranslate nohighlight">\(1.0\times 10^{-7}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>ドラッグ係数</p></td>
+<td><p><span class="math notranslate nohighlight">\(C_D\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(2.0\)</span></p></td>
+<td><p>—</p></td>
+<td><p><span class="math notranslate nohighlight">\(0.1\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>断面積</p></td>
+<td><p><span class="math notranslate nohighlight">\(A\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(3.0\)</span> (→ <span class="math notranslate nohighlight">\(3 \times 10^{-6} km^2 \)</span>)</p></td>
+<td><p><span class="math notranslate nohighlight">\([m^2]\)</span></p></td>
+<td><p>固定</p></td>
+</tr>
+<tr class="row-odd"><td><p>質量</p></td>
+<td><p><span class="math notranslate nohighlight">\(m\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(970\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([kg]\)</span></p></td>
+<td><p>固定</p></td>
+</tr>
+<tr class="row-even"><td><p>基準密度</p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho_0\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(3.614 \times 10^{-4}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([kg m^{-3}]\)</span></p></td>
+<td><p>固定</p></td>
+</tr>
+<tr class="row-odd"><td><p>基準高度</p></td>
+<td><p><span class="math notranslate nohighlight">\(h_0\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(700\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([km]\)</span></p></td>
+<td><p>固定</p></td>
+</tr>
+<tr class="row-even"><td><p>スケールハイト</p></td>
+<td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(88.667\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([km]\)</span></p></td>
+<td><p>固定</p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">1.3 地上局座標 / ECEF(Earth Centric Earth Fixed)座標系</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>GS ID</p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(x_{GS} [km]\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(y_{GS} [km]\)</span></p></th>
+<th class="head text-right"><p><span class="math notranslate nohighlight">\(z_{GS} [km]\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(101\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(−5127.5100\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(−3794.1600\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(0.0000\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(337\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(3860.9100\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(3238.4900\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(3898.0940\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(394\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(549.5050\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(−1380.8720\)</span></p></td>
+<td class="text-right"><p><span class="math notranslate nohighlight">\(6182.1970\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">2. 状態ベクトル</p>
+<p>衛星の位置・速度、各種物理パラメータ、3つの地上局位置を表す、以下のような状態変数を考える。
+$<span class="math notranslate nohighlight">\(
+\mathbf x
+=\bigl[\,\underbrace{\mathbf r,\mathbf v}_{6},\;
+        μ,\;J_1, J_2,\;C_D,\;
+        \mathbf r_{GS1},\;\mathbf r_{GS2},\;\mathbf r_{GS3}\bigr]^{\mathsf T}
+\in\mathbb R^{19}.
+\)</span>$</p>
+<p><span class="math notranslate nohighlight">\(STM\)</span> は <span class="math notranslate nohighlight">\(19\times 19\)</span> とし、初期値は単位行列である。
+これら <span class="math notranslate nohighlight">\(19 + 19\times 19 = 380\)</span> 次元の状態ベクトルを考え、数値積分する。</p>
+<hr class="docutils" />
+<p class="rubric">3. 観測モデル</p>
+<p>観測量は、3種類の地上局で得られるレンジ、レンジレートとする。ただし、伝播遅延、相対論・大気遅延・重力赤方偏移の影響などは無視することとする。</p>
+<p>また、状態変数によるヤコビアンを解析的に導出し，<strong>2 × 19</strong> の行列 <span class="math notranslate nohighlight">\(\mathbf H_k\)</span> を実装すること。</p>
+<hr class="docutils" />
+<p class="rubric">4. 推定ケース</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Case</p></th>
+<th class="head"><p>推定する地上局座標</p></th>
+<th class="head"><p>初期分散設定　$\sigma^2$</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>GS1</strong></p></td>
+<td><p>GS2, GS3</p></td>
+<td><p>推定局: <span class="math notranslate nohighlight">\(1 \times10^{+0}\,\text{km}^2\)</span> <br>固定局(GS1): $1 \times10^{-6},\text{km}^2$</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>GS2</strong></p></td>
+<td><p>GS1, GS3</p></td>
+<td><p>同上（GS2 固定）</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>GS3</strong></p></td>
+<td><p>GS1, GS2</p></td>
+<td><p>同上（GS3 固定）</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>None</strong></p></td>
+<td><p>3 局すべて</p></td>
+<td><p>3 局とも <span class="math notranslate nohighlight">\(1 \times10^{+0}\,\text{km}^2\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><p>非推定パラメータ（μ, J2, CD 等）の初期分散は <code class="docutils literal notranslate"><span class="pre">constants.txt</span></code> 推奨値を用いよ。<br />
+観測雑音共分散は <span class="math notranslate nohighlight">\(\sigma_\rho=1\times10^{-2}\,\text{m}\)</span>、<span class="math notranslate nohighlight">\(\sigma_{\dot\rho}=1\times10^{-3}\,\text{m/s}\)</span> とする。</p>
+</div></blockquote>
+<hr class="docutils" />
+<p class="rubric">5. 検討事項</p>
+<ol class="arabic simple">
+<li><p>力学／観測モデルの数式</p></li>
+<li><p>STM を含む ODE 実装の説明</p></li>
+<li><p>バッチ正規方程式の組立て手順</p></li>
+<li><p>各ケースの結果</p>
+<ul class="simple">
+<li><p>初期状態量を伝播した3次元軌道図（ECI）</p></li>
+<li><p>pre／post-fit 残差プロット（ρ, (\dotρ)）</p></li>
+<li><p>RMS 値表</p></li>
+<li><p>推定パラメータと 1‑σ 不確定性</p></li>
+</ul>
+</li>
+<li><p>考察</p>
+<ul class="simple">
+<li><p>どの局を固定すべきか？理由は？</p></li>
+<li><p>モデル誤差（高次重力，SRP 等）が残差に与える影響の推察</p></li>
+<li><p>反復バッチ推定の必要性有無</p></li>
+</ul>
+</li>
+</ol>
+</div>
+<!-- #endregion -->
+<!-- #region -->
+<section id="j-2">
+<h1><span class="math notranslate nohighlight">\(J_2\)</span> 摂動加速度はどこから来るのか  ― 地球の歪みから重力ポテンシャル展開を経て加速度式へ ―<a class="headerlink" href="#j-2" title="Permalink to this heading">#</a></h1>
+<section id="vs">
+<h2>1.  理想球 vs. 扁平地球<a class="headerlink" href="#vs" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>理想球（質量 <span class="math notranslate nohighlight">\(M\)</span> が中心に集中）</strong><br />
+地球が完全な球であれば、重力ポテンシャルは、
+$<span class="math notranslate nohighlight">\(
+U_0(r)= -\frac{GM}{r},\qquad r=\sqrt{x^{2}+y^{2}+z^{2}}.
+\)</span>$</p></li>
+<li><p><strong>実際の地球</strong><br />
+しかし、実際の地球は<em>赤道半径</em> <span class="math notranslate nohighlight">\(a=6378\text{ km}\)</span>、<em>極半径</em> <span class="math notranslate nohighlight">\(b=6357\text{ km}\)</span> から分かるように、<a class="reference external" href="https://ja.wikipedia.org/wiki/%E6%89%81%E7%90%83">扁平楕円体</a>である。
+つまり、赤道方向にわずかにふくらみ，極方向にへこんでいる。この扁平度は無次元量<span class="math notranslate nohighlight">\(f\)</span>で表される。<br />
+$<span class="math notranslate nohighlight">\(
+f=\frac{a-b}{a}\approx\frac1{298}.
+\)</span>$</p></li>
+</ul>
+<section id="id1">
+<h3>2.  重力ポテンシャルの球面調和展開<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>地球の質量分布を球面調和級数（ゾーナル項のみ）で表すと</p>
+<div class="math notranslate nohighlight">
+\[
+U(r,\phi)= -\frac{GM}{r}
+\Biggl[
+  1-\sum_{\ell=1}^{\infty}
+    \Bigl(\frac{R_\oplus}{r}\Bigr)^{\!\ell}
+    \;J_\ell\;P_\ell(\sin\phi)
+\Biggr],
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\phi\)</span>：測地緯度（ECI 基準なら <span class="math notranslate nohighlight">\(\sin\phi = z/r\)</span>）</p></li>
+<li><p><span class="math notranslate nohighlight">\(P_\ell\)</span>：Legendre 多項式</p></li>
+<li><p><span class="math notranslate nohighlight">\(J_\ell\)</span>：<strong>ゾーナル係数</strong></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(J_1\)</span>：質量中心のズレ（一般的に0とすることが多い）</p></li>
+<li><p><span class="math notranslate nohighlight">\(J_2\)</span>：扁平性を示す。</p></li>
+</ul>
+</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(J_2\)</span>が突出して大きく，他の<span class="math notranslate nohighlight">\(J_l(l&gt;=3)\)</span> は数桁小さい。そのため低高度では<span class="math notranslate nohighlight">\(J_2\)</span>項のみで95%以上の非球対項を説明できる。</p>
+<p>実測値は、
+$<span class="math notranslate nohighlight">\(
+J_2 \;=\; 1.082\,626\,925... \times 10^{-3}.
+\)</span>$</p>
+</section>
+</section>
+<section id="id2">
+<h2>3.  <span class="math notranslate nohighlight">\(J_2\)</span> 項のみ抽出<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+U_{J2}
+&amp;= -\frac{GM}{r}
+    \Bigl(\frac{R_\oplus}{r}\Bigr)^{\!2}
+    J_2\,P_2(\sin\phi) ,\\[6pt]
+P_2(\sin\phi)
+&amp;=\tfrac12\bigl(3\sin^{2}\phi-1\bigr)
+  =\tfrac12\!\Bigl(1-\frac{3z^{2}}{r^{2}}\Bigr).
+\end{aligned}
+\end{split}\]</div>
+<p>整理すると</p>
+<div class="math notranslate nohighlight">
+\[
+U_{J2}= -\frac{GMJ_2R_\oplus^{2}}{2r^{3}}
+        \Bigl(1-\frac{3z^{2}}{r^{2}}\Bigr).
+\]</div>
+</section>
+<section id="id3">
+<h2>4.  勾配を取って加速度へ<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>重力加速度は <span class="math notranslate nohighlight">\(\mathbf a = -\nabla U\)</span> で計算される。したがって、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boxed{
+\mathbf a_{J2}=
+-\frac{3GMJ_2R_\oplus^{2}}{2r^{5}}
+\begin{bmatrix}
+x\left(1-\dfrac{5z^{2}}{r^{2}}\right) \\[6pt]
+y\left(1-\dfrac{5z^{2}}{r^{2}}\right) \\[6pt]
+z\left(3-\dfrac{5z^{2}}{r^{2}}\right)
+\end{bmatrix}}
+\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(r^{-5}\)</span> で減衰：二体重力の <span class="math notranslate nohighlight">\(r^{-2}\)</span> に比べ <span class="math notranslate nohighlight">\(r^{-3}\)</span> だけ速く弱まる</p></li>
+<li><p><span class="math notranslate nohighlight">\(x,y\)</span> 成分：<span class="math notranslate nohighlight">\(\bigl(1-\tfrac{5z^{2}}{r^{2}}\bigr)\)</span> が非球対性を与える</p></li>
+<li><p><span class="math notranslate nohighlight">\(z\)</span> 成分：<span class="math notranslate nohighlight">\(\bigl(3-\tfrac{5z^{2}}{r^{2}}\bigr)\)</span> が極方向へ戻す成分</p></li>
+</ul>
+</section>
+<section id="id4">
+<h2>5.  直感的な影響<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>軌道面の歳差（Ω̇）</strong><br />
+赤道膨張により軌道面がゆっくり回転。</p></li>
+<li><p><strong>近地点引数の回転（ω̇）</strong><br />
+赤道傾斜によるトルクで近地点が移動。</p></li>
+<li><p><strong>低高度ほど顕著</strong><br />
+<span class="math notranslate nohighlight">\(J_2\)</span> は <span class="math notranslate nohighlight">\(r^{-5}\)</span> 依存なので LEO で支配的、<br />
+GEO ではほぼ無視できる。</p></li>
+</ol>
+</section>
+<section id="id5">
+<h2>6.  まとめ<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>地球の“赤道膨張”という 2 次の形状ゆがみを<br />
+<strong>ゾーナル係数 <span class="math notranslate nohighlight">\(J_2\)</span></strong> でパラメータ化。</p></li>
+<li><p>ポテンシャル <span class="math notranslate nohighlight">\(U = U_0 + U_{J2}\)</span> として追加。</p></li>
+<li><p>勾配 <span class="math notranslate nohighlight">\(-\nabla U_{J2}\)</span> を取ることで<br />
+上式の <strong><span class="math notranslate nohighlight">\(J_2\)</span> 摂動加速度</strong> に到達。</p></li>
+<li><p>これを二体重力に加えるだけで LEO～MEO の<br />
+非球対重力効果の大部分が捕捉できる。</p></li>
+</ol>
+<!-- #endregion -->
+</section>
+</section>
+<section id="id6">
+<h1>観測量と観測モデルの定式化<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h1>
+<p>本課題で扱う観測は <strong>レンジ</strong> と <strong>レンジレート</strong> の2種類のみです。<br />
+いずれも「<strong>地上局 ↔ 衛星</strong>」間の瞬時幾何距離・相対速度に基づき、電波往復時間や往復位相から計算された値と考えます（大気・相対論補正などの細かい修正項は今回は無視）。<br />
+以下では <strong>ECI 座標系</strong> を基準に、数式、偏微分（<span class="math notranslate nohighlight">\(H\)</span>行列）の導出手順を詳述します。</p>
+<hr class="docutils" />
+<section id="id7">
+<h2>1. 座標系と記号<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>記号</p></th>
+<th class="head"><p>定義 (ECI 基準)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf r\)</span></p></td>
+<td><p>衛星位置ベクトル <span class="math notranslate nohighlight">\([x,\,y,\,z]^{\mathsf T}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf v\)</span></p></td>
+<td><p>衛星速度ベクトル <span class="math notranslate nohighlight">\([\dot x,\,\dot y,\,\dot z]^{\mathsf T}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf r_s(t)\)</span></p></td>
+<td><p>地上局位置ベクトル</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf v_s(t)\)</span></p></td>
+<td><p>地上局速度ベクトル</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\boldsymbol ω_\oplus\)</span></p></td>
+<td><p>地球自転角速度 <span class="math notranslate nohighlight">\([0,\,0,\,ω_\oplus]^{\mathsf T}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>地上局の ECI 座標は <strong>ECEF → ECI</strong> 回転で</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf r_s(t)=
+\mathbf C_{\text{ECI}\leftarrow\text{ECEF}}\!\bigl(θ(t)\bigr)\,\mathbf r_{s,0},
+\qquad
+θ(t)=ω_\oplus t,
+\]</div>
+<p>速度は</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf v_s(t)=\boldsymbol ω_\oplus \times \mathbf r_s(t).
+\]</div>
+</section>
+<hr class="docutils" />
+<section id="id8">
+<h2>2. 観測モデル<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<section id="rho">
+<h3>2.1 レンジ <span class="math notranslate nohighlight">\(\rho\)</span><a class="headerlink" href="#rho" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+\rho =\bigl\|\mathbf r-\mathbf r_s\bigr\| 
+      =\sqrt{(\mathbf r-\mathbf r_s)\!\cdot(\mathbf r-\mathbf r_s)}.
+\]</div>
+</section>
+<section id="dot-rho">
+<h3>2.2 レンジレート <span class="math notranslate nohighlight">\(\dot\rho\)</span><a class="headerlink" href="#dot-rho" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+\dot\rho
+      =\frac{(\mathbf r-\mathbf r_s)\cdot(\mathbf v-\mathbf v_s)}{\rho}.
+\]</div>
+<p>ただし、以下の仮定を置いている。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>往復遅延（lc / 2）の効果は「即時距離」として近似</p></li>
+<li><p>相対論・大気遅延・重力赤方偏移などは無視</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id9">
+<h2>3. 線形化と設計行列（偏微分）<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<p>観測ベクトル<br />
+$$
+\mathbf h(\mathbf x,t)=</p>
+<div class="amsmath math notranslate nohighlight" id="equation-a5708145-cb09-4ff3-8e89-75bccc38c9d6">
+<span class="eqno">()<a class="headerlink" href="#equation-a5708145-cb09-4ff3-8e89-75bccc38c9d6" title="Permalink to this equation">#</a></span>\[\begin{bmatrix}
+\rho \\ \dot\rho
+\end{bmatrix}\]</div>
+<div class="math notranslate nohighlight">
+\[\]</div>
+<p>\mathbf x
+=\bigl[,\underbrace{\mathbf r,\mathbf v}<em>{6},;
+μ,;J_1, J_2,;C_D,;
+\mathbf r</em>{GS1},;\mathbf r_{GS2},;\mathbf r_{GS3}\bigr]^{\mathsf T}
+\in\mathbb R^{19}.
+$$</p>
+<section id="id10">
+<h3>3.1 位置・速度に関する偏微分<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<p>まず <span class="math notranslate nohighlight">\(\mathbf Δ=\mathbf r-\mathbf r_s,\quad \mathbf δ=\mathbf v-\mathbf v_s\)</span> とおくとレンジに関しては、</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial\rho}{\partial\mathbf r}
+      =\frac{\mathbf Δ^{\mathsf T}}{\rho},\quad
+\frac{\partial\rho}{\partial\mathbf v}
+      =\mathbf 0_{1\times3}.
+\]</div>
+<p>続いて、レンジレートに関しては、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\dot\rho =\frac{\mathbf Δ\cdot\mathbf δ}{\rho}
+       \quad\Longrightarrow\quad
+\begin{aligned}
+\frac{\partial\dot\rho}{\partial\mathbf r}
+ &amp;=
+\frac{1}{\rho}
+\Bigl(\mathbf δ^{\mathsf T}-\dot\rho\,\frac{\mathbf Δ^{\mathsf T}}{\rho}\Bigr),\\[6pt]
+\frac{\partial\dot\rho}{\partial\mathbf v}
+ &amp;=\frac{\mathbf Δ^{\mathsf T}}{\rho}.
+\end{aligned}
+\end{split}\]</div>
+</section>
+<section id="id11">
+<h3>3.2 地上局座標に関する偏微分<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<p>ECEF → ECI 回転を <span class="math notranslate nohighlight">\(\mathbf C(θ)\)</span> とおくと<br />
+$<span class="math notranslate nohighlight">\(
+\mathbf r_s = \mathbf C\,\mathbf r_{s,0}
+\)</span><span class="math notranslate nohighlight">\(  
+ECI での微小変位は
+\)</span><span class="math notranslate nohighlight">\(
+\mathrm d\mathbf r_s = \mathbf C\,\mathrm d\mathbf r_{s,0}
+\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial\rho}{\partial\mathbf r_{s,0}}
+     = -\frac{\partial\rho}{\partial\mathbf r}\,\mathbf C,
+\qquad
+\frac{\partial\dot\rho}{\partial\mathbf r_{s,0}}
+     = -\frac{\partial\dot\rho}{\partial\mathbf r}\,\mathbf C.
+\]</div>
+<blockquote>
+<div><p>実装では <span class="math notranslate nohighlight">\(\mathbf C\)</span> が<strong>直交行列</strong>なので転置 = 逆行列が用いられる<br />
+<span class="math notranslate nohighlight">\(\mathbf C^{-1}=\mathbf C^{\mathsf T}\)</span>。</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="mathbf-h-k">
+<h3>3.3  <span class="math notranslate nohighlight">\(\mathbf H_k\)</span><a class="headerlink" href="#mathbf-h-k" title="Permalink to this heading">#</a></h3>
+<p>2 行 19 列（本課題の状態次元）でブロック配置すると</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf H_k=
+\begin{bmatrix}
+\displaystyle\frac{\partial\rho}{\partial\mathbf r} &amp;
+\mathbf 0 &amp;
+\mathbf 0 &amp;
+-\displaystyle\frac{\partial\rho}{\partial\mathbf r}\,\mathbf C &amp; \cdots
+\\[10pt]
+\displaystyle\frac{\partial\dot\rho}{\partial\mathbf r} &amp;
+\displaystyle\frac{\partial\dot\rho}{\partial\mathbf v} &amp;
+\mathbf 0 &amp;
+-\displaystyle\frac{\partial\dot\rho}{\partial\mathbf r}\,\mathbf C &amp; \cdots
+\end{bmatrix}.
+\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf 0\)</span> は μ, J2, C_D など動的パラメータに対する直接偏微分（本課題ではゼロ）。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\cdots\)</span> は推定対象でない他局座標列に対応する 0 ブロック。</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id12">
+<h2>4. 観測ノイズと共分散<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h2>
+<p>観測雑音は平均 0，分散既知のガウス白色雑音と仮定する。
+今回は</p>
+<div class="math notranslate nohighlight">
+\[
+  \sigma_\rho = 10^{-2}\,\text{m},\qquad
+  \sigma_{\dot\rho} = 10^{-3}\,\text{m s}^{-1}.
+\]</div>
+<p>として、共分散行列は以下のように定義する。</p>
+<div class="math notranslate nohighlight">
+\[
+    \mathbf R = \operatorname{diag}\!\bigl(\sigma_\rho^{2},\;\sigma_{\dot\rho}^{2}\bigr).
+\]</div>
+</section>
+<section id="id13">
+<h2>5. 実装メモ<a class="headerlink" href="#id13" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>行列形で計算</strong>することで <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> のブロードキャストが有効になり、高速。</p></li>
+<li><p>偏微分は常に <strong>ECI 系</strong> で評価し、地上局座標偏微分のみ <span class="math notranslate nohighlight">\(\mathbf C^{\mathsf T}\)</span> で換算。</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="id14">
+<h2>6. まとめ<a class="headerlink" href="#id14" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>観測モデルはユークリッド距離とその時間微分のみで単純だが、  <strong>地球自転で動く地上局の位置・速度</strong> を正しく扱う点が今回のポイント。</p></li>
+<li><p>線形化により得られる <span class="math notranslate nohighlight">\(\mathbf H_k\)</span> はバッチ・カルマン双方で共通に使用できる。</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><span class="math notranslate nohighlight">\(J_2\)</span> 摂動加速度はどこから来るのか  ― 地球の歪みから重力ポテンシャル展開を経て加速度式へ ―</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">1.  理想球 vs. 扁平地球</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.  重力ポテンシャルの球面調和展開</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.  <span class="math notranslate nohighlight">\(J_2\)</span> 項のみ抽出</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.  勾配を取って加速度へ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.  直感的な影響</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6.  まとめ</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">観測量と観測モデルの定式化</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1. 座標系と記号</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2. 観測モデル</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rho">2.1 レンジ <span class="math notranslate nohighlight">\(\rho\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dot-rho">2.2 レンジレート <span class="math notranslate nohighlight">\(\dot\rho\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3. 線形化と設計行列（偏微分）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.1 位置・速度に関する偏微分</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">3.2 地上局座標に関する偏微分</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathbf-h-k">3.3  <span class="math notranslate nohighlight">\(\mathbf H_k\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4. 観測ノイズと共分散</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">5. 実装メモ</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">6. まとめ</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Hal Ohki/Yuto Nakagawa/Sho Nishimura
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
