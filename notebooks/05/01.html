@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>1. 軌道決定（Orbit Determination） &#8212; Hands-On Astrodynamics tutorial</title>
+    <title>5. 軌道決定（Orbit Determination） &#8212; Hands-On Astrodynamics tutorial</title>
   
   
   
@@ -77,7 +77,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="\(J_2\) 摂動加速度はどこから来るのか ― 地球の歪みから重力ポテンシャル展開を経て加速度式へ ―" href="02.html" />
-    <link rel="prev" title="はじめに" href="../../index.html" />
+    <link rel="prev" title="姿勢決定（Attitude Determination）" href="../01/04.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -180,12 +180,24 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">1. 軌道決定（Orbit Determination）</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01/01.00.html">1. キネマティクス（Kinematics）</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01/02.html">剛体のキネマティクス I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01/03.html">剛体のキネマティクス II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01/04.html">姿勢決定（Attitude Determination）</a></li>
+
+
+
+
+
+
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">5. 軌道決定（Orbit Determination）</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="02.html"><span class="math notranslate nohighlight">\(J_2\)</span> 摂動加速度はどこから来るのか  ― 地球の歪みから重力ポテンシャル展開を経て加速度式へ ―</a></li>
 
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../appendix/quotes.html">名言集</a></li>
 </ul>
 </li>
@@ -374,7 +386,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>1. 軌道決定（Orbit Determination）</h1>
+    <h1>5. 軌道決定（Orbit Determination）</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -397,7 +409,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="orbit-determination">
-<h1>1. 軌道決定（Orbit Determination）<a class="headerlink" href="#orbit-determination" title="Permalink to this heading">#</a></h1>
+<h1>5. 軌道決定（Orbit Determination）<a class="headerlink" href="#orbit-determination" title="Permalink to this heading">#</a></h1>
 <section id="id1">
 <h2>軌道決定とは?<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 </section>
@@ -436,12 +448,12 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../../index.html"
+       href="../01/04.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">はじめに</p>
+        <p class="prev-next-title">姿勢決定（Attitude Determination）</p>
       </div>
     </a>
     <a class="right-next"
