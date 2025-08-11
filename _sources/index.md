@@ -11,7 +11,7 @@
 
 <div style="text-align: center;">
 <video autoplay loop muted playsinline width="100%" src="_static/starlink.mp4"></video>
-<video autoplay loop muted playsinline width="100%" src="_static/3bp.mp4"></video>
+<video autoplay loop muted playsinline width="100%" src="_static/cr3bp.mp4"></video>
 </div>
 :::
 
