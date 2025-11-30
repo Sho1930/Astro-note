@@ -1,86 +1,76 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>5.1.2 前提条件 &#8212; Hands-On Astrodynamics tutorial</title>
+    <title>5.2) 最小二乗法 (Least Square Method) &#8212; Hands-On Astrodynamics tutorial</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
-    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-DVQ7NZ8CYZ"></script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'G-DVQ7NZ8CYZ');
-            </script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'G-DVQ7NZ8CYZ');
-            </script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/05/02';</script>
-    <link rel="icon" href="../../_static/rocket.ico"/>
+    <link rel="shortcut icon" href="../../_static/rocket.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Appendix" href="../appendix/appendix.html" />
-    <link rel="prev" title="5. 軌道決定（Orbit Determination）" href="01.html" />
+    <link rel="next" title="5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）" href="03.html" />
+    <link rel="prev" title="5.1) 軌道決定問題の定式化" href="01.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -90,23 +80,28 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -128,20 +123,12 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -157,8 +144,6 @@
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
-  
-    
   
 
 <a class="navbar-brand logo" href="../../index.html">
@@ -177,18 +162,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -199,7 +173,7 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../01/01.00.html">1. キネマティクス（Kinematics）</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01/01.00.html">1. キネマティクス（Kinematics）</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../01/02.html">剛体のキネマティクス I</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../01/03.html">剛体のキネマティクス II</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../01/04.html">姿勢決定（Attitude Determination）</a></li>
@@ -210,15 +184,18 @@
 
 
 </ul>
-</details></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="01.html">5. 軌道決定（Orbit Determination）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.1.2 前提条件</a></li>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01.00.html">5. 統計的軌道決定（Statistical Orbit Determination）</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.html">5.1) 軌道決定問題の定式化</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.2) 最小二乗法 (Least Square Method)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.html">5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.html">5.7) Uncertainty Propagation</a></li>
 </ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../appendix/quotes.html">名言集</a></li>
 </ul>
-</details></li>
+</li>
 </ul>
 
     </div>
@@ -234,7 +211,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -243,14 +220,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -260,37 +237,6 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-launch-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
-    <i class="fas fa-rocket"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://colab.research.google.com/github/Sho1930/Astro-note/blob/main/notebooks/05/02.ipynb" target="_blank"
-   class="btn btn-sm dropdown-item"
-   title="Launch on Colab"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  
-    <img alt="Colab logo" src="../../_static/images/logo_colab.png">
-  </span>
-<span class="btn__text-container">Colab</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
 
 
 
@@ -351,7 +297,7 @@
       
       
       
-      <li><a href="../../_sources/notebooks/05/02.ipynb" target="_blank"
+      <li><a href="../../_sources/notebooks/05/02.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -361,7 +307,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -406,10 +352,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -417,14 +363,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -435,7 +381,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>5.1.2 前提条件</h1>
+    <h1>5.2) 最小二乗法 (Least Square Method)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -445,43 +391,10 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.1.2.1 観測量</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eci-earth-centric-inertial">5.1.2.2 初期状態量 / ECI(Earth Centric Inertial)座標系</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.3 物理パラメータ初期値</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ecef-earth-centric-earth-fixed">1.3 地上局座標 / ECEF(Earth Centric Earth Fixed)座標系</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2. 状態ベクトル</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3. 観測モデル</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4. 推定ケース</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">5. 検討事項</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#j-2"><span class="math notranslate nohighlight">\(J_2\)</span> 摂動加速度の導出</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">1.  理想球 vs. 扁平地球</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.  重力ポテンシャルの球面調和展開</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.  <span class="math notranslate nohighlight">\(J_2\)</span> 項のみ抽出</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">4.  勾配を取って加速度へ</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">5.  直感的な影響</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">6.  まとめ</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">観測量と観測モデルの定式化</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1. 座標系と記号</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">2. 観測モデル</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rho">2.1 レンジ <span class="math notranslate nohighlight">\(\rho\)</span></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dot-rho">2.2 レンジレート <span class="math notranslate nohighlight">\(\dot\rho\)</span></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">3. 線形化と設計行列（偏微分）</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">3.1 位置・速度に関する偏微分</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">3.2 地上局座標に関する偏微分</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mathbf-h-k">3.3  <span class="math notranslate nohighlight">\(\mathbf H_k\)</span></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">4. 観測ノイズと共分散</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">5. 実装メモ</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">6. まとめ</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">5.2.1) （復習）線形観測モデル</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.2.2) 最小二乗法（Least Square Method）：</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weighted-least-square-method">5.2.3) 重み付き最小二乗法（Weighted Least Square Method）：</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.2.4) 例題</a></li>
 </ul>
             </nav>
         </div>
@@ -491,678 +404,286 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
-  <div class="note admonition">
-<p class="admonition-title">5.1: バッチ推定</p>
-<h2 class="rubric" id="id1">5.1.1 目的</h2>
-<p>本課題では <strong>バッチ最小二乗法（Batch LS）</strong> を用いて低軌道衛星の軌道を推定し，  力学モデルの精度と観測幾何（地上局配置）が推定結果に与える影響を評価する。</p>
-<ol class="arabic simple">
-<li><p><strong>非線形力学モデル（J2 + 空気抵抗）</strong> を定式化し、与えられた状態変数と対応する<strong>状態遷移行列（STM）</strong> を同時に数値積分する。</p></li>
-<li><p><strong>双方向レンジ／レンジレート観測</strong>をモデル化し、状態変数によるヤコビ行列（<span class="math notranslate nohighlight">\(H\)</span>行列）を導出・実装する。</p></li>
-<li><p>正規方程式を組み立てて、初期状態および物理パラメータの <strong>バッチ推定（Batch LS）</strong> ができる。</p></li>
-<li><p>観測量と推定値の<strong>残差 RMS・共分散</strong> を用いてモデル／幾何の妥当性を判断し、適宜モデルの改善について考察を実施する。</p></li>
-</ol>
+  <section class="tex2jax_ignore mathjax_ignore" id="least-square-method">
+<h1>5.2) 最小二乗法 (Least Square Method)<a class="headerlink" href="#least-square-method" title="Permalink to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">目的</p>
+<ul class="simple">
+<li><p>最小二乗法を用いて、線形化した観測方程式から推定状態量を求められるようになる。</p></li>
+<li><p>最小二乗法と重み付き最小二乗法の違いを理解する。</p></li>
+<li><p>最小二乗法の前提、限界を理解する。</p></li>
+</ul>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ----------------------------------------------------------------------</span>
-<span class="c1"># 0. Imports</span>
-<span class="c1"># ----------------------------------------------------------------------</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>      <span class="c1"># noqa: F401</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_ivp</span>        <span class="c1"># ode45 eq.  :contentReference[oaicite:8]{index=8}</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">norm</span>                 <span class="c1"># PDF         :contentReference[oaicite:9]{index=9}</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.linalg</span><span class="w"> </span><span class="kn">import</span> <span class="n">block_diag</span>          <span class="c1"># block diag  :contentReference[oaicite:10]{index=10}</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sympy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>                           <span class="c1"># lambdify    :contentReference[oaicite:11]{index=11}</span>
-</pre></div>
-</div>
-</div>
-</div>
+<section id="id1">
+<h2>5.2.1) （復習）線形観測モデル<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>5.1)で見たように、STMを用いた畳み込みにより、多時刻観測を基準時刻の未知ベクトル <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> に対する線形観測モデルへと変換することができた。</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{y} = H \mathbf{x} + \boldsymbol{\epsilon}
+\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{y} \equiv\left[\begin{array}{c}
+y_1 \\
+\vdots \\
+y_{\ell}
+\end{array}\right] ; \quad H \equiv\left[\begin{array}{c}
+\widetilde{H}_1 \Phi\left(t_1, t_k\right) \\
+\vdots \\
+\widetilde{H}_{\ell} \Phi\left(t_{\ell}, t_k\right)
+\end{array}\right] ; \quad \boldsymbol{\epsilon} \equiv\left[\begin{array}{c}
+\epsilon_1 \\
+\vdots \\
+\epsilon_{\ell};
+\end{array}\right]
+; \quad \mathbf{x} = x(t_k)
+\end{split}\]</div>
+</section>
 <section id="id2">
-<h1>5.1.2 前提条件<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<h2>5.2.2) 最小二乗法（Least Square Method）：<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>最小二乗法では、残差二乗和を評価関数 <span class="math notranslate nohighlight">\(J(x)\)</span>とする。</p>
+<div class="math notranslate nohighlight">
+\[
+J(x)=\tfrac12 \boldsymbol{\epsilon}^\top\boldsymbol{\epsilon} = \tfrac12(y-Hx)^\top(y-Hx)
+\]</div>
+<p>このとき、 <span class="math notranslate nohighlight">\(J(x)\)</span> を最小にする <span class="math notranslate nohighlight">\(x\)</span> を求める。勾配を <span class="math notranslate nohighlight">\(0\)</span> に置くと、</p>
+<div class="math notranslate nohighlight">
+\[
+-H^\top (y-Hx) = 0
+\]</div>
+<p>これを解くと、最小二乗推定値 <span class="math notranslate nohighlight">\(\hat x\)</span> は、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+H^\top H\,\hat x &amp;= H^\top y,\qquad \\
+\hat x &amp;= (H^\top H)^{-1}H^\top y
+\end{aligned}
+\end{split}\]</div>
+<p>となる。</p>
+<p>ここで、 <span class="math notranslate nohighlight">\(\partial^2 J / \partial x^2=H^{\top} H\)</span> で、 <span class="math notranslate nohighlight">\(H\)</span> がフルランクなら、正定値となり、解は一意に得られる。</p>
+<p>一方で、観測が少ない <span class="math notranslate nohighlight">\(m &lt; n\)</span> などで <span class="math notranslate nohighlight">\(H\)</span> がフルランクでない場合、最小ノルム解が有用となる。ラグランジュ乗数法で</p>
+<div class="math notranslate nohighlight">
+\[
+\min _x \frac{1}{2} x^{\top} x \quad \text { s.t. } \quad y=H x
+\]</div>
+<p>を解くと、</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{x}=H^{\top}\left(H H^{\top}\right)^{-1} y
+\]</div>
+<p>が得られる。これは <span class="math notranslate nohighlight">\(H\)</span> の<a class="reference external" href="https://ja.wikipedia.org/wiki/%E6%93%AC%E4%BC%BC%E9%80%86%E8%A1%8C%E5%88%97">擬似逆行列</a>　<span class="math notranslate nohighlight">\(H^{+} = H^{\top}\left(H H^{\top}\right)^{-1}\)</span> を使った解で、「方程式を満たす解の中でノルム最小」となる代表解である。</p>
+<div class="note admonition">
+<p class="admonition-title">最小二乗解</p>
+<p>残差二乗和を評価関数 <span class="math notranslate nohighlight">\(J(x)\)</span>とする。</p>
+<div class="math notranslate nohighlight">
+\[
+J(x)=\tfrac12 \boldsymbol{\epsilon}^\top\boldsymbol{\epsilon} = \tfrac12(y-Hx)^\top(y-Hx)
+\]</div>
+<p><span class="math notranslate nohighlight">\(H\)</span> がフルランクならば、最小二乗解 <span class="math notranslate nohighlight">\(\hat x\)</span> は、以下のように表せる。</p>
+<div class="math notranslate nohighlight">
+\[
+\hat x = (H^\top H)^{-1}H^\top y
+\]</div>
+<p><span class="math notranslate nohighlight">\(H\)</span> がフルランクでない場合、</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{x}=H^{\top}\left(H H^{\top}\right)^{-1} y
+\]</div>
+</div>
+<p>最小二乗法は、シンプルな定式化で解を得ることが出来るが、いくつかのデメリットがある。</p>
+<ul class="simple">
+<li><p>各観測の精度は異なりうるが、定式化において等価に扱っている。</p></li>
+<li><p>各観測は相関を持ちうるが、この相関を定式化において表現できない。</p></li>
+<li><p>各観測の統計量を扱えない。</p></li>
+</ul>
+<p>これらのデメリットが、次項以降で扱う手法を取り入れるモチベーションとなる。</p>
+</section>
+<section id="weighted-least-square-method">
+<h2>5.2.3) 重み付き最小二乗法（Weighted Least Square Method）：<a class="headerlink" href="#weighted-least-square-method" title="Permalink to this heading">#</a></h2>
+<p>5.2.2)で説明した最小二乗法は、各観測の精度を等価に扱っていた。しかし、実際の観測量は種類ごと、地上局ごとに精度が異なり、しばしば相関も持つ。</p>
+<ul class="simple">
+<li><p>レンジ <span class="math notranslate nohighlight">\(m\)</span> とレンジレート <span class="math notranslate nohighlight">\(m/s\)</span> は同一受信機に由来し、相関を持つ（時刻ノイズ成分を共有）</p></li>
+<li><p>地上局ごとに、観測量に系統誤差が存在する。</p></li>
+</ul>
+<p>これらの観測量を同じ精度として扱うと、情報の過小/過大評価から数値不安定性を招く。重み付き最小二乗法は、観測の信頼度・相関を共分散 <span class="math notranslate nohighlight">\(R\)</span> を通じて正しく反映する枠組みである。</p>
+<p>各観測の精度を重み行列 <span class="math notranslate nohighlight">\(w_i\)</span> で表すことを考えよう。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+&amp;\begin{array}{rr}
+y_1 = H_1 x_k+\epsilon_1 ; &amp; \varepsilon \sim \mathcal{N}(0, w_1) \\
+y_2 = H_2 x_k+\epsilon_2 ; &amp; \varepsilon \sim \mathcal{N}(0, w_2) \\
+\vdots &amp; \vdots \\
+y_l = H_l x_k+\epsilon_l ; &amp; \varepsilon \sim \mathcal{N}(0, w_l)　\\
+\end{array}\\
+&amp;\text { where }\\
+&amp;H_i=\widetilde{H}_i \Phi\left(t_i, t_k\right) .
+\end{aligned}
+\end{split}\]</div>
+<p>ここで、以下のように各変数を定義する。（今回は、簡単のため、各観測間に相関がない場合を考えている）</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+&amp; \mathbf{y}=\left[\begin{array}{c}
+\mathbf{y}_1 \\
+\mathbf{y}_2 \\
+\vdots \\
+\mathbf{y}_{\ell}
+\end{array}\right] ; \quad H=\left[\begin{array}{c}
+H_1 \\
+H_2 \\
+\vdots \\
+H_{\ell}
+\end{array}\right] ; \\
+&amp; \boldsymbol{\epsilon}=\left[\begin{array}{c}
+\boldsymbol{\epsilon}_1 \\
+\boldsymbol{\epsilon}_2 \\
+\vdots \\
+\boldsymbol{\epsilon}_{\ell}
+\end{array}\right] ; \quad W=\left[\begin{array}{cccc}
+w_1 &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; w_2 &amp; \cdots &amp; 0 \\
+&amp; &amp; \ddots &amp; \\
+0 &amp; 0 &amp; \cdots &amp; w_{\ell}
+\end{array}\right] .
+\end{aligned}
+\end{split}\]</div>
+<p>このとき、観測方程式は以下のように定式化できる。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{y} = H x +\boldsymbol{\epsilon} ; \quad \varepsilon \sim \mathcal{N}(0, W) \\
+\end{split}\]</div>
+<p>以上を踏まえて、評価関数 <span class="math notranslate nohighlight">\(J\left(x\right)\)</span> を下式のように再定義する。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+J\left(x\right) &amp;=1 / 2 \boldsymbol{\epsilon}^T W \boldsymbol{\epsilon}=\sum_{i=1}^{\ell} 1 / 2 \boldsymbol{\epsilon}_i^T w_i \boldsymbol{\epsilon}_i \\
+&amp;= \tfrac12(y-Hx)^\top W (y-Hx) 
+\end{aligned}
+\end{split}\]</div>
+<p>最小二乗法の時と同様に、評価関数の勾配 <span class="math notranslate nohighlight">\(0\)</span> を考えると、</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+(H^\top W H) \hat x &amp;= H^\top W y,\qquad \\
+\hat x &amp;= (H^\top W H)^{-1}H^\top R^{-1}y
+\end{aligned}
+\end{split}\]</div>
+<p>となり、重み付き最小二乗解が得られる。</p>
+<div class="note admonition">
+<p class="admonition-title">重み付き最小二乗解</p>
+<p>各観測の重みを 重み行列 <span class="math notranslate nohighlight">\(w_i\)</span> で表現し、これを対角成分に持つブロック行列 <span class="math notranslate nohighlight">\(W\)</span> を考える。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+W=\left[\begin{array}{cccc}
+w_1 &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; w_2 &amp; \cdots &amp; 0 \\
+&amp; &amp; \ddots &amp; \\
+0 &amp; 0 &amp; \cdots &amp; w_{\ell}
+\end{array}\right]
+\end{split}\]</div>
+<p>重み付き残差二乗和を評価関数 <span class="math notranslate nohighlight">\(J(x)\)</span>とする。</p>
+<div class="math notranslate nohighlight">
+\[
+J(x)= \tfrac12(y-Hx)^\top W (y-Hx) 
+\]</div>
+<p>このとき、重み付き最小二乗解 <span class="math notranslate nohighlight">\(\hat x\)</span> は、以下のように表せる。</p>
+<div class="math notranslate nohighlight">
+\[
+\hat x = (H^\top W H)^{-1}H^\top R^{-1}y
+\]</div>
+</div>
+</section>
 <section id="id3">
-<h2>5.1.2.1 観測量<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
-<p>観測量は、以下のようにtxtファイル形式で与えられる。</p>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>ファイル</p></th>
-<th class="head"><p>内容</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">project.txt</span></code></p></td>
-<td><p>観測データ：<br>時刻 (t_k) [s]，地上局 ID (101/337/394)，レンジ [m]，レンジレート [m/s]</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<blockquote>
-<div><p><strong>注意</strong>：観測レンジ／レンジレートは <em>メートル系</em> で与えられている。</p>
-</div></blockquote>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ----------------------------------------------------------------------</span>
-<span class="c1"># 1. Parse Data  (MATLAB: readmatrix)</span>
-<span class="c1"># ----------------------------------------------------------------------</span>
-<span class="n">fname</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;/Users/Tetsuya/Desktop/StatOD/data/project.txt&quot;</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>   <span class="c1"># :contentReference[oaicite:12]{index=12}</span>
-<span class="n">time</span>          <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<span class="n">stationID</span>     <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-<span class="n">rng_obs</span>       <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1e3</span>
-<span class="n">rng_rate_obs</span>  <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1e3</span>
+<h2>5.2.4) 例題<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">trackingData</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">time</span><span class="o">=</span><span class="n">time</span><span class="p">,</span>
-                    <span class="n">stationID</span><span class="o">=</span><span class="n">stationID</span><span class="p">,</span>
-                    <span class="nb">range</span><span class="o">=</span><span class="n">rng_obs</span><span class="p">,</span>
-                    <span class="n">rangeRate</span><span class="o">=</span><span class="n">rng_rate_obs</span><span class="p">)</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 真の初期状態（基準からの偏差ではなく &quot;真値&quot; 側）</span>
+<span class="n">r0_true</span><span class="p">,</span> <span class="n">v0_true</span> <span class="o">=</span> <span class="mf">7000.0</span><span class="p">,</span> <span class="mf">7.5</span>     <span class="c1"># [km], [km/s]（数値は雰囲気）</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">10.0</span>                          <span class="c1"># 観測間隔 [s]</span>
+<span class="n">m</span>  <span class="o">=</span> <span class="mi">20</span>                            <span class="c1"># 観測本数</span>
+
+<span class="c1"># 離散系のSTM（定速度モデル）</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dt</span><span class="p">],</span>
+              <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]])</span>
+
+<span class="c1"># 参照初期値（わざとズラす） → 我々は偏差 δx0 = x0_true - x0_ref を推定したい</span>
+<span class="n">r0_ref</span><span class="p">,</span> <span class="n">v0_ref</span> <span class="o">=</span> <span class="mf">6999.0</span><span class="p">,</span> <span class="mf">7.2</span>
+<span class="n">dx0_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r0_true</span> <span class="o">-</span> <span class="n">r0_ref</span><span class="p">,</span> <span class="n">v0_true</span> <span class="o">-</span> <span class="n">v0_ref</span><span class="p">])</span>  <span class="c1"># 真の偏差</span>
+
+<span class="c1"># 観測（レンジのみ）のヤコビアン（線形）</span>
+<span class="n">H_meas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>  <span class="c1"># \tilde H</span>
+
+<span class="c1"># 観測の生成：真の状態を時間発展し、レンジにノイズを足す</span>
+<span class="k">def</span> <span class="nf">propagate</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="c1"># x_k = F^k x_0</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span> <span class="o">@</span> <span class="n">x</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+<span class="n">x0_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r0_true</span><span class="p">,</span> <span class="n">v0_true</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">Phi_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">sigmas</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">xk_true</span> <span class="o">=</span> <span class="n">propagate</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">x0_true</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+    <span class="n">rk_true</span> <span class="o">=</span> <span class="n">xk_true</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># 雑音はヘテロに（遠くのほど悪いなどでもよいが、ここは適当に）</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.03</span> <span class="o">+</span> <span class="mf">0.001</span><span class="o">*</span><span class="n">k</span>  <span class="c1"># [km] 程度</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">rk_true</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+
+    <span class="c1"># 残差は観測 - 参照（参照はここでは ref を同様に伝播して作る）</span>
+    <span class="n">xk_ref</span> <span class="o">=</span> <span class="n">propagate</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r0_ref</span><span class="p">,</span> <span class="n">v0_ref</span><span class="p">]),</span> <span class="n">k</span><span class="p">)</span>
+    <span class="n">rk_ref</span> <span class="o">=</span> <span class="n">xk_ref</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">residual</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="n">rk_ref</span>
+
+    <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">residual</span><span class="p">)</span>
+    <span class="n">Phi_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_power</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span>  <span class="c1"># ここは定係数なので F^k</span>
+    <span class="n">sigmas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sigma</span><span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>                 <span class="c1"># (m,)</span>
+<span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span>       <span class="c1"># (m,)</span>
+
+<span class="c1"># ブロック行列 H を構成（各行 = \tilde H * Phi_k）</span>
+<span class="n">H_blocks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+    <span class="n">Phi_k</span> <span class="o">=</span> <span class="n">Phi_list</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">H_blocks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">H_meas</span> <span class="o">@</span> <span class="n">Phi_k</span><span class="p">)</span>  <span class="c1"># shape (1,2)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">H_blocks</span><span class="p">)</span>              <span class="c1"># shape (m,2)</span>
+
+<span class="c1"># --- LS（等重み） ---</span>
+<span class="n">dx0_ls</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># --- WLS（R = diag(sigmas^2)） ---</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sigmas</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Rinv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="p">(</span><span class="n">sigmas</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">dx0_wls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Rinv</span> <span class="o">@</span> <span class="n">H</span><span class="p">,</span> <span class="n">H</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Rinv</span> <span class="o">@</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># --- 白色化して LS ---</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span>             <span class="c1"># R = L L^T</span>
+<span class="n">H_tilde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">H</span><span class="p">)</span>
+<span class="n">y_tilde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">dx0_white</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">H_tilde</span><span class="p">,</span> <span class="n">y_tilde</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True δx0   :&quot;</span><span class="p">,</span> <span class="n">dx0_true</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;LS   δx0hat:&quot;</span><span class="p">,</span> <span class="n">dx0_ls</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WLS  δx0hat:&quot;</span><span class="p">,</span> <span class="n">dx0_wls</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;White δx0hat:&quot;</span><span class="p">,</span> <span class="n">dx0_white</span><span class="p">)</span>
+
+<span class="c1"># 予測共分散（線形ガウスの近似下）</span>
+<span class="n">P_ls</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">H</span><span class="p">)</span>
+<span class="n">P_wls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">Rinv</span> <span class="o">@</span> <span class="n">H</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">P_ls:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>  <span class="n">P_ls</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">P_wls:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">P_wls</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-</section>
-<section id="eci-earth-centric-inertial">
-<h2>5.1.2.2 初期状態量 / ECI(Earth Centric Inertial)座標系<a class="headerlink" href="#eci-earth-centric-inertial" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>成分</p></th>
-<th class="head"><p>記号</p></th>
-<th class="head"><p>値</p></th>
-<th class="head"><p>単位</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>位置 <span class="math notranslate nohighlight">\(x\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(x_0\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(757.7000\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([km]\)</span></p></td>
-</tr>
-<tr class="row-odd"><td><p>位置 <span class="math notranslate nohighlight">\(y\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(y_0\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(5222.6070\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([km]\)</span></p></td>
-</tr>
-<tr class="row-even"><td><p>位置 <span class="math notranslate nohighlight">\(z\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(z_0\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(4851.5000\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([km]\)</span></p></td>
-</tr>
-<tr class="row-odd"><td><p>速度 <span class="math notranslate nohighlight">\(vx\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(\dot x_0\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(2.21321\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([km s^{-1}]\)</span></p></td>
-</tr>
-<tr class="row-even"><td><p>速度 <span class="math notranslate nohighlight">\(vy\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(\dot y_0\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(4.67834\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([km s^{-1}]\)</span></p></td>
-</tr>
-<tr class="row-odd"><td><p>速度 <span class="math notranslate nohighlight">\(vz\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(\dot z_0\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(−5.37130\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([km s^{-1}]\)</span></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">757.7</span><span class="p">,</span> <span class="mf">5222.607</span><span class="p">,</span> <span class="mf">4851.5</span><span class="p">,</span> <span class="mf">2.21321</span><span class="p">,</span> <span class="mf">4.67834</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.3713</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="id4">
-<h2>1.3 物理パラメータ初期値<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>パラメータ</p></th>
-<th class="head"><p>記号</p></th>
-<th class="head text-right"><p>初期値</p></th>
-<th class="head"><p>単位</p></th>
-<th class="head"><p>事前標準偏差（推奨）</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>地球重力定数</p></td>
-<td><p><span class="math notranslate nohighlight">\(\mu\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(398 600.4415\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([km^3 s^{-2}]\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(1.0 \times 10^{5}\)</span></p></td>
-</tr>
-<tr class="row-odd"><td><p>J1 項</p></td>
-<td><p><span class="math notranslate nohighlight">\(J_1\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
-<td><p>—</p></td>
-<td><p>固定</p></td>
-</tr>
-<tr class="row-even"><td><p>J2 項</p></td>
-<td><p><span class="math notranslate nohighlight">\(J_2\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(1.082626925638815 × 10^{-3}\)</span></p></td>
-<td><p>—</p></td>
-<td><p><span class="math notranslate nohighlight">\(1.0\times 10^{-7}\)</span></p></td>
-</tr>
-<tr class="row-odd"><td><p>ドラッグ係数</p></td>
-<td><p><span class="math notranslate nohighlight">\(C_D\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(2.0\)</span></p></td>
-<td><p>—</p></td>
-<td><p><span class="math notranslate nohighlight">\(0.1\)</span></p></td>
-</tr>
-<tr class="row-even"><td><p>断面積</p></td>
-<td><p><span class="math notranslate nohighlight">\(A\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(3.0\)</span> (→ <span class="math notranslate nohighlight">\(3 \times 10^{-6} km^2 \)</span>)</p></td>
-<td><p><span class="math notranslate nohighlight">\([m^2]\)</span></p></td>
-<td><p>固定</p></td>
-</tr>
-<tr class="row-odd"><td><p>質量</p></td>
-<td><p><span class="math notranslate nohighlight">\(m\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(970\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([kg]\)</span></p></td>
-<td><p>固定</p></td>
-</tr>
-<tr class="row-even"><td><p>基準密度</p></td>
-<td><p><span class="math notranslate nohighlight">\(\rho_0\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(3.614 \times 10^{-4}\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([kg m^{-3}]\)</span></p></td>
-<td><p>固定</p></td>
-</tr>
-<tr class="row-odd"><td><p>基準高度</p></td>
-<td><p><span class="math notranslate nohighlight">\(h_0\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(700\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([km]\)</span></p></td>
-<td><p>固定</p></td>
-</tr>
-<tr class="row-even"><td><p>スケールハイト</p></td>
-<td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(88.667\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\([km]\)</span></p></td>
-<td><p>固定</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ----------------------------------------------------------------------</span>
-<span class="c1"># 2. Constants &amp; Initial State</span>
-<span class="c1"># ----------------------------------------------------------------------</span>
-<span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.082626925638815e-3</span><span class="p">])</span>
-<span class="n">R_EARTH</span> <span class="o">=</span> <span class="mf">6378.1363</span>          <span class="c1"># km</span>
-<span class="n">MU</span>      <span class="o">=</span> <span class="mf">398600.4415</span>        <span class="c1"># km^3/s^2</span>
-<span class="n">L_MAX</span>   <span class="o">=</span> <span class="mi">2</span>
-<span class="n">AREA</span>    <span class="o">=</span> <span class="mf">3e-6</span>
-<span class="n">MASS</span>    <span class="o">=</span> <span class="mf">970.0</span>
-<span class="n">CD</span>      <span class="o">=</span> <span class="mf">2.0</span>
-<span class="n">PARAM_MEAS</span> <span class="o">=</span> <span class="mi">9</span>  
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="ecef-earth-centric-earth-fixed">
-<h2>1.3 地上局座標 / ECEF(Earth Centric Earth Fixed)座標系<a class="headerlink" href="#ecef-earth-centric-earth-fixed" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>GS ID</p></th>
-<th class="head text-right"><p><span class="math notranslate nohighlight">\(x_{GS} [km]\)</span></p></th>
-<th class="head text-right"><p><span class="math notranslate nohighlight">\(y_{GS} [km]\)</span></p></th>
-<th class="head text-right"><p><span class="math notranslate nohighlight">\(z_{GS} [km]\)</span></p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(101\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(−5127.5100\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(−3794.1600\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(0.0000\)</span></p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(337\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(3860.9100\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(3238.4900\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(3898.0940\)</span></p></td>
-</tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(394\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(549.5050\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(−1380.8720\)</span></p></td>
-<td class="text-right"><p><span class="math notranslate nohighlight">\(6182.1970\)</span></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">STATIONS_ECEF0</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="mi">101</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">5127.5100</span><span class="p">,</span> <span class="o">-</span><span class="mf">3794.1600</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]),</span>
-    <span class="mi">337</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span> <span class="mf">3860.9100</span><span class="p">,</span>  <span class="mf">3238.4900</span><span class="p">,</span> <span class="mf">3898.0940</span><span class="p">]),</span>
-    <span class="mi">394</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>  <span class="mf">549.5050</span><span class="p">,</span> <span class="o">-</span><span class="mf">1380.8720</span><span class="p">,</span> <span class="mf">6182.1970</span><span class="p">]),</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="id5">
-<h2>2. 状態ベクトル<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
-<p>衛星の位置・速度、各種物理パラメータ、3つの地上局位置を表す、以下のような状態変数を考える。
-$<span class="math notranslate nohighlight">\(
-\mathbf x
-=\bigl[\,\underbrace{\mathbf r,\mathbf v}_{6},\;
-        μ,\;J_1, J_2,\;C_D,\;
-        \mathbf r_{GS1},\;\mathbf r_{GS2},\;\mathbf r_{GS3}\bigr]^{\mathsf T}
-\in\mathbb R^{19}.
-\)</span>$</p>
-<p><span class="math notranslate nohighlight">\(STM\)</span> は <span class="math notranslate nohighlight">\(19\times 19\)</span> とし、初期値は単位行列である。
-これら <span class="math notranslate nohighlight">\(19 + 19\times 19 = 380\)</span> 次元の状態ベクトルを考え、数値積分する。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">state0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="n">MU</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">CD</span><span class="p">,</span>
-                    <span class="n">STATIONS_ECEF0</span><span class="p">[</span><span class="mi">101</span><span class="p">],</span>
-                    <span class="n">STATIONS_ECEF0</span><span class="p">[</span><span class="mi">337</span><span class="p">],</span>
-                    <span class="n">STATIONS_ECEF0</span><span class="p">[</span><span class="mi">394</span><span class="p">],</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>   <span class="c1"># 6+1+2+1+3*3 = 19 states</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="id6">
-<h2>3. 観測モデル<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
-<p>観測量は、3種類の地上局で得られるレンジ、レンジレートとする。ただし、伝播遅延、相対論・大気遅延・重力赤方偏移の影響などは無視することとする。</p>
-<p>また、状態変数によるヤコビアンを解析的に導出し，<strong>2 × 19</strong> の行列 <span class="math notranslate nohighlight">\(\mathbf H_k\)</span> を実装すること。</p>
-</section>
-<hr class="docutils" />
-<section id="id7">
-<h2>4. 推定ケース<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Case</p></th>
-<th class="head"><p>推定する地上局座標</p></th>
-<th class="head"><p>初期分散設定　$\sigma^2$</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><strong>GS1</strong></p></td>
-<td><p>GS2, GS3</p></td>
-<td><p>推定局: <span class="math notranslate nohighlight">\(1 \times10^{+0}\,\text{km}^2\)</span> <br>固定局(GS1): $1 \times10^{-6},\text{km}^2$</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>GS2</strong></p></td>
-<td><p>GS1, GS3</p></td>
-<td><p>同上（GS2 固定）</p></td>
-</tr>
-<tr class="row-even"><td><p><strong>GS3</strong></p></td>
-<td><p>GS1, GS2</p></td>
-<td><p>同上（GS3 固定）</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>None</strong></p></td>
-<td><p>3 局すべて</p></td>
-<td><p>3 局とも <span class="math notranslate nohighlight">\(1 \times10^{+0}\,\text{km}^2\)</span></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<blockquote>
-<div><p>非推定パラメータ（μ, J2, CD 等）の初期分散は <code class="docutils literal notranslate"><span class="pre">constants.txt</span></code> 推奨値を用いよ。<br />
-観測雑音共分散は <span class="math notranslate nohighlight">\(\sigma_\rho=1\times10^{-2}\,\text{m}\)</span>、<span class="math notranslate nohighlight">\(\sigma_{\dot\rho}=1\times10^{-3}\,\text{m/s}\)</span> とする。</p>
-</div></blockquote>
-</section>
-<hr class="docutils" />
-<section id="id8">
-<h2>5. 検討事項<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p>力学／観測モデルの数式</p></li>
-<li><p>STM を含む ODE 実装の説明</p></li>
-<li><p>バッチ正規方程式の組立て手順</p></li>
-<li><p>各ケースの結果</p>
-<ul class="simple">
-<li><p>初期状態量を伝播した3次元軌道図（ECI）</p></li>
-<li><p>pre／post-fit 残差プロット（ρ, (\dotρ)）</p></li>
-<li><p>RMS 値表</p></li>
-<li><p>推定パラメータと 1‑σ 不確定性</p></li>
-</ul>
-</li>
-<li><p>考察</p>
-<ul class="simple">
-<li><p>どの局を固定すべきか？理由は？</p></li>
-<li><p>モデル誤差（高次重力，SRP 等）が残差に与える影響の推察</p></li>
-<li><p>反復バッチ推定の必要性有無</p></li>
-</ul>
-</li>
-</ol>
-</section>
-<section id="j-2">
-<h2><span class="math notranslate nohighlight">\(J_2\)</span> 摂動加速度の導出<a class="headerlink" href="#j-2" title="Link to this heading">#</a></h2>
-<section id="vs">
-<h3>1.  理想球 vs. 扁平地球<a class="headerlink" href="#vs" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p><strong>理想球（質量 <span class="math notranslate nohighlight">\(M\)</span> が中心に集中）</strong><br />
-地球が完全な球であれば、重力ポテンシャルは、
-$<span class="math notranslate nohighlight">\(
-U_0(r)= -\frac{GM}{r},\qquad r=\sqrt{x^{2}+y^{2}+z^{2}}.
-\)</span>$</p></li>
-<li><p><strong>実際の地球</strong><br />
-しかし、実際の地球は<em>赤道半径</em> <span class="math notranslate nohighlight">\(a=6378\text{ km}\)</span>、<em>極半径</em> <span class="math notranslate nohighlight">\(b=6357\text{ km}\)</span> から分かるように、<a class="reference external" href="https://ja.wikipedia.org/wiki/%E6%89%81%E7%90%83">扁平楕円体</a>である。
-つまり、赤道方向にわずかにふくらみ，極方向にへこんでいる。この扁平度は無次元量<span class="math notranslate nohighlight">\(f\)</span>で表される。<br />
-$<span class="math notranslate nohighlight">\(
-f=\frac{a-b}{a}\approx\frac1{298}.
-\)</span>$</p></li>
-</ul>
-<section id="id9">
-<h4>2.  重力ポテンシャルの球面調和展開<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
-<p>地球の質量分布を球面調和級数（ゾーナル項のみ）で表すと</p>
-<div class="math notranslate nohighlight">
-\[
-U(r,\phi)= -\frac{GM}{r}
-\Biggl[
-  1-\sum_{\ell=1}^{\infty}
-    \Bigl(\frac{R_\oplus}{r}\Bigr)^{\!\ell}
-    \;J_\ell\;P_\ell(\sin\phi)
-\Biggr],
-\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\phi\)</span>：測地緯度（ECI 基準なら <span class="math notranslate nohighlight">\(\sin\phi = z/r\)</span>）</p></li>
-<li><p><span class="math notranslate nohighlight">\(P_\ell\)</span>：Legendre 多項式</p></li>
-<li><p><span class="math notranslate nohighlight">\(J_\ell\)</span>：<strong>ゾーナル係数</strong></p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\(J_1\)</span>：質量中心のズレ（一般的に0とすることが多い）</p></li>
-<li><p><span class="math notranslate nohighlight">\(J_2\)</span>：扁平性を示す。</p></li>
-</ul>
-</li>
-</ul>
-<p><span class="math notranslate nohighlight">\(J_2\)</span>が突出して大きく，他の<span class="math notranslate nohighlight">\(J_l(l&gt;=3)\)</span> は数桁小さい。そのため低高度では<span class="math notranslate nohighlight">\(J_2\)</span>項のみで95%以上の非球対項を説明できる。</p>
-<p>実測値は、
-$<span class="math notranslate nohighlight">\(
-J_2 \;=\; 1.082\,626\,925... \times 10^{-3}.
-\)</span>$</p>
-</section>
-</section>
-<section id="id10">
-<h3>3.  <span class="math notranslate nohighlight">\(J_2\)</span> 項のみ抽出<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{aligned}
-U_{J2}
-&amp;= -\frac{GM}{r}
-    \Bigl(\frac{R_\oplus}{r}\Bigr)^{\!2}
-    J_2\,P_2(\sin\phi) ,\\[6pt]
-P_2(\sin\phi)
-&amp;=\tfrac12\bigl(3\sin^{2}\phi-1\bigr)
-  =\tfrac12\!\Bigl(1-\frac{3z^{2}}{r^{2}}\Bigr).
-\end{aligned}
-\end{split}\]</div>
-<p>整理すると</p>
-<div class="math notranslate nohighlight">
-\[
-U_{J2}= -\frac{GMJ_2R_\oplus^{2}}{2r^{3}}
-        \Bigl(1-\frac{3z^{2}}{r^{2}}\Bigr).
-\]</div>
-</section>
-<section id="id11">
-<h3>4.  勾配を取って加速度へ<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
-<p>重力加速度は <span class="math notranslate nohighlight">\(\mathbf a = -\nabla U\)</span> で計算される。したがって、</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\boxed{
-\mathbf a_{J2}=
--\frac{3GMJ_2R_\oplus^{2}}{2r^{5}}
-\begin{bmatrix}
-x\left(1-\dfrac{5z^{2}}{r^{2}}\right) \\[6pt]
-y\left(1-\dfrac{5z^{2}}{r^{2}}\right) \\[6pt]
-z\left(3-\dfrac{5z^{2}}{r^{2}}\right)
-\end{bmatrix}}
-\end{split}\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(r^{-5}\)</span> で減衰：二体重力の <span class="math notranslate nohighlight">\(r^{-2}\)</span> に比べ <span class="math notranslate nohighlight">\(r^{-3}\)</span> だけ速く弱まる</p></li>
-<li><p><span class="math notranslate nohighlight">\(x,y\)</span> 成分：<span class="math notranslate nohighlight">\(\bigl(1-\tfrac{5z^{2}}{r^{2}}\bigr)\)</span> が非球対性を与える</p></li>
-<li><p><span class="math notranslate nohighlight">\(z\)</span> 成分：<span class="math notranslate nohighlight">\(\bigl(3-\tfrac{5z^{2}}{r^{2}}\bigr)\)</span> が極方向へ戻す成分</p></li>
-</ul>
-</section>
-<section id="id12">
-<h3>5.  直感的な影響<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
-<ol class="arabic simple">
-<li><p><strong>軌道面の歳差（Ω̇）</strong><br />
-赤道膨張により軌道面がゆっくり回転。</p></li>
-<li><p><strong>近地点引数の回転（ω̇）</strong><br />
-赤道傾斜によるトルクで近地点が移動。</p></li>
-<li><p><strong>低高度ほど顕著</strong><br />
-<span class="math notranslate nohighlight">\(J_2\)</span> は <span class="math notranslate nohighlight">\(r^{-5}\)</span> 依存なので LEO で支配的、<br />
-GEO ではほぼ無視できる。</p></li>
-</ol>
-</section>
-<section id="id13">
-<h3>6.  まとめ<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
-<ol class="arabic simple">
-<li><p>地球の“赤道膨張”という 2 次の形状ゆがみを<br />
-<strong>ゾーナル係数 <span class="math notranslate nohighlight">\(J_2\)</span></strong> でパラメータ化。</p></li>
-<li><p>ポテンシャル <span class="math notranslate nohighlight">\(U = U_0 + U_{J2}\)</span> として追加。</p></li>
-<li><p>勾配 <span class="math notranslate nohighlight">\(-\nabla U_{J2}\)</span> を取ることで<br />
-上式の <strong><span class="math notranslate nohighlight">\(J_2\)</span> 摂動加速度</strong> に到達。</p></li>
-<li><p>これを二体重力に加えるだけで LEO～MEO の<br />
-非球対重力効果の大部分が捕捉できる。</p></li>
-</ol>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">precompute_zonal_sph</span><span class="p">(</span><span class="n">R_val</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">l_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">vz</span><span class="p">,</span> <span class="n">mu</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x y z vx vy vz mu&#39;</span><span class="p">)</span>
-    <span class="n">coeffs_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;J0:</span><span class="si">{</span><span class="n">l_max</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">phi</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">asin</span><span class="p">(</span><span class="n">z</span><span class="o">/</span><span class="n">r</span><span class="p">)</span>
-    <span class="n">U</span> <span class="o">=</span> <span class="n">mu</span><span class="o">/</span><span class="n">r</span>
-    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">l_max</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">U</span> <span class="o">-=</span> <span class="n">mu</span><span class="o">/</span><span class="n">r</span> <span class="o">*</span> <span class="n">coeffs_sym</span><span class="p">[</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">R_val</span><span class="o">/</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="n">l</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">legendre</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
-    <span class="n">acc</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)])</span>
-    <span class="n">aug</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span>
-                           <span class="n">sp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>          <span class="c1"># dµ placeholder</span>
-                           <span class="n">sp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">l_max</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>     <span class="c1"># dJₗ placeholder</span>
-    <span class="n">acc_f</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">coeffs_sym</span><span class="p">),</span> <span class="n">aug</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>  <span class="c1"># :contentReference[oaicite:13]{index=13}</span>
-    <span class="n">f_full</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">,</span><span class="n">vz</span><span class="p">]),</span> <span class="n">aug</span><span class="p">)</span>
-    <span class="n">A</span> <span class="o">=</span> <span class="n">f_full</span><span class="o">.</span><span class="n">jacobian</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">,</span><span class="n">vz</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="o">*</span><span class="n">coeffs_sym</span><span class="p">])</span>
-    <span class="n">A_f</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">,</span><span class="n">vz</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">coeffs_sym</span><span class="p">),</span> <span class="n">A</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">acc_f</span><span class="p">,</span> <span class="n">A_f</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="id14">
-<h2>観測量と観測モデルの定式化<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
-<p>本課題で扱う観測は <strong>レンジ</strong> と <strong>レンジレート</strong> の2種類のみです。<br />
-いずれも「<strong>地上局 ↔ 衛星</strong>」間の瞬時幾何距離・相対速度に基づき、電波往復時間や往復位相から計算された値と考えます（大気・相対論補正などの細かい修正項は今回は無視）。<br />
-以下では <strong>ECI 座標系</strong> を基準に、数式、偏微分（<span class="math notranslate nohighlight">\(H\)</span>行列）の導出手順を詳述します。</p>
-<hr class="docutils" />
-<section id="id15">
-<h3>1. 座標系と記号<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
-<div class="pst-scrollable-table-container"><table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>記号</p></th>
-<th class="head"><p>定義 (ECI 基準)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf r\)</span></p></td>
-<td><p>衛星位置ベクトル <span class="math notranslate nohighlight">\([x,\,y,\,z]^{\mathsf T}\)</span></p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf v\)</span></p></td>
-<td><p>衛星速度ベクトル <span class="math notranslate nohighlight">\([\dot x,\,\dot y,\,\dot z]^{\mathsf T}\)</span></p></td>
-</tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf r_s(t)\)</span></p></td>
-<td><p>地上局位置ベクトル</p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf v_s(t)\)</span></p></td>
-<td><p>地上局速度ベクトル</p></td>
-</tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\boldsymbol ω_\oplus\)</span></p></td>
-<td><p>地球自転角速度 <span class="math notranslate nohighlight">\([0,\,0,\,ω_\oplus]^{\mathsf T}\)</span></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>地上局の ECI 座標は <strong>ECEF → ECI</strong> 回転で</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf r_s(t)=
-\mathbf C_{\text{ECI}\leftarrow\text{ECEF}}\!\bigl(θ(t)\bigr)\,\mathbf r_{s,0},
-\qquad
-θ(t)=ω_\oplus t,
-\]</div>
-<p>速度は</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf v_s(t)=\boldsymbol ω_\oplus \times \mathbf r_s(t).
-\]</div>
-</section>
-<hr class="docutils" />
-<section id="id16">
-<h3>2. 観測モデル<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
-<section id="rho">
-<h4>2.1 レンジ <span class="math notranslate nohighlight">\(\rho\)</span><a class="headerlink" href="#rho" title="Link to this heading">#</a></h4>
-<div class="math notranslate nohighlight">
-\[
-\rho =\bigl\|\mathbf r-\mathbf r_s\bigr\| 
-      =\sqrt{(\mathbf r-\mathbf r_s)\!\cdot(\mathbf r-\mathbf r_s)}.
-\]</div>
-</section>
-<section id="dot-rho">
-<h4>2.2 レンジレート <span class="math notranslate nohighlight">\(\dot\rho\)</span><a class="headerlink" href="#dot-rho" title="Link to this heading">#</a></h4>
-<div class="math notranslate nohighlight">
-\[
-\dot\rho
-      =\frac{(\mathbf r-\mathbf r_s)\cdot(\mathbf v-\mathbf v_s)}{\rho}.
-\]</div>
-<p>ただし、以下の仮定を置いている。</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>往復遅延（lc / 2）の効果は「即時距離」として近似</p></li>
-<li><p>相対論・大気遅延・重力赤方偏移などは無視</p></li>
-</ul>
-</div></blockquote>
-</section>
-</section>
-<hr class="docutils" />
-<section id="id17">
-<h3>3. 線形化と設計行列（偏微分）<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
-<p>観測ベクトル<br />
-$<span class="math notranslate nohighlight">\(
-\mathbf h(\mathbf x,t)=
-\begin{bmatrix}
-\rho \\ \dot\rho
-\end{bmatrix},\qquad
-\)</span>$</p>
-<div class="math notranslate nohighlight">
-\[
-\mathbf x
-=\bigl[\,\underbrace{\mathbf r,\mathbf v}_{6},\;
-        μ,\;J_1, J_2,\;C_D,\;
-        \mathbf r_{GS1},\;\mathbf r_{GS2},\;\mathbf r_{GS3}\bigr]^{\mathsf T}
-\in\mathbb R^{19}.
-\]</div>
-<section id="id18">
-<h4>3.1 位置・速度に関する偏微分<a class="headerlink" href="#id18" title="Link to this heading">#</a></h4>
-<p>まず <span class="math notranslate nohighlight">\(\mathbf Δ=\mathbf r-\mathbf r_s,\quad \mathbf δ=\mathbf v-\mathbf v_s\)</span> とおくとレンジに関しては、</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{\partial\rho}{\partial\mathbf r}
-      =\frac{\mathbf Δ^{\mathsf T}}{\rho},\quad
-\frac{\partial\rho}{\partial\mathbf v}
-      =\mathbf 0_{1\times3}.
-\]</div>
-<p>続いて、レンジレートに関しては、</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\dot\rho =\frac{\mathbf Δ\cdot\mathbf δ}{\rho}
-       \quad\Longrightarrow\quad
-\begin{aligned}
-\frac{\partial\dot\rho}{\partial\mathbf r}
- &amp;=
-\frac{1}{\rho}
-\Bigl(\mathbf δ^{\mathsf T}-\dot\rho\,\frac{\mathbf Δ^{\mathsf T}}{\rho}\Bigr),\\[6pt]
-\frac{\partial\dot\rho}{\partial\mathbf v}
- &amp;=\frac{\mathbf Δ^{\mathsf T}}{\rho}.
-\end{aligned}
-\end{split}\]</div>
-</section>
-<section id="id19">
-<h4>3.2 地上局座標に関する偏微分<a class="headerlink" href="#id19" title="Link to this heading">#</a></h4>
-<p>ECEF → ECI 回転を <span class="math notranslate nohighlight">\(\mathbf C(θ)\)</span> とおくと<br />
-$<span class="math notranslate nohighlight">\(
-\mathbf r_s = \mathbf C\,\mathbf r_{s,0}
-\)</span><span class="math notranslate nohighlight">\(  
-ECI での微小変位は
-\)</span><span class="math notranslate nohighlight">\(
-\mathrm d\mathbf r_s = \mathbf C\,\mathrm d\mathbf r_{s,0}
-\)</span>$</p>
-<div class="math notranslate nohighlight">
-\[
-\frac{\partial\rho}{\partial\mathbf r_{s,0}}
-     = -\frac{\partial\rho}{\partial\mathbf r}\,\mathbf C,
-\qquad
-\frac{\partial\dot\rho}{\partial\mathbf r_{s,0}}
-     = -\frac{\partial\dot\rho}{\partial\mathbf r}\,\mathbf C.
-\]</div>
-<blockquote>
-<div><p>実装では <span class="math notranslate nohighlight">\(\mathbf C\)</span> が<strong>直交行列</strong>なので転置 = 逆行列が用いられる<br />
-<span class="math notranslate nohighlight">\(\mathbf C^{-1}=\mathbf C^{\mathsf T}\)</span>。</p>
-</div></blockquote>
-</section>
-<hr class="docutils" />
-<section id="mathbf-h-k">
-<h4>3.3  <span class="math notranslate nohighlight">\(\mathbf H_k\)</span><a class="headerlink" href="#mathbf-h-k" title="Link to this heading">#</a></h4>
-<p>2 行 19 列（本課題の状態次元）でブロック配置すると</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\mathbf H_k=
-\begin{bmatrix}
-\displaystyle\frac{\partial\rho}{\partial\mathbf r} &amp;
-\mathbf 0 &amp;
-\mathbf 0 &amp;
--\displaystyle\frac{\partial\rho}{\partial\mathbf r}\,\mathbf C &amp; \cdots
-\\[10pt]
-\displaystyle\frac{\partial\dot\rho}{\partial\mathbf r} &amp;
-\displaystyle\frac{\partial\dot\rho}{\partial\mathbf v} &amp;
-\mathbf 0 &amp;
--\displaystyle\frac{\partial\dot\rho}{\partial\mathbf r}\,\mathbf C &amp; \cdots
-\end{bmatrix}.
-\end{split}\]</div>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathbf 0\)</span> は μ, J2, C_D など動的パラメータに対する直接偏微分（本課題ではゼロ）。</p></li>
-<li><p><span class="math notranslate nohighlight">\(\cdots\)</span> は推定対象でない他局座標列に対応する 0 ブロック。</p></li>
-</ul>
-</section>
-</section>
-<hr class="docutils" />
-<section id="id20">
-<h3>4. 観測ノイズと共分散<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
-<p>観測雑音は平均 0，分散既知のガウス白色雑音と仮定する。
-今回は</p>
-<div class="math notranslate nohighlight">
-\[
-  \sigma_\rho = 10^{-2}\,\text{m},\qquad
-  \sigma_{\dot\rho} = 10^{-3}\,\text{m s}^{-1}.
-\]</div>
-<p>として、共分散行列は以下のように定義する。</p>
-<div class="math notranslate nohighlight">
-\[
-    \mathbf R = \operatorname{diag}\!\bigl(\sigma_\rho^{2},\;\sigma_{\dot\rho}^{2}\bigr).
-\]</div>
-</section>
-<section id="id21">
-<h3>5. 実装メモ<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
-<ol class="arabic simple">
-<li><p><strong>行列形で計算</strong>することで <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> のブロードキャストが有効になり、高速。</p></li>
-<li><p>偏微分は常に <strong>ECI 系</strong> で評価し、地上局座標偏微分のみ <span class="math notranslate nohighlight">\(\mathbf C^{\mathsf T}\)</span> で換算。</p></li>
-</ol>
-</section>
-<hr class="docutils" />
-<section id="id22">
-<h3>6. まとめ<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>観測モデルはユークリッド距離とその時間微分のみで単純だが、  <strong>地球自転で動く地上局の位置・速度</strong> を正しく扱う点が今回のポイント。</p></li>
-<li><p>線形化により得られる <span class="math notranslate nohighlight">\(\mathbf H_k\)</span> はバッチ・カルマン双方で共通に使用できる。</p></li>
-</ul>
-</section>
 </section>
 </section>
 
@@ -1193,7 +714,7 @@ ECI での微小変位は
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1202,15 +723,15 @@ ECI での微小変位は
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">5. 軌道決定（Orbit Determination）</p>
+        <p class="prev-next-title">5.1) 軌道決定問題の定式化</p>
       </div>
     </a>
     <a class="right-next"
-       href="../appendix/appendix.html"
+       href="03.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Appendix</p>
+        <p class="prev-next-title">5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1223,50 +744,16 @@ ECI での微小変位は
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.1.2.1 観測量</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eci-earth-centric-inertial">5.1.2.2 初期状態量 / ECI(Earth Centric Inertial)座標系</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.3 物理パラメータ初期値</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ecef-earth-centric-earth-fixed">1.3 地上局座標 / ECEF(Earth Centric Earth Fixed)座標系</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2. 状態ベクトル</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3. 観測モデル</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4. 推定ケース</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">5. 検討事項</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#j-2"><span class="math notranslate nohighlight">\(J_2\)</span> 摂動加速度の導出</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vs">1.  理想球 vs. 扁平地球</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.  重力ポテンシャルの球面調和展開</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">3.  <span class="math notranslate nohighlight">\(J_2\)</span> 項のみ抽出</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">4.  勾配を取って加速度へ</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">5.  直感的な影響</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">6.  まとめ</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">観測量と観測モデルの定式化</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1. 座標系と記号</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">2. 観測モデル</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rho">2.1 レンジ <span class="math notranslate nohighlight">\(\rho\)</span></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dot-rho">2.2 レンジレート <span class="math notranslate nohighlight">\(\dot\rho\)</span></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">3. 線形化と設計行列（偏微分）</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">3.1 位置・速度に関する偏微分</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">3.2 地上局座標に関する偏微分</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mathbf-h-k">3.3  <span class="math notranslate nohighlight">\(\mathbf H_k\)</span></a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">4. 観測ノイズと共分散</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">5. 実装メモ</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">6. まとめ</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">5.2.1) （復習）線形観測モデル</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.2.2) 最小二乗法（Least Square Method）：</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weighted-least-square-method">5.2.3) 重み付き最小二乗法（Weighted Least Square Method）：</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.2.4) 例題</a></li>
 </ul>
   </nav></div>
 
@@ -1281,7 +768,7 @@ ECI での微小変位は
   <div class="footer-item">
     
 <p class="component-author">
-By Hal Ohki/Yuto Nakagawa/Sho Nishimura
+By Sho Nishimura
 </p>
 
   </div>
@@ -1291,7 +778,7 @@ By Hal Ohki/Yuto Nakagawa/Sho Nishimura
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2025.
       <br/>
     
   </p>
@@ -1315,8 +802,8 @@ By Hal Ohki/Yuto Nakagawa/Sho Nishimura
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

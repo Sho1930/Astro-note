@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>姿勢決定（Attitude Determination） &#8212; Hands-On Astrodynamics tutorial</title>
   
@@ -14,72 +15,61 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../../_static/proof.css?v=b4b7a797" />
-    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
-    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-DVQ7NZ8CYZ"></script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'G-DVQ7NZ8CYZ');
-            </script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'G-DVQ7NZ8CYZ');
-            </script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/01/04';</script>
-    <link rel="icon" href="../../_static/rocket.ico"/>
+    <link rel="shortcut icon" href="../../_static/rocket.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Appendix" href="../appendix/appendix.html" />
+    <link rel="next" title="5. 統計的軌道決定（Statistical Orbit Determination）" href="../05/01.00.html" />
     <link rel="prev" title="剛体のキネマティクス II" href="03.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -90,23 +80,28 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -128,20 +123,12 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -157,8 +144,6 @@
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
-  
-    
   
 
 <a class="navbar-brand logo" href="../../index.html">
@@ -177,18 +162,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -199,7 +173,7 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="01.00.html">1. キネマティクス（Kinematics）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01.00.html">1. キネマティクス（Kinematics）</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="02.html">剛体のキネマティクス I</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03.html">剛体のキネマティクス II</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">姿勢決定（Attitude Determination）</a></li>
@@ -210,11 +184,18 @@
 
 
 </ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05/01.00.html">5. 統計的軌道決定（Statistical Orbit Determination）</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05/01.html">5.1) 軌道決定問題の定式化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05/02.html">5.2) 最小二乗法 (Least Square Method)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05/03.html">5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05/07.html">5.7) Uncertainty Propagation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../appendix/quotes.html">名言集</a></li>
 </ul>
-</details></li>
+</li>
 </ul>
 
     </div>
@@ -230,7 +211,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -239,14 +220,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -256,37 +237,6 @@
         <div class="header-article-item">
 
 <div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-launch-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
-    <i class="fas fa-rocket"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="https://colab.research.google.com/github/Sho1930/Astro-note/blob/main/notebooks/01/04.ipynb" target="_blank"
-   class="btn btn-sm dropdown-item"
-   title="Launch on Colab"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  
-    <img alt="Colab logo" src="../../_static/images/logo_colab.png">
-  </span>
-<span class="btn__text-container">Colab</span>
-</a>
-</li>
-      
-  </ul>
-</div>
-
 
 
 
@@ -347,7 +297,7 @@
       
       
       
-      <li><a href="../../_sources/notebooks/01/04.ipynb" target="_blank"
+      <li><a href="../../_sources/notebooks/01/04.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -357,7 +307,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -402,10 +352,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -413,14 +363,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -458,10 +408,10 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="attitude-determination">
-<h1>姿勢決定（Attitude Determination）<a class="headerlink" href="#attitude-determination" title="Link to this heading">#</a></h1>
+<h1>姿勢決定（Attitude Determination）<a class="headerlink" href="#attitude-determination" title="Permalink to this heading">#</a></h1>
 <p>いよいよ、<strong>姿勢決定</strong>の分野に足を踏み入れていく。ここでは、太陽の方向、磁場の向き、星の位置など、方向を表す複数の観測量を取得し、宇宙機の3次元姿勢を算出することに焦点を当てる。つまり、宇宙機座標系と基準座標系の両方で既知のベクトルを活用し、「宇宙機が基準座標系から見て、どの方向を向いているか？」を特定する手法である。</p>
 <p>本記事では、姿勢決定分野の基礎となる古典的および最新のアルゴリズムを紹介する。扱う内容は以下の通り。</p>
 <div class="note admonition">
@@ -489,20 +439,14 @@ q-Methodを最適化し、リアルタイム処理と高速計算に特化した
 宇宙空間における剛体の回転運動を支配する数学的性質を習得する。</p></li>
 </ul>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import Relevant Libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">plotly.offline</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_notebook_mode</span><span class="p">,</span> <span class="n">iplot</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import Relevant Libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">init_notebook_mode</span><span class="p">,</span> <span class="n">iplot</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">quaternion_to_DCM</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">quaternion_to_DCM</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Converts a quaternion to a direction cosine matrix (DCM).</span>
 
@@ -542,11 +486,7 @@ q-Methodを最適化し、リアルタイム処理と高速計算に特化した
     <span class="k">return</span> <span class="n">C</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">DCM_to_quaternion</span><span class="p">(</span><span class="n">dcm</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">DCM_to_quaternion</span><span class="p">(</span><span class="n">dcm</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Converts a Direction Cosine Matrix (DCM) to a quaternion using a method to ensure robustness against numerical issues.</span>
 <span class="sd">    </span>
@@ -616,13 +556,12 @@ q-Methodを最適化し、リアルタイム処理と高速計算に特化した
     <span class="k">return</span> <span class="n">q</span>
 </pre></div>
 </div>
-</div>
-</div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>4.1) 姿勢決定問題の概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1>4.1) 姿勢決定問題の概要<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h1>
 <p><strong>姿勢決定</strong>とは、姿勢センサの測定結果を利用して、基準座標系に対する物体の姿勢を算出することである。宇宙機を例に取ると、太陽方向ベクトル・恒星方向ベクトル・磁場ベクトルなど複数のベクトルが観測量として得られる。特定時刻に得られた複数の観測量から、3次元の姿勢を求める問題を<strong>Deteriministic attitude estimation problem</strong>と呼ぶ。一方で、時系列の観測量やレート測定（e.g. <a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AD%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97">ジャイロスコープ</a>）を利用して、3次元の姿勢を求める問題を、<strong>Dynamics attitude estimation problem</strong>、<strong>Attitude filter solution</strong>などと呼ぶ。この問題を扱うには動的な手法（e.g. <a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%82%AB%E3%83%AB%E3%83%9E%E3%83%B3%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC">カルマンフィルタ</a>）は推定理論を必要とするため、別のトピックで扱うこととする。
 本稿では、前者の<strong>Deteriministic attitude estimation problem</strong>、つまり同時刻に観測されたデータのみを用いて姿勢を静的に決定する問題を扱っていく。</p>
+<!-- #region -->
 <p>姿勢決定の目的は、<strong>慣性座標系における既知の基準ベクトル</strong>と、<strong>機体座標系で計測されたベクトル</strong>を対応付けることで、宇宙機の3次元姿勢を算出することである。
 姿勢は通常、<strong>方向余弦行列（Direction Cosine Matrix, DCM）</strong> <span class="math notranslate nohighlight">\([\mathcal{B}\mathcal{N}]\)</span> によって表され、この行列は慣性座標系のベクトル（<span class="math notranslate nohighlight">\(\mathcal{^N}\hat{v}\)</span>）を機体座標系のベクトル（<span class="math notranslate nohighlight">\(\mathcal{^B}\hat{v}\)</span>）へと変換する。</p>
 <p>ここで、各センサの計測値は、宇宙機の3次元姿勢に関する<strong>部分的な情報</strong>しか提供しない。具体的には、1つのセンサ計測値が持つのは2自由度の情報であり、3自由度の姿勢を決定できない。つまり、完全な姿勢を特定するためには、<strong>複数の独立した観測</strong>が必要である。この問題では、<strong>ノイズを含む機体座標系における複数のセンサ計測値</strong>と、<strong>正確で既知の慣性座標系の基準ベクトル</strong>との対応関係を扱う。</p>
@@ -679,9 +618,10 @@ q-Methodを最適化し、リアルタイム処理と高速計算に特化した
   \]</div>
 </li>
 </ul>
+<!-- #endregion -->
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="triad">
-<h1>4.2) TRIAD法<a class="headerlink" href="#triad" title="Link to this heading">#</a></h1>
+<h1>4.2) TRIAD法<a class="headerlink" href="#triad" title="Permalink to this heading">#</a></h1>
 <p><strong><a class="reference external" href="https://en.wikipedia.org/wiki/Triad_method">TRIAD法</a><strong>は <strong>2つのベクトル観測</strong>を用いて、特定の時刻における宇宙機の姿勢を推定する</strong>決定論的手法</strong>である。
 この手法では、問題を簡略化するために、<strong>中間座標系（TRIAD座標系）</strong> を導入する。<br />
 このTRIAD座標系を、慣性座標系（例：恒星の方向や地磁場）および機体座標系（センサによる観測値）にそれぞれ適用することで、姿勢推定を行列計算として単純に解くことが可能となる。</p>
@@ -695,6 +635,7 @@ TRIAD法は計算負荷が非常に低いため、処理能力が限られたミ
 <li><p><strong>観測値の最適な使い分け</strong>：<br />
 TRIAD法では、最も精度の高い観測（通常は太陽方向）を<strong>主参照軸（primary axis)<strong>として使用し、磁場方向のような精度が劣る観測値は</strong>補助的な参照軸</strong>として扱える。</p></li>
 </ul>
+<!-- #region -->
 <p><strong><ins>TRIAD法のStep</ins></strong></p>
 <p><strong>1. 座標系の定義</strong></p>
 <ul class="simple">
@@ -806,11 +747,10 @@ TRIAD法では、最も精度の高い観測（通常は太陽方向）を<stron
 <li><p>誤差の大きさは、**軸-角表現(axis-angle representation)**を使って回転軸と角度を抽出することで評価できる。これにより、推定された機体座標系が真の座標系からどれだけ回転しているか（ラジアンまたは度数）を定量的に把握できる。</p></li>
 <li><p>この処理により、姿勢推定の精度を高い精度で評価することができる。</p></li>
 </ul>
+<!-- #endregion -->
 <p><strong>TRIAD法</strong>は姿勢決定における基本的な手法であり、2つのセンサ測定値を直接使用できるという点で非常にシンプルかつ有用である。特に、利用可能なデータが限られている状況において、迅速かつ信頼性の高い姿勢推定を実現するための、航空宇宙工学における基礎的ツールとなる。
 一方で、3つ以上の観測量を扱えないというデメリットがあり、任意の数の観測量を扱える<strong>q-Method</strong>, <strong>QUEST</strong>, <strong>OLAE</strong>を導入する動機となる。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">Triad</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Triad</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    TRIAD algorithm.</span>
 <span class="sd">    </span>
@@ -856,11 +796,7 @@ TRIAD法では、最も精度の高い観測（通常は太陽方向）を<stron
     <span class="k">return</span> <span class="n">B_bar_N</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 2 - TRIAD Method, Q1</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 2 - TRIAD Method, Q1</span>
 <span class="n">b1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.8190</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5282</span><span class="p">,</span> <span class="mf">0.2242</span><span class="p">])</span>
 <span class="n">b2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.3138</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1584</span><span class="p">,</span> <span class="mf">0.9362</span><span class="p">])</span>
 <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
@@ -871,19 +807,7 @@ TRIAD法では、最も精度の高い観測（通常は太陽方向）を<stron
 <span class="nb">print</span><span class="p">(</span><span class="n">B_bar_N</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rotation Matrix BN:
-[[ 0.81899104  0.45928237 -0.34396712]
- [-0.52819422  0.83763943 -0.13917991]
- [ 0.22419755  0.29566855  0.92860948]]
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 2 - TRIAD Method, Q2</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 2 - TRIAD Method, Q2</span>
 <span class="n">B_bar_B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">B_bar_N</span><span class="p">,</span> <span class="n">B_bar_N</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rotation Matrix B_bar_B:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">B_bar_B</span><span class="p">)</span>
@@ -891,19 +815,10 @@ TRIAD法では、最も精度の高い観測（通常は太陽方向）を<stron
 <span class="c1">#print(phi)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rotation Matrix B_bar_B:
-[[1.00000000e+00 5.22634982e-17 1.06527965e-18]
- [5.22634982e-17 1.00000000e+00 6.86536202e-17]
- [1.06527965e-18 6.86536202e-17 1.00000000e+00]]
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="wahba-s-problem">
-<h1>4.3) Wahba’s Problem<a class="headerlink" href="#wahba-s-problem" title="Link to this heading">#</a></h1>
+<h1>4.3) Wahba’s Problem<a class="headerlink" href="#wahba-s-problem" title="Permalink to this heading">#</a></h1>
+<!-- #region -->
 <p><strong><ins>Wahba’s Problemとは</ins></strong></p>
 <ul class="simple">
 <li><p><strong>目的</strong>:<br />
@@ -1024,11 +939,13 @@ Wahbaは、姿勢決定問題を解くための最小二乗法アプローチを
 <li><p>ノルムが<strong>ゼロでない</strong>場合、センサノイズや不正確さにより写像に誤差が生じ、<span class="math notranslate nohighlight">\(J &gt; 0\)</span>となります。</p></li>
 </ul>
 <p>Wahbaの問題は最小二乗法の考え方を姿勢決定に拡張したものであり、目的は誤差ノルムを最小化して最適なDCMを見つけることにある。</p>
+<!-- #endregion -->
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="devenport-s-q-method">
-<h1>4.4) Devenport’s q-Method<a class="headerlink" href="#devenport-s-q-method" title="Link to this heading">#</a></h1>
+<h1>4.4) Devenport’s q-Method<a class="headerlink" href="#devenport-s-q-method" title="Permalink to this heading">#</a></h1>
 <p>Devenportのq-Methodは、クォータニオンを用いて宇宙機の姿勢を決定するための強力な手法である。
 この手法は、Wahbaの問題を固有値問題に帰着させることで、効率的に最適なクォータニオン―すなわち宇宙機の姿勢を最もよく記述するクォータニオン―を求めるものである。</p>
+<!-- #region -->
 <p><strong><ins>目的</ins></strong></p>
 <ul>
 <li><p>クォータニオン <span class="math notranslate nohighlight">\(\beta = [\beta_0, \beta_1, \beta_2, \beta_3]^T\)</span> の最尤推定値を求めることが目的である。ここで：</p>
@@ -1218,11 +1135,10 @@ g'(\beta) = \beta^T[K]\beta - \lambda(\beta^T\beta - 1)
 <li><p><strong>最適なDCMの構成</strong>：得られたクォータニオンをもとに、最良の回転行列 <span class="math notranslate nohighlight">\([\bar{\mathcal{B}}\mathcal{N}]\)</span> を導出する。</p></li>
 </ol>
 <p>このようにして、DavenportのQ-Methodは線形代数・クォータニオン・最適化理論を融合させた洗練された姿勢推定アルゴリズムとなっている。ステップ6での固有値計算は計算コストが高いため、リアルタイム用途には不向きな場合もあるが、高精度な姿勢推定の基礎として広く活用されている。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<!-- #endregion -->
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">Q_method</span><span class="p">(</span><span class="n">v_b</span><span class="p">,</span> <span class="n">v_i</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">Q_method</span><span class="p">(</span><span class="n">v_b</span><span class="p">,</span> <span class="n">v_i</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Davenport&#39;s q-method</span>
 
@@ -1269,11 +1185,7 @@ g'(\beta) = \beta^T[K]\beta - \lambda(\beta^T\beta - 1)
     <span class="k">return</span> <span class="n">C_opt</span><span class="p">,</span> <span class="n">q_opt</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 3, 4 - Devenport&#39;s q-method</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 3, 4 - Devenport&#39;s q-method</span>
 <span class="n">v_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
     <span class="p">[</span><span class="mf">0.8273</span><span class="p">,</span> <span class="mf">0.5541</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0920</span><span class="p">],</span>
     <span class="p">[</span><span class="o">-</span><span class="mf">0.8285</span><span class="p">,</span> <span class="mf">0.5522</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0955</span><span class="p">]</span>
@@ -1295,19 +1207,10 @@ g'(\beta) = \beta^T[K]\beta - \lambda(\beta^T\beta - 1)
 <span class="nb">print</span><span class="p">(</span><span class="n">C_opt</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated Direction Cosine Matrix (DCM):
-[[ 0.41593634 -0.85489355  0.31008704]
- [-0.83375669 -0.49463674 -0.24532484]
- [ 0.36310707 -0.15649763 -0.91851061]]
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="quest">
-<h1>4.5) QUEST<a class="headerlink" href="#quest" title="Link to this heading">#</a></h1>
+<h1>4.5) QUEST<a class="headerlink" href="#quest" title="Permalink to this heading">#</a></h1>
+<!-- #region -->
 <p><strong><ins>目的</ins></strong></p>
 <ul>
 <li><p>QUEST（<strong>QUaternion ESTimator</strong>）法は、Davenport の Q-Method よりも高速に Wahba 問題を解く手法である。計算コストの高い固有値・固有ベクトル問題を直接解くことを避けている。</p></li>
@@ -1473,9 +1376,8 @@ g'(\beta) = \beta^T[K]\beta - \lambda(\beta^T\beta - 1)
 <li><p><strong>実用的な利点</strong>：数値的な高速性と高精度を兼ね備えており、リアルタイムな宇宙機の姿勢決定に最適。</p></li>
 </ol>
 <p>QUEST は、Davenport の Q-Method を精緻に改良した手法であり、精度を維持しながら計算効率を大幅に向上させている。</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">quest</span><span class="p">(</span><span class="n">v_b</span><span class="p">,</span> <span class="n">v_i</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+<!-- #endregion -->
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">quest</span><span class="p">(</span><span class="n">v_b</span><span class="p">,</span> <span class="n">v_i</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Quaternion Estimator (QUEST) according to Shuster (1981).</span>
 
@@ -1561,11 +1463,7 @@ g'(\beta) = \beta^T[K]\beta - \lambda(\beta^T\beta - 1)
     <span class="k">return</span> <span class="n">C_opt</span><span class="p">,</span> <span class="n">q_opt</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 5 - QUEST</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 5 - QUEST</span>
 <span class="n">v_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
     <span class="p">[</span><span class="mf">0.8273</span><span class="p">,</span> <span class="mf">0.5541</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0920</span><span class="p">],</span>
     <span class="p">[</span><span class="o">-</span><span class="mf">0.8285</span><span class="p">,</span> <span class="mf">0.5522</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0955</span><span class="p">]</span>
@@ -1584,42 +1482,7 @@ g'(\beta) = \beta^T[K]\beta - \lambda(\beta^T\beta - 1)
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">DCM_estimated</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ValueError</span><span class="g g-Whitespace">                                </span>Traceback (most recent call last)
-<span class="nn">セル23 を /Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb</span> in <span class="ni">&lt;cell line: 13&gt;</span><span class="nt">()</span>
-      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=6&#39;</span><span class="o">&gt;</span><span class="mi">7</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">v_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=7&#39;</span><span class="o">&gt;</span><span class="mi">8</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="p">[</span><span class="o">-</span><span class="mf">0.1517</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.9669</span><span class="p">,</span> <span class="mf">0.2050</span><span class="p">],</span>
-      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=8&#39;</span><span class="o">&gt;</span><span class="mi">9</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="p">[</span><span class="o">-</span><span class="mf">0.8393</span><span class="p">,</span> <span class="mf">0.4494</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3044</span><span class="p">]</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=9&#39;</span><span class="o">&gt;</span><span class="mi">10</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="p">])</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=11&#39;</span><span class="o">&gt;</span><span class="mi">12</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1"># Call the QUEST function</span>
-<span class="o">---&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=12&#39;</span><span class="o">&gt;</span><span class="mi">13</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">DCM_estimated</span> <span class="o">=</span> <span class="n">quest</span><span class="p">(</span><span class="n">v_b</span><span class="p">,</span> <span class="n">v_i</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=14&#39;</span><span class="o">&gt;</span><span class="mi">15</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1"># Print the resulting Direction Cosine Matrix (DCM)</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=15&#39;</span><span class="o">&gt;</span><span class="mi">16</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated DCM:&quot;</span><span class="p">)</span>
-
-<span class="nn">セル23 を /Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb</span> in <span class="ni">quest</span><span class="nt">(v_b, v_i, w)</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=19&#39;</span><span class="o">&gt;</span><span class="mi">20</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">1e-4</span>  <span class="c1"># 10e-5 in MATLAB is 1e-4</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=21&#39;</span><span class="o">&gt;</span><span class="mi">22</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1"># Equation (38): Compute the attitude profile matrix B.</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=22&#39;</span><span class="o">&gt;</span><span class="mi">23</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1"># v_b is 3 x n, v_i is 3 x n, and w is n-element vector.</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=23&#39;</span><span class="o">&gt;</span><span class="mi">24</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1"># Multiply each column of v_b by the corresponding weight.</span>
-<span class="o">---&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=24&#39;</span><span class="o">&gt;</span><span class="mi">25</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">B</span> <span class="o">=</span> <span class="p">(</span><span class="n">v_b</span> <span class="o">*</span> <span class="n">w</span><span class="p">)</span> <span class="o">@</span> <span class="n">v_i</span><span class="o">.</span><span class="n">T</span>   <span class="c1"># shape (3,3)</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=26&#39;</span><span class="o">&gt;</span><span class="mi">27</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1"># Equation (46): Compute vector Z.</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=27&#39;</span><span class="o">&gt;</span><span class="mi">28</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1"># MATLAB indices: Z = [B(2,3)-B(3,2); B(3,1)-B(1,3); B(1,2)-B(2,1)];</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=28&#39;</span><span class="o">&gt;</span><span class="mi">29</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=29&#39;</span><span class="o">&gt;</span><span class="mi">30</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">B</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=30&#39;</span><span class="o">&gt;</span><span class="mi">31</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">B</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=31&#39;</span><span class="o">&gt;</span><span class="mi">32</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>     <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-     <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/Users/Tetsuya/Desktop/Astro-note/notebooks/01/04.ipynb#X31sZmlsZQ%3D%3D?line=32&#39;</span><span class="o">&gt;</span><span class="mi">33</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="p">])</span>
-
-<span class="ne">ValueError</span>: operands could not be broadcast together with shapes (2,3) (2,) 
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
 
 <span class="c1"># Define the test vectors</span>
 <span class="n">v_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
@@ -1655,30 +1518,12 @@ g'(\beta) = \beta^T[K]\beta - \lambda(\beta^T\beta - 1)
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated DCM:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">DCM_quest</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time taken: </span><span class="si">{</span><span class="n">time_quest</span><span class="si">:</span><span class="s2">.12f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Davenport&#39;s Q-Method:
-Estimated DCM:
-[[ 0.415936 -0.854894  0.310087]
- [-0.833757 -0.494637 -0.245325]
- [ 0.363107 -0.156498 -0.918511]]
-Time taken: 0.000000000000 seconds
 
-QUEST Algorithm:
-Estimated DCM:
-[[ 0.415936 -0.854894  0.310087]
- [-0.833757 -0.494637 -0.245325]
- [ 0.363107 -0.156498 -0.918511]]
-Time taken: 0.000000000000 seconds
 </pre></div>
-</div>
-</div>
 </div>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="olae">
-<h1>4.6) OLAE<a class="headerlink" href="#olae" title="Link to this heading">#</a></h1>
+<h1>4.6) OLAE<a class="headerlink" href="#olae" title="Permalink to this heading">#</a></h1>
 <p><strong><ins>目的</ins></strong></p>
 <ul>
 <li><p><strong>Optimal Linear Attitude Estimator (OLAE)</strong> は、宇宙機の姿勢決定において、Wahbaの問題を直接解くのとは異なる枠組みを提供する。</p></li>
@@ -1846,7 +1691,7 @@ Time taken: 0.000000000000 seconds
 </ol>
 <hr class="docutils" />
 <p><strong><ins>Wahba の問題との比較</ins></strong></p>
-<div class="pst-scrollable-table-container"><table class="table">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>項目</strong></p></th>
 <th class="head"><p><strong>Wahba の問題 (QUEST)</strong></p></th>
@@ -1872,7 +1717,6 @@ Time taken: 0.000000000000 seconds
 </tr>
 </tbody>
 </table>
-</div>
 <hr class="docutils" />
 <p><strong><ins>まとめ</ins></strong></p>
 <ul class="simple">
@@ -1882,9 +1726,7 @@ Time taken: 0.000000000000 seconds
 <li><p>OLAE は計算効率に優れ、リアルタイムの応用や計算資源の限られたシステムに適している。</p></li>
 <li><p>QUEST や Davenport の Q-Method とは異なり、非線形最適化や固有値分解を回避するため、姿勢決定においてより単純かつ高速な代替手法を提供する。</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">olae_method</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">N_v_k</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">olae_method</span><span class="p">(</span><span class="n">B_v_k</span><span class="p">,</span> <span class="n">N_v_k</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Implements the Optimal Linear Attitude Estimator (OLAE) to estimate the rotation matrix (DCM)</span>
 <span class="sd">    from inertial frame to body frame using Classical Rodrigues Parameters (CRPs).</span>
@@ -1959,13 +1801,10 @@ Time taken: 0.000000000000 seconds
     <span class="n">C</span> <span class="o">=</span> <span class="n">CRP_to_DCM</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">C</span>
+
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 5 - QUEST</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concept Check 5 - QUEST</span>
 <span class="n">v_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
     <span class="p">[</span><span class="mf">0.8273</span><span class="p">,</span> <span class="mf">0.5541</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0920</span><span class="p">],</span>
     <span class="p">[</span><span class="o">-</span><span class="mf">0.8285</span><span class="p">,</span> <span class="mf">0.5522</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0955</span><span class="p">]</span>
@@ -1983,16 +1822,6 @@ Time taken: 0.000000000000 seconds
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estimated DCM:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">DCM_estimated</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 </pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated DCM:
-[[ 0.416219 -0.854762  0.31007 ]
- [-0.833608 -0.494901 -0.245298]
- [ 0.363125 -0.156379 -0.918524]]
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 
@@ -2023,7 +1852,7 @@ Time taken: 0.000000000000 seconds
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -2036,11 +1865,11 @@ Time taken: 0.000000000000 seconds
       </div>
     </a>
     <a class="right-next"
-       href="../appendix/appendix.html"
+       href="../05/01.00.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Appendix</p>
+        <p class="prev-next-title">5. 統計的軌道決定（Statistical Orbit Determination）</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -2052,7 +1881,6 @@ Time taken: 0.000000000000 seconds
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -2082,7 +1910,7 @@ Time taken: 0.000000000000 seconds
   <div class="footer-item">
     
 <p class="component-author">
-By Hal Ohki/Yuto Nakagawa/Sho Nishimura
+By Sho Nishimura
 </p>
 
   </div>
@@ -2092,7 +1920,7 @@ By Hal Ohki/Yuto Nakagawa/Sho Nishimura
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2025.
       <br/>
     
   </p>
@@ -2116,8 +1944,8 @@ By Hal Ohki/Yuto Nakagawa/Sho Nishimura
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

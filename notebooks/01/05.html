@@ -1,0 +1,814 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Tensor-product discretizations &#8212; Hands-On Astrodynamics tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/01/05';</script>
+    <link rel="shortcut icon" href="../../_static/rocket.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Appendix" href="../appendix/appendix.html" />
+    <link rel="prev" title="姿勢決定（Attitude Determination）" href="04.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Hands-On Astrodynamics tutorial - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Hands-On Astrodynamics tutorial - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    はじめに
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01.00.html">1. キネマティクス（Kinematics）</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="02.html">剛体のキネマティクス I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.html">剛体のキネマティクス II</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="04.html">姿勢決定（Attitude Determination）</a></li>
+
+
+
+
+
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Tensor-product discretizations</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/quotes.html">名言集</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/Sho1930/Astro-note/blob/main/notebooks/01/05.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Sho1930/Astro-note" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Sho1930/Astro-note/issues/new?title=Issue%20on%20page%20%2Fnotebooks/01/05.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/01/05.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../../_sources/notebooks/01/05.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Tensor-product discretizations</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-on-grids">Functions on grids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameterized-surfaces">Parameterized surfaces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-derivatives">Partial derivatives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <script data-main="../_static/proof.js" src="../_static/require.js"></script><section id="tensor-product-discretizations">
+<span id="section-twodim-tensorprod"></span><h1>Tensor-product discretizations<a class="headerlink" href="#tensor-product-discretizations" title="Permalink to this heading">#</a></h1>
+<p>As you learned when starting double integration in vector calculus, the simplest extension of an interval to two dimensions is a rectangle. We will use a particular notation for rectangles:</p>
+<div class="math notranslate nohighlight" id="equation-rectangletp">
+<span class="eqno">(17)<a class="headerlink" href="#equation-rectangletp" title="Permalink to this equation">#</a></span>\[  [a,b] \times [c,d] = \bigl\{ (x,y)\in\mathbb{R}^2 : a\le x \le b,\; c\le y \le d \bigr\}.\]</div>
+<p id="index-0">The $\times$ in this notation is called a <strong>tensor product</strong>, and a rectangle is the fundamental example of a <strong>tensor-product domain</strong>. The implication of the tensor product is that each variable independently varies over a fixed set. The simplest three-dimensional tensor-product domain is the cuboid $[a,b]\times[c,d]\times[e,f]$. When the interval is the same in each dimension (that is, the region is a square or a cube), we may write $[a,b]^2$ or $[a,b]^3$. We will limit our discussion to two dimensions henceforth.</p>
+<p>The discretization of a two-dimensional tensor-product domain is straightforward.</p>
+<section id="functions-on-grids">
+<h2>Functions on grids<a class="headerlink" href="#functions-on-grids" title="Permalink to this heading">#</a></h2>
+<p>The double indexing of the grid set <code class="xref eq docutils literal notranslate"><span class="pre">rectangledisc</span></code> implies an irresistible connection to matrices. Corresponding to any function  $f(x,y)$ defined on the rectangle is an $(m+1)\times(n+1)$ matrix $\mathbf{F}$ defined by collecting the values of $f$ at the points in the grid. This transformation of a function to a matrix is so important that we give it a formal name:</p>
+<div class="math notranslate nohighlight" id="equation-fun2mtx">
+<span class="eqno">(18)<a class="headerlink" href="#equation-fun2mtx" title="Permalink to this equation">#</a></span>\[\begin{split}\mathbf{F} = \mtx(f) = \Bigl[f(x_i,y_j)\Bigr]_{\substack{i=0,\ldots,m\\j=0,\ldots,n}}.\end{split}\]</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>There is potential for confusion because the first dimension of a matrix varies in the vertical direction, while the first coordinate $x$ varies horizontally. In fact, the Julia plotting routines we use expect the transpose of this arrangement, so that $x$ varies along columns and $y$ along rows.</p>
+</div>
+<div class='demo'><p>Here is the grid from <code class="xref std std-numref docutils literal notranslate"><span class="pre">Example</span> <span class="pre">{number}</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w">   </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">   </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For a given $f(x,y)$ we can find $\operatorname{mtx}(f)$ by using a comprehension syntax.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="nb">π</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">-</span><span class="n">y</span><span class="p">)</span>
+<span class="n">F</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The plots of this section look better using a different graphics engine on the back end:</p>
+<div class="cell tag_hide-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">plotlyjs</span><span class="p">();</span><span class="w">  </span><span class="c"># use better 3D renderer</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-column sd-col-7 sd-col-xs-7 sd-col-sm-7 sd-col-md-7 sd-col-lg-7 docutils">
+<p>We can make a nice plot of the function by first choosing a much finer grid. However, the contour and surface plotting functions expect the <em>transpose</em> of mtx($f$).</p>
+</div>
+<div class="sd-col sd-d-flex-row sd-col-5 sd-col-xs-5 sd-col-sm-5 sd-col-md-5 sd-col-lg-5 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<p class="sd-card-text">To emphasize departures from a zero level, use a colormap such as <code class="docutils literal notranslate"><span class="pre">redsblues</span></code>, and use <code class="docutils literal notranslate"><span class="pre">clims</span></code> to set balanced color differences.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span><span class="p">;</span><span class="w">   </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w">   </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">F</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">];</span>
+
+<span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">F</span><span class="o">&#39;</span><span class="p">,</span><span class="n">levels</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">fill</span><span class="o">=</span><span class="nb">true</span><span class="p">,</span><span class="n">aspect_ratio</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="n">color</span><span class="o">=</span><span class="ss">:redsblues</span><span class="p">,</span><span class="n">clims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">    </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">surface</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">F</span><span class="o">&#39;</span><span class="p">,</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">leg</span><span class="o">=</span><span class="ss">:none</span><span class="p">,</span>
+<span class="w">    </span><span class="n">color</span><span class="o">=</span><span class="ss">:redsblues</span><span class="p">,</span><span class="n">clims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+<span class="w">    </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="n">zlabel</span><span class="o">=</span><span class="s">&quot;f(x,y)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div></section>
+<section id="parameterized-surfaces">
+<h2>Parameterized surfaces<a class="headerlink" href="#parameterized-surfaces" title="Permalink to this heading">#</a></h2>
+<p>We are not limited to rectangles by tensor products. Many regions and surfaces may be parameterized by means of $x(u,v)$, $y(u,v)$, and $z(u,v)$, where $u$ and $v$ lie in a rectangle. Such “logically rectangular” surfaces include the unit disk,</p>
+<div class="math notranslate nohighlight" id="equation-unitdiskparam">
+<span class="eqno">(19)<a class="headerlink" href="#equation-unitdiskparam" title="Permalink to this equation">#</a></span>\[\begin{split}\left\{
+\begin{aligned}
+x &amp;= u \cos v, \\
+y &amp;= u \sin v,\\
+\end{aligned}
+\right.
+\qquad \qquad
+\left.
+\begin{aligned}
+0 &amp; \le u &lt; 1, \\
+0 &amp;\le v \le 2\pi,
+\end{aligned}
+\right.\end{split}\]</div>
+<p>and the unit sphere,</p>
+<div class="math notranslate nohighlight" id="equation-spheredomain">
+<span class="eqno">(20)<a class="headerlink" href="#equation-spheredomain" title="Permalink to this equation">#</a></span>\[\begin{split}\left\{
+\begin{aligned}
+x &amp;= \cos u \sin v,\\
+y &amp;= \sin u \sin v,\\
+z &amp;= \cos v,
+\end{aligned}
+\right.
+\qquad \qquad
+  \left.
+\begin{aligned}
+0 &amp; \le u &lt; 2\pi, \\
+0 &amp;\le v \le \pi.
+\end{aligned}
+\right.\end{split}\]</div>
+<div class='demo'><p>For a function given in polar form, such as $f(r,\theta)=1-r^4$, construction of a function over the unit disk is straightforward using a grid in $(r,\theta)$ space.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">41</span><span class="p">)</span>
+<span class="n">θ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="nb">π</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">81</span><span class="p">)</span>
+<span class="n">F</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mi">1</span><span class="o">-</span><span class="n">r</span><span class="o">^</span><span class="mi">4</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">θ</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">θ</span><span class="w"> </span><span class="p">]</span>
+
+<span class="n">surface</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="n">θ</span><span class="p">,</span><span class="n">F</span><span class="o">&#39;</span><span class="p">,</span><span class="n">legend</span><span class="o">=</span><span class="ss">:none</span><span class="p">,</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="ss">:viridis</span><span class="p">,</span>
+<span class="w">    </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;r&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;θ&quot;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;A polar function&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Of course, we are used to seeing such plots over the $(x,y)$ plane, not the $(r,\theta)$ plane. For this we create matrices for the coordinate functions $x$ and $y$.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">r</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">θ</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">θ</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">θ</span><span class="w"> </span><span class="p">]</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">r</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">θ</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="n">θ</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">θ</span><span class="w"> </span><span class="p">]</span>
+
+<span class="n">surface</span><span class="p">(</span><span class="n">X</span><span class="o">&#39;</span><span class="p">,</span><span class="n">Y</span><span class="o">&#39;</span><span class="p">,</span><span class="n">F</span><span class="o">&#39;</span><span class="p">,</span><span class="n">legend</span><span class="o">=</span><span class="ss">:none</span><span class="p">,</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="ss">:viridis</span><span class="p">,</span>
+<span class="w">    </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Function on the unit disk&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>In such functions the values along the line $r=0$ must be identical, and the values on the line $\theta=0$ should be identical to those on $\theta=2\pi$. Otherwise the interpretation of the domain as the unit disk is nonsensical. If the function is defined in terms of $x$ and $y$, then those can be defined in terms of $r$ and $\theta$ using <a class="reference internal" href="#equation-unitdiskparam">(19)</a>.</p>
+<p>On the unit sphere, we can use color to indicate a function value. Here is a plot of the function $f(x,y,z) = x y z^3$. Since we need coordinate function matrices for the plot, we also use them to evaluate $f$ on the grid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">θ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="nb">π</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">61</span><span class="p">)</span>
+<span class="n">ϕ</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">π</span><span class="p">,</span><span class="n">length</span><span class="o">=</span><span class="mi">51</span><span class="p">)</span>
+
+<span class="n">X</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">θ</span><span class="p">)</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">ϕ</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">θ</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">θ</span><span class="p">,</span><span class="w"> </span><span class="n">ϕ</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ϕ</span><span class="w"> </span><span class="p">]</span>
+<span class="n">Y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="n">θ</span><span class="p">)</span><span class="o">*</span><span class="n">sin</span><span class="p">(</span><span class="n">ϕ</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">θ</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">θ</span><span class="p">,</span><span class="w"> </span><span class="n">ϕ</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ϕ</span><span class="w"> </span><span class="p">]</span>
+<span class="n">Z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">cos</span><span class="p">(</span><span class="n">ϕ</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">θ</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">θ</span><span class="p">,</span><span class="w"> </span><span class="n">ϕ</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">ϕ</span><span class="w"> </span><span class="p">]</span>
+
+<span class="n">F</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="nd">@.</span><span class="w"> </span><span class="n">X</span><span class="o">*</span><span class="n">Y</span><span class="o">*</span><span class="n">Z</span><span class="o">^</span><span class="mi">3</span>
+<span class="n">surface</span><span class="p">(</span><span class="n">X</span><span class="o">&#39;</span><span class="p">,</span><span class="n">Y</span><span class="o">&#39;</span><span class="p">,</span><span class="n">Z</span><span class="o">&#39;</span><span class="p">,</span><span class="n">fill_z</span><span class="o">=</span><span class="n">F</span><span class="o">&#39;</span><span class="p">,</span><span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">leg</span><span class="o">=</span><span class="ss">:none</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="ss">:viridis</span><span class="p">,</span>
+<span class="w">    </span><span class="n">xlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span><span class="mf">1.1</span><span class="p">),</span><span class="n">ylims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span><span class="mf">1.1</span><span class="p">),</span><span class="n">zlims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span><span class="mf">1.1</span><span class="p">),</span>
+<span class="w">    </span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">,</span><span class="n">zlabel</span><span class="o">=</span><span class="s">&quot;z&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="n">title</span><span class="o">=</span><span class="s">&quot;Function on the unit sphere&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div></section>
+<section id="partial-derivatives">
+<h2>Partial derivatives<a class="headerlink" href="#partial-derivatives" title="Permalink to this heading">#</a></h2>
+<p>In order to solve boundary-value problems in one dimension by collocation, we replaced an unknown function $u(x)$ by a vector of its values at selected nodes and discretized the derivatives in the equation using differentiation matrices. We use the same ideas in the 2D case: we represent a function by its values on a grid, and multiplication by differentiation matrices to construct discrete analogs of the partial derivatives $\frac{\partial u}{\partial x}$ and $\frac{\partial u}{\partial y}$.</p>
+<p id="index-1">Consider first $\frac{\partial u}{\partial x}$. In the definition of this partial derivative, the independent variable $y$ is held constant. Note that $y$ is constant within each column of $\mathbf{U} = \mtx(u)$. Thus, we may regard a single column $\mathbf{u}_j$ as a discretized function of $x$ and, as usual, left-multiply by a differentiation matrix $\mathbf{D}_x$ such as <code class="xref eq docutils literal notranslate"><span class="pre">diffmat12b</span></code>. We need to do this for each column of $\mathbf{U}$ by $\mathbf{D}_x$, which is accomplished by $\mathbf{D}_x \mathbf{U}$. Altogether,</p>
+<div class="math notranslate nohighlight" id="equation-partfpartx">
+<span class="eqno">(21)<a class="headerlink" href="#equation-partfpartx" title="Permalink to this equation">#</a></span>\[  \mtx\left( \frac{\partial u}{\partial x} \right) \approx \mathbf{D}_x \, \mtx(u).\]</div>
+<p>This relation is not an equality, because the left-hand side is a discretization of the exact partial derivative, while the right-hand side is a
+finite-difference approximation. Yet it is a natural analog for partial differentiation when we are given not $u(x,y)$ but only the grid value matrix $\mathbf{U}$.</p>
+<p>Now we tackle $\frac{\partial u}{\partial y}$. Here the inactive coordinate $x$ is held fixed within each <em>row</em> of $\mathbf{U}$. However, if we transpose $\mathbf{U}$, then the roles of rows and columns are swapped, and now $y$ varies independently down each column. This is analogous to the situation for the $x$-derivative, so we left-multiply by a finite-difference matrix $\mathbf{D}_y$, and then transpose the entire result to restore the roles of $x$ and $y$ in the grid. Fortunately, linear algebra allows us to express the sequence transpose–left-multiply–transpose more compactly:</p>
+<div class="math notranslate nohighlight" id="equation-partfparty">
+<span class="eqno">(22)<a class="headerlink" href="#equation-partfparty" title="Permalink to this equation">#</a></span>\[\mtx\left( \frac{\partial u}{\partial y} \right) \approx \Bigl(\mathbf{D}_y \mathbf{U}^T\Bigr)^T = \mtx(u)\, \mathbf{D}_y^T.\]</div>
+<p>Keep in mind that the differentiation matrix $\mathbf{D}_x$ is based on the discretization $x_0,\ldots,x_m$, and as such it must be $(m+1)\times (m+1)$. On the other hand, $\mathbf{D}_y$ is based on $y_0,\ldots,y_n$ and is $(n+1)\times (n+1)$. This is exactly what is needed dimensionally to make the products in <a class="reference internal" href="#equation-partfpartx">(21)</a> and <a class="reference internal" href="#equation-partfparty">(22)</a> consistent. More subtly, if the differentiation is based on equispaced grids in each variable, the value of $h$ in a formula such as <code class="xref eq docutils literal notranslate"><span class="pre">centerFD12</span></code> will be different for $\mathbf{D}_x$ and $\mathbf{D}_y$.</p>
+<div class='demo'><p>We define a function and, for reference, its two exact partial derivatives.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">u</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">sin</span><span class="p">(</span><span class="nb">π</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">-</span><span class="n">y</span><span class="p">);</span>
+<span class="n">∂u_∂x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb">π</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">πx</span><span class="o">*</span><span class="n">y</span><span class="o">-</span><span class="n">y</span><span class="p">);</span>
+<span class="n">∂u_∂y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">(</span><span class="nb">π</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="nb">π</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">-</span><span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We use an equispaced grid and second-order finite differences as implemented by <code class="docutils literal notranslate"><span class="pre">diffmat2</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">80</span><span class="p">;</span><span class="w">  </span><span class="n">x</span><span class="p">,</span><span class="n">Dx</span><span class="p">,</span><span class="n">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FNC</span><span class="o">.</span><span class="n">diffmat2</span><span class="p">(</span><span class="n">m</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]);</span>
+<span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">60</span><span class="p">;</span><span class="w">  </span><span class="n">y</span><span class="p">,</span><span class="n">Dy</span><span class="p">,</span><span class="n">_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FNC</span><span class="o">.</span><span class="n">diffmat2</span><span class="p">(</span><span class="n">n</span><span class="p">,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]);</span>
+<span class="n">mtx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="p">]</span>
+<span class="n">U</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mtx</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">∂xU</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Dx</span><span class="o">*</span><span class="n">U</span>
+<span class="n">∂yU</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">U</span><span class="o">*</span><span class="n">Dy</span><span class="o">&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we compare the exact $\frac{\partial u}{\partial y}$ with its finite-difference approximation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">M</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">maximum</span><span class="p">(</span><span class="n">abs</span><span class="p">,</span><span class="n">∂yU</span><span class="p">)</span><span class="w">    </span><span class="c"># find the range of the result</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">aspect_ratio</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">clims</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="n">M</span><span class="p">,</span><span class="n">M</span><span class="p">),</span><span class="n">xlabel</span><span class="o">=</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="n">ylabel</span><span class="o">=</span><span class="s">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">contour!</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">mtx</span><span class="p">(</span><span class="n">∂u_∂y</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">&#39;</span><span class="p">,</span><span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<span class="w">    </span><span class="n">fill</span><span class="o">=</span><span class="nb">true</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="ss">:redsblues</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;∂u/∂y&quot;</span><span class="p">)</span><span class="w">      </span>
+<span class="n">contour!</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">∂yU</span><span class="o">&#39;</span><span class="p">,</span><span class="n">subplot</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">levels</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+<span class="w">    </span><span class="n">fill</span><span class="o">=</span><span class="nb">true</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="ss">:redsblues</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s">&quot;approximation&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To the eye there is little difference to be seen, though the results have no more than a few correct digits at these discretization sizes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-julia notranslate"><div class="highlight"><pre><span></span><span class="n">exact</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mtx</span><span class="p">(</span><span class="n">∂u_∂y</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="c"># Relative difference in Frobenius norm:</span>
+<span class="n">norm</span><span class="p">(</span><span class="n">exact</span><span class="o">-</span><span class="n">∂yU</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">norm</span><span class="p">(</span><span class="n">exact</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div></section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<ol class="arabic" id="problem-tensorprod-surfcontourplot">
+<li><p>⌨ In each part, make side-by-side surface and contour plots of the given function over the given domain.</p>
+<p><strong>(a)</strong> $f(x,y) = 2y + e^{x-y}$, $\quad[0,2]\times[-1,1]$</p>
+<p><strong>(b)</strong> $f(x,y) = \tanh[5(x+xy-y^3)]$, $\quad[-2,2]\times[-1,1]$</p>
+<p><strong>(c)</strong> $f(x,y) = \exp \bigl[-6(x^2+y^2-1)^2 \bigr]$, $\quad[-2,2]\times[-2,2]$</p>
+</li>
+<li><p>⌨ For each function in <a class="reference internal" href="#problem-tensorprod-surfcontourplot"><span class="std std-ref">Exercise 1</span></a>, make side-by-side surface plots of $f_x$ and $f_y$ using Chebyshev spectral differentiation.</p></li>
+<li><p>⌨ For each function in <a class="reference internal" href="#problem-tensorprod-surfcontourplot"><span class="std std-ref">Exercise 1</span></a>, make a contour plot of the mixed derivative $f_{xy}$ using Chebyshev spectral differentiation.</p></li>
+<li><p>⌨ In each case, make a plot of the function given in polar or Cartesian coordinates over the unit disk.</p>
+<p><strong>(a)</strong> $f(r,\theta) = r^2 - 2r\cos \theta$</p>
+<p><strong>(b)</strong> $f(r,\theta) = e^{-10r^2}$</p>
+<p><strong>(c)</strong> $f(x,y) = xy - 2 \sin (x)$</p>
+</li>
+<li><p>⌨ Plot $f(x,y,z)=x y - x z - y z$ as a function on the unit sphere.</p>
+</li>
+<li><p>⌨ Plot $f(x,y,z)=x y - x z - y z$ as a function on the cylinder $r=1$ for $-1\le z \le 2$.</p>
+</li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "julia-fast"
+        },
+        kernelOptions: {
+            name: "julia-fast",
+            path: "./notebooks/01"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'julia-fast'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">姿勢決定（Attitude Determination）</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../appendix/appendix.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Appendix</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-on-grids">Functions on grids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameterized-surfaces">Parameterized surfaces</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-derivatives">Partial derivatives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sho Nishimura
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

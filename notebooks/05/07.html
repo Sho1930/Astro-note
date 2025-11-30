@@ -1,0 +1,1426 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>5.7) Uncertainty Propagation &#8212; Hands-On Astrodynamics tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/05/07';</script>
+    <link rel="shortcut icon" href="../../_static/rocket.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Appendix" href="../appendix/appendix.html" />
+    <link rel="prev" title="5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）" href="03.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Hands-On Astrodynamics tutorial - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Hands-On Astrodynamics tutorial - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    はじめに
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01/01.00.html">1. キネマティクス（Kinematics）</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01/02.html">剛体のキネマティクス I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01/03.html">剛体のキネマティクス II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01/04.html">姿勢決定（Attitude Determination）</a></li>
+
+
+
+
+
+
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01.00.html">5. 統計的軌道決定（Statistical Orbit Determination）</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.html">5.1) 軌道決定問題の定式化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.html">5.2) 最小二乗法 (Least Square Method)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.html">5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.7) Uncertainty Propagation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/quotes.html">名言集</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Sho1930/Astro-note" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Sho1930/Astro-note/issues/new?title=Issue%20on%20page%20%2Fnotebooks/05/07.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/05/07.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>5.7) Uncertainty Propagation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">5.7.1) Uncertainty Propagationとは</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.7.2) 問題設定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-covariance-lincov">5.7.3) Linear Covariance（LinCov）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-mc">5.7.4) Monte Carlo 法（MC）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">基本アイデア</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">定式化</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">特徴</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unscented-transform-u">5.7.5) Unscented Transform（U変換）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">定式化</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">特徴</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-mixture-model">5.7.6) Gaussian Mixture Model（ガウス混合分布）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">近似モデル</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lincov">伝搬の定式化（LinCov ベースの例）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">特徴</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">5.7.7) 手法の比較と使い分け</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">5.7.8) 演習問題</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uncertainty-propagation">
+<h1>5.7) Uncertainty Propagation<a class="headerlink" href="#uncertainty-propagation" title="Permalink to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">目的</p>
+<ul class="simple">
+<li><p>不確定性を表現する手法（LinCov, U変換、GMM）について、定式化を学ぶ。</p></li>
+<li><p>各手法のメリット・デメリットを整理する。</p></li>
+<li><p>実際の数値シミュレーションを通して、各手法の特性を学ぶ。</p></li>
+</ul>
+</div>
+<!-- #region -->
+<section id="id1">
+<h2>5.7.1) Uncertainty Propagationとは<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>宇宙工学ミッションにおいて、不確定性（Uncertainty）の把握は重要な意味をもつ。例えば、<a class="reference external" href="https://www.jaxa.jp/projects/ssa/">SSA</a>(Space Situational Awareness)の一貫で、ある人工衛星と軌道上の物体の衝突確率を計算したいとしよう。このとき、衝突確率を計算するためには、将来時刻における各対象物の不確実性（e.g. 誤差楕円体）を把握する必要がある。
+また、小惑星へのTouchdownを考えたとき、SRP や重力場の不確かさを含めても、着陸点分散が安全域内に収まるかを計算することは、ミッションの成立性検討に寄与する。</p>
+<p>このように、初期状態 <span class="math notranslate nohighlight">\(x(t_0)\)</span> の不確定性がダイナミクスに従って時間伝搬されたとき、ある時刻 <span class="math notranslate nohighlight">\(t\)</span> でどんな確率分布（平均・分散・形）になるかを求めることを、<strong>Uncertainty Propagation</strong> と呼ぶ。Uncertainty Propagationにおいて障壁となるのは、ダイナミクスが非線形性を持つことである。小惑星探査を例にとると、非一様な重力分布、太陽光圧や第三天体による引力などの影響を受け、そのダイナミクスは強い非線形性を持つ。そのため、仮に初期状態量が正規分布をモデル化されるとしても、時間伝播に従って誤差分布は<strong>非ガウス性</strong>や<strong>多峰性</strong>を持つようになる。このような非線形ダイナミクスにおけるUncertainty Propagationを、効率的かつ高精度に実施したいというモチベーションのもと、多くの手法が提案されてきている。本項では、以下の手法を取り扱いながら、そのメリット・デメリットを整理していく。</p>
+<ul class="simple">
+<li><p>LinCov (Linear Covariance Estimae)</p></li>
+<li><p>U変換（Unscented Transform）</p></li>
+<li><p>GMM(Gaussian Mixture Model)</p></li>
+</ul>
+<figure class="align-default" id="od">
+<a class="reference internal image-reference" href="../../_images/Uncertainty.jpg"><img alt="../../_images/Uncertainty.jpg" src="../../_images/Uncertainty.jpg" style="height: 300px;" /></a>
+</figure>
+<p>時間伝播に伴い非ガウス性を持つ誤差分布, 出典：<a class="reference external" href="https://www.sciencedirect.com/science/article/abs/pii/S0273117725001516">An efficient and global method for orbit uncertainty propagation near irregular-shaped asteroids, Xuefen Zhang et al.</a></p>
+<!-- #endregion -->
+</section>
+<section id="id2">
+<h2>5.7.2) 問題設定<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>一般的な非線形状態方程式を</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{\mathbf{x}}(t) = \mathbf{f}(\mathbf{x}(t), t) + \mathbf{w}(t)
+\]</div>
+<p>あるいは離散時間系を</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_{k+1} = \mathbf{f}(\mathbf{x}_k, t_k) + \mathbf{w}_k
+\]</div>
+<p>とする．ここで <span class="math notranslate nohighlight">\(\mathbf{w}\)</span> はプロセス雑音（摂動モデルの不確かさなど）を表す．</p>
+<p>初期状態は確率的に</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_0 \sim p(\mathbf{x}_0)
+\]</div>
+<p>とみなす．軌道決定の結果として，ガウス分布</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_0 \sim \mathcal{N}(\mathbf{x}_0, \mathbf{P}_0)
+\]</div>
+<p>を仮定することが多い．</p>
+<p>目的は，将来時刻 <span class="math notranslate nohighlight">\(t_k\)</span> における分布 <span class="math notranslate nohighlight">\(p(\mathbf{x}_k)\)</span>，
+あるいはその低次モーメント（平均 <span class="math notranslate nohighlight">\(\boldsymbol\mu_k\)</span>，共分散 <span class="math notranslate nohighlight">\(\mathbf{P}_k\)</span>）を，
+できるだけ正確かつ効率良く求めることである．</p>
+</section>
+<section id="linear-covariance-lincov">
+<h2>5.7.3) Linear Covariance（LinCov）<a class="headerlink" href="#linear-covariance-lincov" title="Permalink to this heading">#</a></h2>
+<p>非線形ダイナミクスを<strong>基準軌道近傍で線形化</strong>し，<strong>状態遷移行列 (State Transition Matrix, STM)</strong> を用いて平均・共分散を伝搬する．</p>
+<p>連続時間で</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}, t)
+\]</div>
+<p>を基準軌道 <span class="math notranslate nohighlight">\(\mathbf{x}^\ast(t)\)</span> 周りで線形化すると</p>
+<div class="math notranslate nohighlight">
+\[
+\delta \dot{\mathbf{x}} = \mathbf{A}(t)\,\delta\mathbf{x},
+\quad
+\mathbf{A}(t) = \left.\frac{\partial \mathbf{f}}{\partial \mathbf{x}}\right|_{\mathbf{x}^\ast(t)}
+\]</div>
+<p>となる．このとき STM <span class="math notranslate nohighlight">\(\mathbf{\Phi}(t,t_0)\)</span> は</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{d}{dt}\mathbf{\Phi}(t,t_0) = \mathbf{A}(t)\mathbf{\Phi}(t,t_0), \quad
+\mathbf{\Phi}(t_0,t_0) = \mathbf{I}
+\]</div>
+<p>を満たす．</p>
+<p>雑音を無視すると，平均の伝搬は</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol\mu(t) \approx \mathbf{x}^\ast(t)
+\]</div>
+<p>共分散の伝搬は</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}(t) = \mathbf{\Phi}(t,t_0)\,\mathbf{P}_0\,\mathbf{\Phi}^\mathrm{T}(t,t_0)
+\]</div>
+<p>となる．</p>
+<p>雑音共分散 <span class="math notranslate nohighlight">\(\mathbf{Q}(t)\)</span> を考える場合は Lyapunov 方程式</p>
+<div class="math notranslate nohighlight">
+\[
+\dot{\mathbf{P}} = \mathbf{A}\mathbf{P}\mathbf{A}^\mathrm{T} + \mathbf{Q}
+\]</div>
+<p>で表される．</p>
+<p>離散時間表現では</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_{k+1} \approx \mathbf{f}(\boldsymbol\mu_k),
+\quad
+\mathbf{F}_k = \left.\frac{\partial \mathbf{f}}{\partial \mathbf{x}}\right|_{\boldsymbol\mu_k}
+\]</div>
+<p>とし，</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol\mu_{k+1} = \mathbf{f}(\boldsymbol\mu_k)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}_{k+1} = \mathbf{F}_k \mathbf{P}_k \mathbf{F}_k^\mathrm{T} + \mathbf{Q}_k
+\]</div>
+<p>として共分散を伝搬する．</p>
+<ul class="simple">
+<li><p><strong>長所</strong></p>
+<ul>
+<li><p>計算コストが小さい（6 次元状態では 6×6 の STM のみ）</p></li>
+<li><p>EKF や従来の Covariance Analysis と親和性が高い</p></li>
+<li><p>「線形近似が妥当」な範囲では非常に有効</p></li>
+</ul>
+</li>
+<li><p><strong>短所</strong></p>
+<ul>
+<li><p>強い非線形性（小天体近傍，長期間の <span class="math notranslate nohighlight">\(J_2\)</span> 摂動，レゾナンスなど）下では分布の歪みや多峰性を表現できない．</p></li>
+<li><p>初期分布が非ガウスの場合の扱いが難しい．</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="monte-carlo-mc">
+<h2>5.7.4) Monte Carlo 法（MC）<a class="headerlink" href="#monte-carlo-mc" title="Permalink to this heading">#</a></h2>
+<section id="id3">
+<h3>基本アイデア<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>初期分布 <span class="math notranslate nohighlight">\(p(\mathbf{x}_0)\)</span> から多数のサンプルを生成し，</p></li>
+<li><p>各サンプルを<strong>完全な非線形方程式</strong>で時間発展させ，</p></li>
+<li><p>サンプル集合から統計量（平均，共分散，高次モーメントなど）を推定する．</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>定式化<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<ol class="arabic">
+<li><p>初期サンプリング<br />
+$<span class="math notranslate nohighlight">\(
+\mathbf{x}_0^{(i)} \sim p(\mathbf{x}_0), \quad i=1,\dots,N
+\)</span>$</p></li>
+<li><p>非線形伝搬<br />
+$<span class="math notranslate nohighlight">\(
+\mathbf{x}^{(i)}_{k+1} = \Phi_\text{NL}\big(\mathbf{x}^{(i)}_k\big)
+\)</span><span class="math notranslate nohighlight">\(
+ここで \)</span>\Phi_\text{NL}$ は数値積分を含む非線形時間発展演算子．</p></li>
+<li><p>統計量の推定<br />
+平均：</p>
+<div class="math notranslate nohighlight">
+\[
+   \hat{\boldsymbol\mu}_k = \frac{1}{N}\sum_{i=1}^N \mathbf{x}^{(i)}_k
+   \]</div>
+<p>共分散：</p>
+<div class="math notranslate nohighlight">
+\[
+   \hat{\mathbf{P}}_k = \frac{1}{N-1}\sum_{i=1}^N
+   (\mathbf{x}^{(i)}_k - \hat{\boldsymbol\mu}_k)
+   (\mathbf{x}^{(i)}_k - \hat{\boldsymbol\mu}_k)^\mathrm{T}
+   \]</div>
+</li>
+</ol>
+</section>
+<section id="id5">
+<h3>特徴<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>長所</strong></p>
+<ul>
+<li><p>非線形性が強くても「真のダイナミクス通り」に伝搬できるため，
+モデルが正しければ非常に正確．</p></li>
+<li><p>非ガウス分布，多峰性，長い尾を持つ分布なども（サンプル数を増やせば）表現可能．</p></li>
+<li><p>実装が容易．</p></li>
+</ul>
+</li>
+<li><p><strong>短所</strong></p>
+<ul>
+<li><p>高精度な統計量を得るには多くのサンプルが必要で，計算コストが大きい．</p></li>
+<li><p>Onboard でリアルタイムに用いるには重すぎることが多い．</p></li>
+<li><p>高次元状態では「次元の呪い」により必要サンプル数が急増する．</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="unscented-transform-u">
+<h2>5.7.5) Unscented Transform（U変換）<a class="headerlink" href="#unscented-transform-u" title="Permalink to this heading">#</a></h2>
+<p>UT は「少数の代表点（シグマ点）をうまく選ぶことで，
+非線形変換後の平均・共分散を高精度に近似する」手法である．UKF のコア部分に相当する．</p>
+<section id="id6">
+<h3>定式化<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<p>状態次元を <span class="math notranslate nohighlight">\(n\)</span>，現在の平均・共分散を <span class="math notranslate nohighlight">\(\boldsymbol\mu_k, \mathbf{P}_k\)</span> とする．</p>
+<ol class="arabic">
+<li><p>パラメータ</p>
+<div class="math notranslate nohighlight">
+\[
+   \lambda = \alpha^2 (n + \kappa) - n
+   \]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\alpha \in (0,1]\)</span>：シグマ点の広がり</p></li>
+<li><p><span class="math notranslate nohighlight">\(\kappa\)</span>：補正パラメータ</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta\)</span>：分布形状情報（ガウスなら <span class="math notranslate nohighlight">\(\beta=2\)</span> が多い）</p></li>
+</ul>
+</li>
+<li><p>シグマ点生成</p>
+<div class="math notranslate nohighlight">
+\[
+   \mathbf{\chi}_0 = \boldsymbol\mu_k
+   \]</div>
+<div class="math notranslate nohighlight">
+\[
+   \mathbf{\chi}_i = \boldsymbol\mu_k + \left[\sqrt{(n+\lambda)\mathbf{P}_k}\right]_i,
+   \quad i=1,\dots,n
+   \]</div>
+<div class="math notranslate nohighlight">
+\[
+   \mathbf{\chi}_{i+n} = \boldsymbol\mu_k - \left[\sqrt{(n+\lambda)\mathbf{P}_k}\right]_i,
+   \quad i=1,\dots,n
+   \]</div>
+</li>
+<li><p>重み</p>
+<div class="math notranslate nohighlight">
+\[
+   W_0^{(m)} = \frac{\lambda}{n+\lambda}, \quad
+   W_0^{(c)} = \frac{\lambda}{n+\lambda} + (1-\alpha^2 + \beta)
+   \]</div>
+<div class="math notranslate nohighlight">
+\[
+   W_i^{(m)} = W_i^{(c)} = \frac{1}{2(n+\lambda)}, \quad i=1,\dots,2n
+   \]</div>
+</li>
+<li><p>非線形伝搬</p>
+<div class="math notranslate nohighlight">
+\[
+   \mathbf{y}_i = \mathbf{f}(\mathbf{\chi}_i)
+   \]</div>
+</li>
+<li><p>平均・共分散の再構成</p>
+<div class="math notranslate nohighlight">
+\[
+   \boldsymbol\mu_{k+1} = \sum_{i=0}^{2n} W_i^{(m)} \mathbf{y}_i
+   \]</div>
+<div class="math notranslate nohighlight">
+\[
+   \mathbf{P}_{k+1} = \sum_{i=0}^{2n} W_i^{(c)} (\mathbf{y}_i - \boldsymbol\mu_{k+1})
+   (\mathbf{y}_i - \boldsymbol\mu_{k+1})^\mathrm{T} + \mathbf{Q}_k
+   \]</div>
+</li>
+</ol>
+</section>
+<section id="id7">
+<h3>特徴<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>長所</strong></p>
+<ul>
+<li><p>2n+1 程度の評価で 2〜3 次精度のモーメント近似が得られる．</p></li>
+<li><p>強い非線形性に対して LinCov よりも高精度．</p></li>
+<li><p>ガウス分布のまま扱えるため，EKF を UKF に置き換えやすい．</p></li>
+</ul>
+</li>
+<li><p><strong>短所</strong></p>
+<ul>
+<li><p>基本的に「初期分布はガウス」という前提．</p></li>
+<li><p>分布形状の非ガウス性（多峰性など）は表現しにくい．</p></li>
+<li><p>次元が大きくなるとシグマ点数 2n+1 も増え，計算コストが増加する．</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="gaussian-mixture-model">
+<h2>5.7.6) Gaussian Mixture Model（ガウス混合分布）<a class="headerlink" href="#gaussian-mixture-model" title="Permalink to this heading">#</a></h2>
+<p>GMM は，「1つのガウスでは表現できない分布を，複数ガウスの混合で近似する」手法である．</p>
+<section id="id8">
+<h3>近似モデル<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}) \approx \sum_{k=1}^K w_k \, \mathcal{N}(\mathbf{x}; \boldsymbol\mu_k, \mathbf{P}_k),
+\quad
+w_k \ge 0,\ \sum_{k=1}^K w_k = 1
+\]</div>
+<p><span class="math notranslate nohighlight">\(K\)</span> を増やすことで，歪んだ分布，多峰性，長い尾を持つ分布を柔軟に表現できる．</p>
+</section>
+<section id="lincov">
+<h3>伝搬の定式化（LinCov ベースの例）<a class="headerlink" href="#lincov" title="Permalink to this heading">#</a></h3>
+<p>初期 GMM を</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}_0) = \sum_{k=1}^K w_k \,\mathcal{N}(\mathbf{x}_0; \boldsymbol\mu_{k,0}, \mathbf{P}_{k,0})
+\]</div>
+<p>とする．各成分について LinCov で伝搬すると，</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol\mu_k(t) \approx \mathbf{x}_k^\ast(t)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}_k(t) = \mathbf{\Phi}_k(t,t_0)\,\mathbf{P}_{k,0}\,\mathbf{\Phi}_k^\mathrm{T}(t,t_0)
+\]</div>
+<p>全体の分布は</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathbf{x}(t)) \approx \sum_{k=1}^K w_k
+\,\mathcal{N}(\mathbf{x}(t); \boldsymbol\mu_k(t), \mathbf{P}_k(t))
+\]</div>
+<p>平均・共分散は「混合の公式」により</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol\mu(t) = \sum_{k=1}^K w_k \boldsymbol\mu_k(t)
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}(t) =
+\sum_{k=1}^K w_k \big[
+\mathbf{P}_k(t) +
+(\boldsymbol\mu_k(t) - \boldsymbol\mu(t))
+(\boldsymbol\mu_k(t) - \boldsymbol\mu(t))^\mathrm{T}
+\big]
+\]</div>
+<p>で与えられる．</p>
+</section>
+<section id="id9">
+<h3>特徴<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>長所</strong></p>
+<ul>
+<li><p>非ガウス分布（歪み，多峰性など）を表現可能．</p></li>
+<li><p>各成分はガウスなので，LinCov, UT, Kalman Filter と相性が良い．</p></li>
+<li><p>成分数 <span class="math notranslate nohighlight">\(K\)</span> を調整することで精度と計算量をトレードできる．</p></li>
+</ul>
+</li>
+<li><p><strong>短所</strong></p>
+<ul>
+<li><p>成分数 <span class="math notranslate nohighlight">\(K\)</span> が大きくなると計算コストが増大．</p></li>
+<li><p>コンポーネントの分割・マージの戦略設計が難しい．</p></li>
+<li><p>高次元状態で <span class="math notranslate nohighlight">\(K\)</span> を増やしすぎると負荷が大きい．</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id10">
+<h2>5.7.7) 手法の比較と使い分け<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>手法</p></th>
+<th class="head"><p>非線形性の扱い</p></th>
+<th class="head"><p>非ガウス性</p></th>
+<th class="head"><p>計算コスト</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>LinCov</p></td>
+<td><p>1次（線形近似）</p></td>
+<td><p>✗</p></td>
+<td><p>◎ 低い</p></td>
+</tr>
+<tr class="row-odd"><td><p>MC</p></td>
+<td><p>正確（モデル通り）</p></td>
+<td><p>○（サンプル次第）</p></td>
+<td><p>✕ 高い</p></td>
+</tr>
+<tr class="row-even"><td><p>UT</p></td>
+<td><p>2〜3次モーメント近似</p></td>
+<td><p>△（基本ガウス）</p></td>
+<td><p>○ 中程度</p></td>
+</tr>
+<tr class="row-odd"><td><p>GMM</p></td>
+<td><p>成分ごとの手法次第</p></td>
+<td><p>◎</p></td>
+<td><p>△〜✕</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>大まかな誤差評価・初期設計段階では <strong>LinCov</strong> が簡便で有用．</p></li>
+<li><p>小天体近傍や長期摂動など強い非線形性を含む場合は <strong>UT / GMM / MC</strong> を組み合わせて検討する．</p></li>
+<li><p>衝突確率評価など安全性クリティカルな場面では，
+<strong>MC</strong> や <strong>GMM</strong> により分布の尾部まで丁寧に評価することが望ましい．</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="id11">
+<h2>5.7.8) 演習問題<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">inv</span><span class="p">,</span> <span class="n">det</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">sqrtm</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span><span class="p">,</span> <span class="n">chi2</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>   <span class="c1"># noqa: F401  (needed for 3‑D)</span>
+<span class="c1">#plt.rcParams[&#39;text.usetex&#39;] = True        # keep LaTeX typography</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># SECTION 1 ─ CREATE REFERENCE TRAJECTORY</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># Constants</span>
+<span class="n">coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.082626925638815e-3</span><span class="p">])</span>     <span class="c1"># [J1,J2]</span>
+<span class="n">R_EARTH</span> <span class="o">=</span> <span class="mf">6378.1363</span>                                <span class="c1"># km</span>
+<span class="n">MU</span>      <span class="o">=</span> <span class="mf">398600.4415</span>                              <span class="c1"># km^3/s^2</span>
+<span class="n">L_MAX</span>   <span class="o">=</span> <span class="mi">2</span>
+<span class="n">AREA</span>    <span class="o">=</span> <span class="mf">3e-6</span>                                     <span class="c1"># km^2   (cross‑section)</span>
+<span class="n">MASS</span>    <span class="o">=</span> <span class="mf">970.0</span>                                    <span class="c1"># kg</span>
+<span class="n">CD</span>      <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">PARAM_MEAS</span> <span class="o">=</span> <span class="mi">9</span>
+
+<span class="c1"># Initial state (km, km/s)</span>
+<span class="n">state0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">757.7</span><span class="p">,</span> <span class="mf">5222.607</span><span class="p">,</span> <span class="mf">4851.5</span><span class="p">,</span> <span class="mf">2.21321</span><span class="p">,</span> <span class="mf">4.67834</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.3713</span><span class="p">])</span>
+<span class="c1"># Append 6×6 identity (flattened) as initial STM</span>
+<span class="n">state0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">state0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># Symbolic pre‑computations</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">precompute_zonal_sph</span><span class="p">(</span><span class="n">R_val</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">l_max</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pre-compute zonal-harmonic acceleration &amp; Jacobian symbolic lambdas.&quot;&quot;&quot;</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">vz</span><span class="p">,</span> <span class="n">mu_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x y z vx vy vz mu&#39;</span><span class="p">)</span>
+    <span class="n">coeffs_sym</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;J0:</span><span class="si">{</span><span class="n">l_max</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">r</span>   <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">asin</span><span class="p">(</span><span class="n">z</span> <span class="o">/</span> <span class="n">r</span><span class="p">)</span>
+    <span class="n">U</span>   <span class="o">=</span> <span class="o">-</span> <span class="n">mu_sym</span> <span class="o">/</span> <span class="n">r</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">l_max</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">U</span> <span class="o">+=</span> <span class="n">mu_sym</span><span class="o">/</span><span class="n">r</span> <span class="o">*</span> <span class="n">coeffs_sym</span><span class="p">[</span><span class="n">l</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">R_val</span><span class="o">/</span><span class="n">r</span><span class="p">)</span><span class="o">**</span><span class="n">l</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">legendre</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="o">-</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">z</span><span class="p">)])</span>
+    <span class="n">a_aug</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">coeffs_sym</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># extra µ,Jl rows</span>
+
+    <span class="n">acc_fun</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">mu_sym</span><span class="p">,</span> <span class="n">coeffs_sym</span><span class="p">),</span> <span class="n">a_aug</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+
+    <span class="c1"># full dummy state for Jacobian: [vx,vy,vz,acc_aug]</span>
+    <span class="n">f_full</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">vz</span><span class="p">]),</span> <span class="n">a_aug</span><span class="p">)</span>
+    <span class="n">A_sym</span>  <span class="o">=</span> <span class="n">f_full</span><span class="o">.</span><span class="n">jacobian</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">vz</span><span class="p">,</span> <span class="n">mu_sym</span><span class="p">,</span> <span class="o">*</span><span class="n">coeffs_sym</span><span class="p">])</span>
+    <span class="n">A_fun</span>  <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">vz</span><span class="p">,</span> <span class="n">mu_sym</span><span class="p">,</span> <span class="n">coeffs_sym</span><span class="p">),</span> <span class="n">A_sym</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">acc_fun</span><span class="p">,</span> <span class="n">A_fun</span>
+
+<span class="k">def</span> <span class="nf">precompute_drag</span><span class="p">(</span><span class="n">area</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">mass</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">r_earth</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Symbolic drag acceleration &amp; Jacobian.&quot;&quot;&quot;</span>
+    <span class="n">omega_E</span> <span class="o">=</span> <span class="mf">7.2921158553e-5</span>            <span class="c1"># rad/s</span>
+    <span class="n">rho0</span>    <span class="o">=</span> <span class="mf">3.614e-4</span>                   <span class="c1"># kg/km³</span>
+    <span class="n">r0</span>      <span class="o">=</span> <span class="mf">700.0</span> <span class="o">+</span> <span class="n">r_earth</span>            <span class="c1"># km</span>
+    <span class="n">H</span>       <span class="o">=</span> <span class="mf">88.6670</span>                    <span class="c1"># km</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">vz</span><span class="p">,</span> <span class="n">cd</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x y z vx vy vz cd&#39;</span><span class="p">)</span>
+    <span class="n">r_vec</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">])</span>
+    <span class="n">v_vec</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="n">vx</span><span class="p">,</span> <span class="n">vy</span><span class="p">,</span> <span class="n">vz</span><span class="p">])</span>
+    <span class="n">v_rel</span> <span class="o">=</span> <span class="n">v_vec</span> <span class="o">-</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">omega_E</span><span class="p">])</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">r_vec</span><span class="p">)</span>
+    <span class="n">vmag</span>  <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_rel</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v_rel</span><span class="p">))</span>
+    <span class="n">r</span>     <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">rho</span>   <span class="o">=</span> <span class="n">rho0</span> <span class="o">*</span> <span class="n">sp</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">r</span><span class="o">-</span><span class="n">r0</span><span class="p">)</span><span class="o">/</span><span class="n">H</span><span class="p">)</span>
+    <span class="n">a_drag</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">cd</span><span class="o">*</span><span class="n">area</span><span class="o">/</span><span class="n">mass</span><span class="p">)</span> <span class="o">*</span> <span class="n">rho</span> <span class="o">*</span> <span class="n">vmag</span> <span class="o">*</span> <span class="n">v_rel</span>
+    <span class="n">a_aug</span>  <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">a_drag</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># placeholder d(cd)</span>
+    <span class="n">a_fun</span>  <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">,</span><span class="n">vz</span><span class="p">,</span><span class="n">cd</span><span class="p">),</span> <span class="n">a_aug</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+
+    <span class="n">f_full</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">,</span><span class="n">vz</span><span class="p">]),</span> <span class="n">a_aug</span><span class="p">)</span>
+    <span class="n">A_sym</span>  <span class="o">=</span> <span class="n">f_full</span><span class="o">.</span><span class="n">jacobian</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">,</span><span class="n">vz</span><span class="p">,</span><span class="n">cd</span><span class="p">])</span>
+    <span class="n">A_fun</span>  <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">vy</span><span class="p">,</span><span class="n">vz</span><span class="p">,</span><span class="n">cd</span><span class="p">),</span> <span class="n">A_sym</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a_fun</span><span class="p">,</span> <span class="n">A_fun</span>
+
+<span class="n">ACC_SPH</span><span class="p">,</span> <span class="n">A_SPH</span> <span class="o">=</span> <span class="n">precompute_zonal_sph</span><span class="p">(</span><span class="n">R_EARTH</span><span class="p">,</span> <span class="n">L_MAX</span><span class="p">)</span>
+<span class="n">ACC_DRAG</span><span class="p">,</span> <span class="n">A_DRAG</span> <span class="o">=</span> <span class="n">precompute_drag</span><span class="p">(</span><span class="n">AREA</span><span class="p">,</span> <span class="n">MASS</span><span class="p">,</span> <span class="n">R_EARTH</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">latex</span><span class="p">,</span> <span class="n">pprint</span><span class="p">,</span> <span class="n">init_printing</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Math</span>
+<span class="n">init_printing</span><span class="p">()</span>
+<span class="n">Math</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$$&#39;</span> <span class="o">+</span> <span class="n">latex</span><span class="p">(</span><span class="n">ACC_DRAG</span><span class="p">)</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$$&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">njit</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># Helper: ECI→ECEF Direction‑Cosine Matrix</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">dcm_eci_to_ecef</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="n">omega_earth</span> <span class="o">=</span> <span class="mf">7.2921158553e-5</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">omega_earth</span><span class="o">*</span><span class="n">t</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span>  <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="mi">0</span><span class="p">],</span>
+                     <span class="p">[</span>            <span class="mi">0</span><span class="p">,</span>              <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># Core dynamics   (identical to MATLAB sc_Dynamics + sc_ODE)</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">sc_dynamics</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">coeffs_vals</span><span class="p">,</span> <span class="n">mu_val</span><span class="p">,</span> <span class="n">cd</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return ẋ = f(x) and dfdx for 6-state S/C plus STM.&quot;&quot;&quot;</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">state</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">vel</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+
+    <span class="c1"># ECI→ECEF</span>
+    <span class="n">C_e2f</span> <span class="o">=</span> <span class="n">dcm_eci_to_ecef</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">pos_f</span> <span class="o">=</span> <span class="n">C_e2f</span> <span class="o">@</span> <span class="n">pos</span>
+    <span class="c1"># Zonal harmonics (ECEF frame, then rotate back)</span>
+    <span class="n">a_sph</span> <span class="o">=</span> <span class="n">ACC_SPH</span><span class="p">(</span><span class="o">*</span><span class="n">pos_f</span><span class="p">,</span> <span class="n">mu_val</span><span class="p">,</span> <span class="n">coeffs_vals</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">a_sph</span> <span class="o">=</span> <span class="n">C_e2f</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">a_sph</span>
+    <span class="c1"># Drag (direct in ECI)</span>
+    <span class="n">a_drag</span> <span class="o">=</span> <span class="n">ACC_DRAG</span><span class="p">(</span><span class="o">*</span><span class="n">pos</span><span class="p">,</span> <span class="o">*</span><span class="n">vel</span><span class="p">,</span> <span class="n">cd</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">a_sph</span> <span class="o">+</span> <span class="n">a_drag</span>
+    <span class="c1"># Reshape acc to (3,) to match dy[3:6] shape</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">acc</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="c1"># Jacobian if STM present</span>
+    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
+        <span class="n">A_sph</span> <span class="o">=</span> <span class="n">A_SPH</span><span class="p">(</span><span class="o">*</span><span class="n">pos_f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">mu_val</span><span class="p">,</span> <span class="n">coeffs_vals</span><span class="p">)[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">A_sph</span> <span class="o">=</span> <span class="n">C_e2f</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A_sph</span> <span class="o">@</span> <span class="n">C_e2f</span>
+        <span class="n">A_drag</span> <span class="o">=</span> <span class="n">A_DRAG</span><span class="p">(</span><span class="o">*</span><span class="n">pos</span><span class="p">,</span> <span class="o">*</span><span class="n">vel</span><span class="p">,</span> <span class="n">cd</span><span class="p">)[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">Ar</span> <span class="o">=</span> <span class="n">A_sph</span> <span class="o">+</span> <span class="n">A_drag</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">Av</span> <span class="o">=</span> <span class="n">A_drag</span><span class="p">[:,</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">block</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)],</span>
+                      <span class="p">[</span><span class="n">Ar</span><span class="p">,</span> <span class="n">Av</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">acc</span><span class="p">,</span> <span class="n">A</span>
+    <span class="k">return</span> <span class="n">acc</span><span class="p">,</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">sc_ode</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Derivative for solve_ivp: propagate 6-state + flattened 36-el STM.&quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">pos</span><span class="p">,</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">acc</span><span class="p">,</span> <span class="n">A</span> <span class="o">=</span> <span class="n">sc_dynamics</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">coeffs</span><span class="p">,</span> <span class="n">MU</span><span class="p">,</span> <span class="n">CD</span><span class="p">)</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">dy</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">vel</span>
+    <span class="n">dy</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">acc</span>
+    <span class="c1"># STM</span>
+    <span class="n">stm</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">dy_stm</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">stm</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+    <span class="n">dy</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span> <span class="o">=</span> <span class="n">dy_stm</span>
+    <span class="k">return</span> <span class="n">dy</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># Numerical integration of the reference orbit (solve_ivp ≈ ode45)</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="n">T_ORBIT</span> <span class="o">=</span> <span class="mi">24</span><span class="o">*</span><span class="mi">3600</span>          <span class="c1"># one day s</span>
+<span class="n">t_span</span>  <span class="o">=</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">T_ORBIT</span><span class="p">)</span>
+<span class="n">t_eval</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T_ORBIT</span><span class="o">+</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>   <span class="c1"># 1‑s step, like MATLAB 0:T_orbit</span>
+
+<span class="n">sol_ref</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">sc_ode</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">t_eval</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">2.22e-10</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">2.22e-10</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;RK45&#39;</span><span class="p">)</span>
+
+<span class="c1"># 3‑D orbit plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span>  <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol_ref</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sol_ref</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sol_ref</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;r.&#39;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="c1"># rudimentary Earth</span>
+<span class="n">u</span><span class="p">,</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">:</span><span class="mi">40</span><span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">:</span><span class="mi">20</span><span class="n">j</span><span class="p">]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot_wireframe</span><span class="p">(</span><span class="n">R_EARTH</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+                  <span class="n">R_EARTH</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">u</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+                  <span class="n">R_EARTH</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x (km)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y (km)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;z (km)&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;OrbitUQ.pdf&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># SECTION 2 ─ INITIAL UNCERTAINTY AND ANALYSIS TIMES</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="n">sigma_pos</span> <span class="o">=</span> <span class="mf">1.0</span>            <span class="c1"># km</span>
+<span class="n">sigma_vel</span> <span class="o">=</span> <span class="mf">1e-3</span>           <span class="c1"># km/s</span>
+<span class="n">P0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="n">sigma_pos</span><span class="o">**</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="p">[</span><span class="n">sigma_vel</span><span class="o">**</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="n">state0</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+<span class="n">STM0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="n">t_eval_hours</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">24</span><span class="p">])</span>
+<span class="n">t_eval_sec</span>   <span class="o">=</span> <span class="n">t_eval_hours</span><span class="o">*</span><span class="mi">3600</span>
+
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># SECTION 3 ─ LINEAR COVARIANCE PROPAGATION</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="k">def</span> <span class="nf">propagate_nominal_and_stm</span><span class="p">(</span><span class="n">t_grid</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Integrate only once for all epochs (identical to MATLAB ode113 call).&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">rhs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="k">return</span> <span class="n">sc_ode</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="p">(</span><span class="n">t_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_grid</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="n">STM0</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]),</span>
+                    <span class="n">t_eval</span><span class="o">=</span><span class="n">t_grid</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">2.22e-10</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">2.22e-10</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>    <span class="c1"># shape len(t_grid)×42</span>
+
+<span class="n">nom_all</span> <span class="o">=</span> <span class="n">propagate_nominal_and_stm</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)</span>
+
+<span class="n">lin_states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+<span class="n">lin_covs</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nom_all</span><span class="p">):</span>
+    <span class="n">x_nom</span> <span class="o">=</span> <span class="n">row</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+    <span class="n">stm</span>   <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">6</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">lin_states</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_nom</span>
+    <span class="n">lin_covs</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">stm</span> <span class="o">@</span> <span class="n">P0</span> <span class="o">@</span> <span class="n">stm</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># SECTION 4 ─ MONTE‑CARLO PROPAGATION</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="n">N_MC</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">rng</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_samples</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">P0</span><span class="p">,</span> <span class="n">N_MC</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">MC_states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="n">N_MC</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N_MC</span><span class="p">):</span>
+    <span class="n">ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">X_samples</span><span class="p">[:,</span><span class="n">j</span><span class="p">],</span> <span class="n">STM0</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">sc_ode</span><span class="p">,</span> <span class="p">(</span><span class="n">t_eval_sec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_eval_sec</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">ic</span><span class="p">,</span>
+                    <span class="n">t_eval</span><span class="o">=</span><span class="n">t_eval_sec</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">2.22e-10</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">2.22e-10</span><span class="p">)</span>
+    <span class="n">MC_states</span><span class="p">[:,</span><span class="n">j</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">j</span><span class="o">/</span><span class="n">N_MC</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+
+<span class="n">MC_mean</span> <span class="o">=</span> <span class="n">MC_states</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">MC_cov</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">MC_states</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">MC_cov</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x0</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x0</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># SECTION 5 ─ UNSCENTED TRANSFORM</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">alpha</span><span class="p">,</span><span class="n">beta</span><span class="p">,</span><span class="n">kappa</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">3</span><span class="o">-</span><span class="n">n</span>
+<span class="n">lam</span>   <span class="o">=</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">kappa</span><span class="p">)</span> <span class="o">-</span> <span class="n">n</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">lam</span><span class="p">)</span>
+<span class="n">S0</span> <span class="o">=</span> <span class="n">sqrtm</span><span class="p">(</span><span class="n">P0</span><span class="p">)</span>
+<span class="n">sigma_pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">x0</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                       <span class="n">x0</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="n">gamma</span><span class="o">*</span><span class="n">S0</span><span class="p">,</span>
+                       <span class="n">x0</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">gamma</span><span class="o">*</span><span class="n">S0</span><span class="p">])</span>
+<span class="n">w_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">lam</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">lam</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">lam</span><span class="p">)))])</span>
+<span class="c1"># w_cいらなくない？</span>
+<span class="n">w_c</span> <span class="o">=</span> <span class="n">w_m</span><span class="o">.</span><span class="n">copy</span><span class="p">();</span> <span class="n">w_c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">beta</span>
+
+<span class="n">ut_traj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="n">sigma_pts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sigma_pts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="n">ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">sigma_pts</span><span class="p">[:,</span><span class="n">k</span><span class="p">],</span> <span class="n">STM0</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">sc_ode</span><span class="p">,</span> <span class="p">(</span><span class="n">t_eval_sec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t_eval_sec</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">ic</span><span class="p">,</span>
+                    <span class="n">t_eval</span><span class="o">=</span><span class="n">t_eval_sec</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">2.22e-10</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">2.22e-10</span><span class="p">)</span>
+    <span class="n">ut_traj</span><span class="p">[:,</span><span class="n">k</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+
+<span class="n">ut_states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+<span class="n">ut_covs</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)):</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">ut_traj</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">w_m</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">mu</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span>
+    <span class="n">P</span>  <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">w_c</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">dx</span><span class="p">[:,</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="nd">@dx</span><span class="p">[:,</span><span class="n">k</span><span class="p">:</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">ut_states</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">mu</span>
+    <span class="n">ut_covs</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">P</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">w_m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">lam</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">lam</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="n">lam</span><span class="p">)))])</span>
+<span class="n">w_m</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sigma_pts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t_eval_sec</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># SECTION 6 ─ GAUSSIAN‑MIXTURE PROPAGATION (fixed‑cov variant)</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="n">K</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">mu_gmm_ic</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">P0</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="n">pdf_vals</span>  <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">P0</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">mu_gmm_ic</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="n">w_gmm</span> <span class="o">=</span> <span class="n">pdf_vals</span><span class="o">/</span><span class="n">pdf_vals</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">P_gmm_ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">P0</span><span class="p">[:,:,</span><span class="kc">None</span><span class="p">],</span> <span class="n">K</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">gmm_states</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+<span class="n">gmm_covs</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="n">K</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+    <span class="n">ic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">mu_gmm_ic</span><span class="p">[:,</span><span class="n">k</span><span class="p">],</span> <span class="n">STM0</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">sc_ode</span><span class="p">,(</span><span class="n">t_eval_sec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">t_eval_sec</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span><span class="n">ic</span><span class="p">,</span>
+                    <span class="n">t_eval</span><span class="o">=</span><span class="n">t_eval_sec</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">2.22e-10</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">2.22e-10</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)):</span>
+        <span class="n">Phi</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">6</span><span class="p">:,</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+        <span class="n">gmm_states</span><span class="p">[:,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[:</span><span class="mi">6</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">gmm_covs</span><span class="p">[:,:,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Phi</span> <span class="o">@</span> <span class="n">P_gmm_ic</span><span class="p">[:,:,</span><span class="n">k</span><span class="p">]</span> <span class="o">@</span> <span class="n">Phi</span><span class="o">.</span><span class="n">T</span>
+        
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="o">/</span><span class="n">K</span><span class="o">*</span><span class="mi">100</span><span class="si">}</span><span class="s2"> %&quot;</span><span class="p">)</span>
+
+<span class="n">gmm_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+<span class="n">gmm_cov</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)):</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">w_gmm</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="n">gmm_states</span><span class="p">[:,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">))</span>
+    <span class="n">P</span>  <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">w_gmm</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">gmm_covs</span><span class="p">[:,:,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span>
+                       <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">gmm_states</span><span class="p">[:,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">mu</span><span class="p">,</span>
+                                <span class="n">gmm_states</span><span class="p">[:,</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">mu</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">))</span>
+    <span class="n">gmm_mean</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">mu</span>
+    <span class="n">gmm_cov</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">P</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>              <span class="c1"># PDF 用</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Ellipse</span>
+
+<span class="c1"># ---------- 前準備 ----------</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">t_indices</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>                       <span class="c1"># 0,1,2,3  →  MATLAB の 1:4 に対応</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s1">&#39;$x$ [km]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$y$ [km]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$z$ [km]&#39;</span><span class="p">,</span>
+          <span class="sa">r</span><span class="s1">&#39;$v_x$ [km/s]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$v_y$ [km/s]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$v_z$ [km/s]&#39;</span><span class="p">]</span>
+
+<span class="c1"># ---------- 共分散楕円プロット用ヘルパ -------------------------</span>
+<span class="k">def</span> <span class="nf">plot_cov_ellipse</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">nsig</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    C: 2x2 共分散行列,  mu: 2 要素平均, nsig: σ の倍率</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">vals</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="n">order</span><span class="p">],</span> <span class="n">vecs</span><span class="p">[:,</span> <span class="n">order</span><span class="p">]</span>
+    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">nsig</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="o">*</span><span class="n">vecs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">Ellipse</span><span class="p">(</span><span class="n">xy</span><span class="o">=</span><span class="n">mu</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span>
+                <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="c1"># ---------- メインループ（時刻ごとに新しい図を作る） -------------</span>
+<span class="k">for</span> <span class="n">t_idx</span> <span class="ow">in</span> <span class="n">t_indices</span><span class="p">:</span>
+    <span class="c1"># Monte Carlo サンプル</span>
+    <span class="n">X_mc</span> <span class="o">=</span> <span class="n">MC_states</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">t_idx</span><span class="p">]</span>          <span class="c1"># shape 6 x N_MC</span>
+    <span class="n">mu_mc</span> <span class="o">=</span> <span class="n">X_mc</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">C_mc</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X_mc</span><span class="p">)</span>
+
+    <span class="c1"># 他手法</span>
+    <span class="n">mu_lin</span><span class="p">,</span> <span class="n">C_lin</span> <span class="o">=</span> <span class="n">lin_states</span><span class="p">[:,</span> <span class="n">t_idx</span><span class="p">],</span> <span class="n">lin_covs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">t_idx</span><span class="p">]</span>
+    <span class="n">mu_ut</span> <span class="p">,</span> <span class="n">C_ut</span>  <span class="o">=</span> <span class="n">ut_states</span><span class="p">[:,</span> <span class="n">t_idx</span><span class="p">]</span> <span class="p">,</span> <span class="n">ut_covs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">t_idx</span><span class="p">]</span>
+    <span class="n">mu_gmm</span><span class="p">,</span> <span class="n">C_gmm</span> <span class="o">=</span> <span class="n">gmm_mean</span><span class="p">[:,</span> <span class="n">t_idx</span><span class="p">]</span>   <span class="p">,</span> <span class="n">gmm_cov</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">t_idx</span><span class="p">]</span>
+
+    <span class="c1"># Figure 作成</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Corner Plot - Time Index </span><span class="si">{</span><span class="n">t_idx</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+    <span class="n">legend_shown</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="o">*</span><span class="n">n</span> <span class="o">+</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># 対角（ヒストグラムと PDF）</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">X_mc</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                        <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MC&#39;</span><span class="p">)</span>
+
+                <span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X_mc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X_mc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">200</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">mu_lin</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">C_lin</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">])),</span>
+                        <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;LinCov&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">mu_ut</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>  <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">C_ut</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">])),</span>
+                        <span class="s1">&#39;g-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;UT&#39;</span><span class="p">)</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">mu_gmm</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">C_gmm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">])),</span>
+                        <span class="s1">&#39;m-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;GMM&#39;</span><span class="p">)</span>
+
+                <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+            <span class="c1"># 非対角（散布図と楕円）</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_mc</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">X_mc</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+                <span class="n">kw</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">nsig</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+                <span class="c1"># 1回だけラベル付きで描いて凡例用に</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">legend_shown</span><span class="p">:</span>
+                    <span class="n">plot_cov_ellipse</span><span class="p">(</span><span class="n">C_mc</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]][:,[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span> <span class="n">mu_mc</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span>
+                                     <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;MC&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+                    <span class="n">plot_cov_ellipse</span><span class="p">(</span><span class="n">C_lin</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]][:,[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span> <span class="n">mu_lin</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span>
+                                     <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;LinCov&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+                    <span class="n">plot_cov_ellipse</span><span class="p">(</span><span class="n">C_ut</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]][:,[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span>  <span class="n">mu_ut</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span>
+                                     <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;UT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+                    <span class="n">plot_cov_ellipse</span><span class="p">(</span><span class="n">C_gmm</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]][:,[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span> <span class="n">mu_gmm</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span>
+                                     <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;GMM&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+                    <span class="n">legend_shown</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">plot_cov_ellipse</span><span class="p">(</span><span class="n">C_mc</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]][:,[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span> <span class="n">mu_mc</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span>
+                                     <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+                    <span class="n">plot_cov_ellipse</span><span class="p">(</span><span class="n">C_lin</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]][:,[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span> <span class="n">mu_lin</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span>
+                                     <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+                    <span class="n">plot_cov_ellipse</span><span class="p">(</span><span class="n">C_ut</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]][:,[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span>  <span class="n">mu_ut</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span>
+                                     <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+                    <span class="n">plot_cov_ellipse</span><span class="p">(</span><span class="n">C_gmm</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]][:,[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span> <span class="n">mu_gmm</span><span class="p">[[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]],</span>
+                                     <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 全体凡例</span>
+    <span class="n">handles</span><span class="p">,</span> <span class="n">labels_</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">[:</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;MC&#39;</span><span class="p">,</span> <span class="s1">&#39;LinCov&#39;</span><span class="p">,</span> <span class="s1">&#39;UT&#39;</span><span class="p">,</span> <span class="s1">&#39;GMM&#39;</span><span class="p">],</span>
+               <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="c1"># PDF 保存</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;corner_plot_t</span><span class="si">{</span><span class="n">t_idx</span><span class="o">+</span><span class="mi">1</span><span class="si">:</span><span class="s1">02d</span><span class="si">}</span><span class="s1">.pdf&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+    <span class="c1">#plt.close(fig)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># SECTION 8 ─ NUMERICAL COMPARISON (norms &amp; KL divergence)</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">--- Time </span><span class="si">{</span><span class="n">t_eval_hours</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">}</span><span class="s1"> hr ---&#39;</span><span class="p">)</span>
+    <span class="n">Xmc</span> <span class="o">=</span> <span class="n">MC_states</span><span class="p">[:,:,</span><span class="n">idx</span><span class="p">];</span> <span class="n">mu_mc</span> <span class="o">=</span> <span class="n">Xmc</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span> <span class="n">C_mc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">Xmc</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">C</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;LinCov&#39;</span><span class="p">,</span><span class="n">lin_states</span><span class="p">[:,</span><span class="n">idx</span><span class="p">],</span><span class="n">lin_covs</span><span class="p">[:,:,</span><span class="n">idx</span><span class="p">]),</span>
+                      <span class="p">(</span><span class="s1">&#39;UT&#39;</span>    <span class="p">,</span><span class="n">ut_states</span><span class="p">[:,</span><span class="n">idx</span><span class="p">]</span> <span class="p">,</span><span class="n">ut_covs</span><span class="p">[:,:,</span><span class="n">idx</span><span class="p">]),</span>
+                      <span class="p">(</span><span class="s1">&#39;GMM&#39;</span>   <span class="p">,</span><span class="n">gmm_mean</span><span class="p">[:,</span><span class="n">idx</span><span class="p">]</span>  <span class="p">,</span><span class="n">gmm_cov</span><span class="p">[:,:,</span><span class="n">idx</span><span class="p">])]:</span>
+        <span class="n">mean_err</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu</span><span class="o">-</span><span class="n">mu_mc</span><span class="p">)</span>
+        <span class="n">cov_err</span>  <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">C</span><span class="o">-</span><span class="n">C_mc</span><span class="p">,</span><span class="s1">&#39;fro&#39;</span><span class="p">)</span>
+        <span class="n">mean_pct</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">mean_err</span><span class="o">/</span><span class="n">norm</span><span class="p">(</span><span class="n">mu_mc</span><span class="p">)</span> <span class="k">if</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu_mc</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">cov_pct</span>  <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">cov_err</span> <span class="o">/</span><span class="n">norm</span><span class="p">(</span><span class="n">C_mc</span><span class="p">,</span><span class="s1">&#39;fro&#39;</span><span class="p">)</span>
+        <span class="n">delta_mu</span> <span class="o">=</span> <span class="n">mu_mc</span><span class="o">-</span><span class="n">mu</span>
+        <span class="n">kl</span> <span class="o">=</span> <span class="mf">.5</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="nd">@C_mc</span><span class="p">)</span> <span class="o">+</span> <span class="n">delta_mu</span><span class="nd">@inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="nd">@delta_mu</span>
+                 <span class="o">-</span> <span class="n">n</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">det</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="o">/</span><span class="n">det</span><span class="p">(</span><span class="n">C_mc</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">] ‖Δμ‖=</span><span class="si">{</span><span class="n">mean_err</span><span class="si">:</span><span class="s1">.3e</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">mean_pct</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> %) &#39;</span>
+              <span class="sa">f</span><span class="s1">&#39;‖ΔP‖=</span><span class="si">{</span><span class="n">cov_err</span><span class="si">:</span><span class="s1">.3e</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">cov_pct</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1"> %)  KL=</span><span class="si">{</span><span class="n">kl</span><span class="si">:</span><span class="s1">.5f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1"># SECTION 9 ─ 2‑σ CONTAINMENT OF MC SAMPLES</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_eval_sec</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">--- 2σ containment at </span><span class="si">{</span><span class="n">t_eval_hours</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="si">}</span><span class="s1"> hr ---&#39;</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">MC_states</span><span class="p">[:,:,</span><span class="n">idx</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">nm</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">C</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">&#39;LinCov&#39;</span><span class="p">,</span><span class="n">lin_states</span><span class="p">[:,</span><span class="n">idx</span><span class="p">],</span><span class="n">lin_covs</span><span class="p">[:,:,</span><span class="n">idx</span><span class="p">]),</span>
+                    <span class="p">(</span><span class="s1">&#39;UT&#39;</span>    <span class="p">,</span><span class="n">ut_states</span><span class="p">[:,</span><span class="n">idx</span><span class="p">]</span> <span class="p">,</span><span class="n">ut_covs</span><span class="p">[:,:,</span><span class="n">idx</span><span class="p">]),</span>
+                    <span class="p">(</span><span class="s1">&#39;GMM&#39;</span>   <span class="p">,</span><span class="n">gmm_mean</span><span class="p">[:,</span><span class="n">idx</span><span class="p">]</span>  <span class="p">,</span><span class="n">gmm_cov</span><span class="p">[:,:,</span><span class="n">idx</span><span class="p">])]:</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">X</span><span class="o">-</span><span class="n">mu</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span>
+        <span class="n">mahal2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">C</span><span class="p">)</span><span class="nd">@dx</span> <span class="o">*</span> <span class="n">dx</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">inside</span> <span class="o">=</span> <span class="p">(</span><span class="n">mahal2</span> <span class="o">&lt;=</span> <span class="n">chi2</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.954</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+        <span class="n">pct</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="n">inside</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="n">N_MC</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;  </span><span class="si">{</span><span class="n">nm</span><span class="si">:</span><span class="s1">6s</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">pct</span><span class="si">:</span><span class="s1">6.2f</span><span class="si">}</span><span class="s1"> % of MC within 2σ ellipsoid&#39;</span><span class="p">)</span>
+
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">=== DONE – all figures/statistics reproduced in Python ===&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<figure class="align-default" id="corner-plot-t01">
+<a class="reference internal image-reference" href="../../_images/t01.jpg"><img alt="../../_images/t01.jpg" src="../../_images/t01.jpg" style="height: 650px;" /></a>
+</figure>
+<figure class="align-default" id="corner-plot-t02">
+<a class="reference internal image-reference" href="../../_images/t02.jpg"><img alt="../../_images/t02.jpg" src="../../_images/t02.jpg" style="height: 650px;" /></a>
+</figure>
+<figure class="align-default" id="corner-plot-t03">
+<a class="reference internal image-reference" href="../../_images/t03.jpg"><img alt="../../_images/t03.jpg" src="../../_images/t03.jpg" style="height: 650px;" /></a>
+</figure>
+<figure class="align-default" id="corner-plot-t04">
+<a class="reference internal image-reference" href="../../_images/t04.jpg"><img alt="../../_images/t04.jpg" src="../../_images/t04.jpg" style="height: 650px;" /></a>
+</figure>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../appendix/appendix.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Appendix</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">5.7.1) Uncertainty Propagationとは</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.7.2) 問題設定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-covariance-lincov">5.7.3) Linear Covariance（LinCov）</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#monte-carlo-mc">5.7.4) Monte Carlo 法（MC）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">基本アイデア</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">定式化</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">特徴</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unscented-transform-u">5.7.5) Unscented Transform（U変換）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">定式化</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">特徴</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-mixture-model">5.7.6) Gaussian Mixture Model（ガウス混合分布）</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">近似モデル</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lincov">伝搬の定式化（LinCov ベースの例）</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">特徴</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">5.7.7) 手法の比較と使い分け</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">5.7.8) 演習問題</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sho Nishimura
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

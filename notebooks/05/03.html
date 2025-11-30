@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator） &#8212; Hands-On Astrodynamics tutorial</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/05/03';</script>
+    <link rel="shortcut icon" href="../../_static/rocket.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.7) Uncertainty Propagation" href="07.html" />
+    <link rel="prev" title="5.2) 最小二乗法 (Least Square Method)" href="02.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Hands-On Astrodynamics tutorial - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="Hands-On Astrodynamics tutorial - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    はじめに
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../01/01.00.html">1. キネマティクス（Kinematics）</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../01/02.html">剛体のキネマティクス I</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01/03.html">剛体のキネマティクス II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../01/04.html">姿勢決定（Attitude Determination）</a></li>
+
+
+
+
+
+
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01.00.html">5. 統計的軌道決定（Statistical Orbit Determination）</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.html">5.1) 軌道決定問題の定式化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.html">5.2) 最小二乗法 (Least Square Method)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.html">5.7) Uncertainty Propagation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../appendix/quotes.html">名言集</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Sho1930/Astro-note" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Sho1930/Astro-note/issues/new?title=Issue%20on%20page%20%2Fnotebooks/05/03.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/notebooks/05/03.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">5.3.1) 問題設定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.3.2) 線形・不偏・最小分散とは</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">線形推定量の仮定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">不偏性の制約</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">推定誤差共分散</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#x-k">5.3.3) 推定量 <span class="math notranslate nohighlight">\(x_k\)</span> の導出</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5.3.4) 事前情報が得られている場合</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="minimum-variance-unbiased-estimator">
+<h1>5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）<a class="headerlink" href="#minimum-variance-unbiased-estimator" title="Permalink to this heading">#</a></h1>
+<div class="tip admonition">
+<p class="admonition-title">目的</p>
+<ul class="simple">
+<li><p>不偏最小分散推定を用いて、線形化した観測方程式から推定状態量を求められるようになる。</p></li>
+<li><p>事前情報がある場合の不偏最小分散推定を理解する。</p></li>
+<li><p>最小二乗法と不偏最小分散推定が等価となる条件を理解する。</p></li>
+</ul>
+</div>
+<section id="id1">
+<h2>5.3.1) 問題設定<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>前項で扱った最小二乗法・重み付き最小二乗法では、各観測の統計量や事前情報の有無を考慮することができなかった。本項で扱う、<strong>不偏最小分散推定（Minimum Variance Unbiased Estimator: MVUE）</strong> では、各観測の統計量、具体的には１次及び2次の統計量（平均・分散）、そして事前情報を考慮することができる。</p>
+<p>もし、観測誤差 <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> が平均0、分散 <span class="math notranslate nohighlight">\(R_{ii}\)</span> の正規分布に従うとする。つまり、</p>
+<div class="math notranslate nohighlight">
+\[
+\varepsilon_i \sim \mathcal{N}(0, R_{ii})
+\]</div>
+<p>のように表されるとき、解きたい推定問題は以下のように表現できる。</p>
+<div class="note admonition">
+<p class="admonition-title">不偏最小分散推定問題の定式化</p>
+<p>以下の状態方程式、観測方程式が与えられているとする。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+x_i &amp;= \Phi\left(t_i, t_k\right) x_k \\
+y_i &amp;= \widetilde{H}_i x_i + \epsilon_i  \quad (i=1,...,l), \quad \varepsilon_i \sim \mathcal{N}(0, R_{ii})
+\end{aligned}
+\end{split}\]</div>
+<p>このとき状態量 <span class="math notranslate nohighlight">\(x_k\)</span> に対して、線形・不偏・最小分散を満たす推定量 <span class="math notranslate nohighlight">\(\hat{x_k}\)</span> を求めよ。</p>
+</div>
+<p>まず、いままでと同様に、一本の線形方程式にまとめることを考える。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{y} \equiv\left[\begin{array}{c}
+y_1 \\
+\vdots \\
+y_{\ell}
+\end{array}\right] ; \quad H \equiv\left[\begin{array}{c}
+\widetilde{H}_1 \Phi\left(t_1, t_k\right) \\
+\vdots \\
+\widetilde{H}_{\ell} \Phi\left(t_{\ell}, t_k\right)
+\end{array}\right] ; \quad \boldsymbol{\epsilon} \equiv\left[\begin{array}{c}
+\epsilon_1 \\
+\vdots \\
+\epsilon_{\ell};
+\end{array}\right]
+\end{split}\]</div>
+<p>とおくと、</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{aligned}
+\mathbf{y} = H x_k + \boldsymbol{\epsilon} 
+\end{aligned}
+\]</div>
+<p>とまとめることができる。</p>
+<p>ただし、 <span class="math notranslate nohighlight">\(\boldsymbol{\epsilon}\)</span> について、以下が成り立つ。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+E[\boldsymbol{\epsilon}]=\left[\begin{array}{c}
+E\left[\epsilon_1\right] \\
+E\left[\epsilon_2\right] \\
+\vdots \\
+E\left[\epsilon_{\ell}\right]
+\end{array}\right]=\left[\begin{array}{c}
+0 \\
+0 \\
+\vdots \\
+0
+\end{array}\right] \quad E\left[\boldsymbol{\epsilon}^T\right]=\left[\begin{array}{lll}
+R_{11} R_{12} &amp; \cdots &amp; R_{1 \ell} \\
+R_{12}^T R_{22} &amp; \cdots &amp; R_{2 \ell} \\
+\vdots &amp; \ddots &amp; \vdots \\
+R_{1 \ell}^T &amp; \cdots &amp; R_{\ell \ell}
+\end{array}\right]=R .
+\end{split}\]</div>
+<p>一般的に行列 <span class="math notranslate nohighlight">\(R\)</span> の非対角成分は0であるケースを考えることが多いが、以降の定式化において制約とならない。</p>
+<!-- #region -->
+<p>次に、線形・不偏・最小分散について、具体的な定式化を見ていこう。</p>
+</section>
+<section id="id2">
+<h2>5.3.2) 線形・不偏・最小分散とは<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<section id="id3">
+<h3>線形推定量の仮定<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>推定量 <span class="math notranslate nohighlight">\(\hat x_k\)</span> が線形であるとは、観測量 <span class="math notranslate nohighlight">\(y\)</span> の線形和で表されることを意味する。つまり、</p>
+<div class="math notranslate nohighlight">
+\[
+\hat x_k = M\,y, \quad M \in \mathbb{R}^{n\times m} 
+\]</div>
+<p>と定式化される。</p>
+</section>
+<section id="id4">
+<h3>不偏性の制約<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>推定量 <span class="math notranslate nohighlight">\(\hat x_k\)</span> が不偏であるとは、</p>
+<div class="math notranslate nohighlight">
+\[
+E[\hat x_k]=x_k
+\]</div>
+<p>と定義される。線形性の定式化を踏まえると、</p>
+<div class="math notranslate nohighlight">
+\[
+E[\hat x_k] = E[M(Hx_k + \varepsilon)] = MH\,x_k + M\,E[\varepsilon] = MH\,x_k
+\]</div>
+<p>不偏 <span class="math notranslate nohighlight">\(E[\hat x_k]=x_k\)</span> が <strong>任意の</strong> <span class="math notranslate nohighlight">\(x_k\)</span> について成り立つためには、</p>
+<div class="math notranslate nohighlight">
+\[
+MH = I
+\]</div>
+<p>が必要十分となる。</p>
+</section>
+<section id="id5">
+<h3>推定誤差共分散<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<p>まず、</p>
+<div class="math notranslate nohighlight">
+\[
+\hat x_k - x_k = M(Hx_k + \varepsilon) - x_k = (MH - I)x_k + M\varepsilon = M\varepsilon
+\]</div>
+<p>ただし、 <span class="math notranslate nohighlight">\(MH = I\)</span> を課しているため前項が 0 であることを用いた。したがって、推定誤差共分散 <span class="math notranslate nohighlight">\(P_k\)</span> は、</p>
+<div class="math notranslate nohighlight">
+\[
+P_k := E[(\hat x_k - x_k)(\hat x_k - x_k)^\top] = M\,R\,M^\top 
+\]</div>
+<p>となる。</p>
+<p>以上をまとめると、 <span class="math notranslate nohighlight">\(MH = I\)</span> の制約条件下において、<span class="math notranslate nohighlight">\(P_k\)</span> を 最小化 する推定量 <span class="math notranslate nohighlight">\(\hat x_k\)</span> を求めるというのが、今回の線形・不偏・最小分散推定問題となる。</p>
+<!-- #endregion -->
+</section>
+</section>
+<section id="x-k">
+<h2>5.3.3) 推定量 <span class="math notranslate nohighlight">\(x_k\)</span> の導出<a class="headerlink" href="#x-k" title="Permalink to this heading">#</a></h2>
+<p>前項までの内容をまとめると、解くべき問題は、<span class="math notranslate nohighlight">\(MH = I\)</span> の制約条件下における、推定誤差共分散 <span class="math notranslate nohighlight">\(P_k=M\,R\,M^\top\)</span>　の最小化問題、つまり、</p>
+<div class="math notranslate nohighlight">
+\[
+\min _{\hat x_k} M\,R\,M^\top  \quad \text { s.t. } \quad MH = I
+\]</div>
+<p>である。ラグランジュ乗数 <span class="math notranslate nohighlight">\(\Lambda\)</span> を用いて、評価関数 <span class="math notranslate nohighlight">\(\mathcal{L}(M,\Lambda)\)</span> を以下のように定義する。</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(M,\Lambda) = M R M^\top + \Lambda^\top (I - M H)^\top + (I - M H)\Lambda
+\]</div>
+<p>ただし、最終項は 評価関数の対称性を保つ目的で加えていることに留意する。 <span class="math notranslate nohighlight">\(M\)</span> , <span class="math notranslate nohighlight">\(\Lambda\)</span> に関する変分を考えると、</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial M} = M R - \Lambda^\top H^\top = 0
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \Lambda} = I - MH = 0
+\]</div>
+<p>未知量 <span class="math notranslate nohighlight">\(M\)</span> , <span class="math notranslate nohighlight">\(\Lambda\)</span> に対して、式が2本得られているので、解が一意に定まる。上記の連立方程式を解くと、</p>
+<div class="math notranslate nohighlight">
+\[
+M = (H^\top R^{-1} H)^{-1} H^\top R^{-1} 
+\]</div>
+<p>と求まる。したがって、求める推定量 <span class="math notranslate nohighlight">\(x_k\)</span> は、</p>
+<div class="math notranslate nohighlight">
+\[
+x_k = M y = (H^\top R^{-1} H)^{-1} H^\top R^{-1} y
+\]</div>
+</section>
+<section id="id6">
+<h2>5.3.4) 事前情報が得られている場合<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks/05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">5.2) 最小二乗法 (Least Square Method)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="07.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">5.7) Uncertainty Propagation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">5.3.1) 問題設定</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.3.2) 線形・不偏・最小分散とは</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">線形推定量の仮定</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">不偏性の制約</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">推定誤差共分散</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#x-k">5.3.3) 推定量 <span class="math notranslate nohighlight">\(x_k\)</span> の導出</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">5.3.4) 事前情報が得られている場合</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sho Nishimura
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,12 +1,13 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>剛体のキネマティクス I &#8212; Hands-On Astrodynamics tutorial</title>
   
@@ -14,69 +15,58 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../../_static/proof.css?v=b4b7a797" />
-    <link rel="stylesheet" type="text/css" href="../../_static/tabs.css?v=4c969af8" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
-    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
-    <script src="../../_static/tabs.js?v=3ee01567"></script>
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
-    <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-DVQ7NZ8CYZ"></script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'G-DVQ7NZ8CYZ');
-            </script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){ dataLayer.push(arguments); }
-                gtag('js', new Date());
-                gtag('config', 'G-DVQ7NZ8CYZ');
-            </script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/01/02';</script>
-    <link rel="icon" href="../../_static/rocket.ico"/>
+    <link rel="shortcut icon" href="../../_static/rocket.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="剛体のキネマティクス II" href="03.html" />
@@ -90,23 +80,28 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
+
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -128,20 +123,12 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -157,8 +144,6 @@
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
 
-  
-    
   
 
 <a class="navbar-brand logo" href="../../index.html">
@@ -177,18 +162,7 @@
   
   
 </a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -199,7 +173,7 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="01.00.html">1. キネマティクス（Kinematics）</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="01.00.html">1. キネマティクス（Kinematics）</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">剛体のキネマティクス I</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03.html">剛体のキネマティクス II</a></li>
 <li class="toctree-l2"><a class="reference internal" href="04.html">姿勢決定（Attitude Determination）</a></li>
@@ -210,11 +184,18 @@
 
 
 </ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../05/01.00.html">5. 統計的軌道決定（Statistical Orbit Determination）</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../05/01.html">5.1) 軌道決定問題の定式化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05/02.html">5.2) 最小二乗法 (Least Square Method)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05/03.html">5.3) 不偏最小分散推定（Minimum Variance Unbiased Estimator）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05/07.html">5.7) Uncertainty Propagation</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../appendix/appendix.html">Appendix</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../appendix/quotes.html">名言集</a></li>
 </ul>
-</details></li>
+</li>
 </ul>
 
     </div>
@@ -230,7 +211,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -239,14 +220,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -271,14 +252,14 @@
       
       <li><a href="https://colab.research.google.com/github/Sho1930/Astro-note/blob/main/notebooks/01/02.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
-   title="Launch on Colab"
+   title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
 
 <span class="btn__icon-container">
   
-    <img alt="Colab logo" src="../../_static/images/logo_colab.png">
+    <img src="../../_static/images/logo_colab.png">
   </span>
 <span class="btn__text-container">Colab</span>
 </a>
@@ -348,6 +329,23 @@
       
       
       <li><a href="../../_sources/notebooks/01/02.ipynb" target="_blank"
+   class="btn btn-sm btn-download-notebook-button dropdown-item"
+   title="Download notebook file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="../../_sources/notebooks/01/02.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -357,7 +355,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -402,10 +400,10 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script>
@@ -413,14 +411,14 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -466,19 +464,11 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="i">
-<h1>剛体のキネマティクス I<a class="headerlink" href="#i" title="Link to this heading">#</a></h1>
+<h1>剛体のキネマティクス I<a class="headerlink" href="#i" title="Permalink to this heading">#</a></h1>
 <p>本稿では、剛体の姿勢表現について扱う。まずは、<strong>方向余弦行列（DCM）</strong>・<strong>オイラー角</strong>を用いた姿勢表現について学んでいく。まず定義の確認からはじめ、姿勢の加減算などの基本的な操作に加え、姿勢パラメータの変化率と角速度ベクトルの関係を記述する、<strong>キネマティクスの微分方程式</strong>について解説する。</p>
-<div class="note admonition">
-<p class="admonition-title">項目</p>
-<ul class="simple">
-<li><p>2.1) 剛体のキネマティクス</p></li>
-<li><p>2.2) 方向余弦行列(DCM)</p></li>
-<li><p>2.3) オイラー角</p></li>
-</ul>
-</div>
 <div class="tip admonition">
 <p class="admonition-title">目的</p>
 <ul class="simple">
@@ -488,19 +478,25 @@ document.write(`
 <li><p>時間経過に伴う姿勢パラメータ変化を数値積分を用いて求める。</p></li>
 </ul>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import Relevant Libraries</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">plotly.offline</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_notebook_mode</span><span class="p">,</span> <span class="n">iplot</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import Relevant Libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+<span class="kn">from</span> <span class="nn">plotly.offline</span> <span class="kn">import</span> <span class="n">init_notebook_mode</span><span class="p">,</span> <span class="n">iplot</span>
 </pre></div>
 </div>
 </div>
+</details>
 </div>
 <section id="id1">
-<h2>2.1) 剛体のキネマティクスの概要<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>2.1) 剛体のキネマティクスの概要<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
 <p>剛体のキネマティクスとは、変形しない物体（剛体）の位置と向き（姿勢）の時間変化を記述する。具体的には、以下の点が重要である。</p>
 <p><strong><ins>平行移動と回転</ins></strong><br>
 物体全体の移動（平行移動）と、物体がどの方向を向いているか（回転）を別々に扱う。平行移動は通常、3次元の座標 <span class="math notranslate nohighlight">\((x,y,z)\)</span> で表され、回転は<strong>方向余弦行列（DCM）</strong>、<strong>オイラー角</strong>、<strong>クォータニオン</strong>などのパラメータで表現される。</p>
@@ -512,9 +508,9 @@ document.write(`
 <p>本章では、主に 「どの方向を向いているか」（姿勢）について、<strong>方向余弦行列(DCM)</strong>、<strong>オイラー角</strong>の2種類の姿勢パラメータを通じて考えていこう。</p>
 </section>
 <section id="dcm">
-<h2>2.2) 方向余弦行列 (DCM)<a class="headerlink" href="#dcm" title="Link to this heading">#</a></h2>
+<h2>2.2) 方向余弦行列 (DCM)<a class="headerlink" href="#dcm" title="Permalink to this heading">#</a></h2>
 <section id="id2">
-<h3>2.2.1) 方向余弦行列（DCM）とは<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<h3>2.2.1) 方向余弦行列（DCM）とは<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
 <p>右手系の正規直交基底座標系として、座標系 <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> , <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> を考える。
 各座標系の正規直交基底を <span class="math notranslate nohighlight">\(\hat{n}_i\)</span> , <span class="math notranslate nohighlight">\(\hat{b}_i (i=1,2,3)\)</span> として、各座標系を以下のように表現する。</p>
 <div class="math notranslate nohighlight">
@@ -531,8 +527,7 @@ document.write(`
 \end{bmatrix}
 \end{split}\]</div>
 <figure class="align-default" id="coordinates">
-<a class="reference internal image-reference" href="../../_images/coordinates.jpg"><img alt="../../_images/coordinates.jpg" src="../../_images/coordinates.jpg" style="height: 400px;" />
-</a>
+<a class="reference internal image-reference" href="../../_images/coordinates.jpg"><img alt="../../_images/coordinates.jpg" src="../../_images/coordinates.jpg" style="height: 400px;" /></a>
 </figure>
 <p>ここで、各座標系の基底ベクトルの関係を考えてみる。上図より、基底ベクトル <span class="math notranslate nohighlight">\(\hat{b}_i\)</span> は、基底ベクトル <span class="math notranslate nohighlight">\(\hat{n}_i\)</span> との余弦（cos）を係数とする線型結合で表されるため、</p>
 <div class="math notranslate nohighlight">
@@ -560,7 +555,7 @@ document.write(`
 <p>このとき、行列 <span class="math notranslate nohighlight">\(\mathbf{C}\)</span> を座標系 <span class="math notranslate nohighlight">\(\mathbf{b}\)</span> から <span class="math notranslate nohighlight">\(\mathbf{n}\)</span> への座標変換行列または <strong>方向余弦行列（Direction Cosine Matrix(DCM))</strong> と呼ぶ。DCMは9つの成分を持つが、姿勢は本来3つのパラメータで表現できる。したがって、冗長性を持つ姿勢表現と言える。</p>
 </section>
 <section id="id3">
-<h3>2.2.2) 方向余弦行列(DCM)の性質<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<h3>2.2.2) 方向余弦行列(DCM)の性質<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
 <p>方向余弦行列（DCM）<span class="math notranslate nohighlight">\([C]\)</span> は、その定義および座標系の直交性に起因して、興味深い特徴を持つ。これらの特徴を一つ一つ見ていこう。</p>
 <p><strong>1. 直交性</strong><br>
 まず、式について、座標系を入れ替えて同じことを繰り返してみると、</p>
@@ -656,9 +651,14 @@ document.write(`
 <ul class="simple">
 <li><p>3-2-1シーケンスの定義に基づいて、各回転行列を組み合わせる。</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">dcm_321</span><span class="p">(</span><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">dcm_321</span><span class="p">(</span><span class="n">roll</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">yaw</span><span class="p">):</span>
     <span class="c1"># ロール (φ) : x軸回り</span>
     <span class="n">R_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
                     <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">roll</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">roll</span><span class="p">)],</span>
@@ -685,14 +685,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3-2-1シーケンスDCM:
- [[ 0.81379768 -0.46984631  0.34202014]
- [ 0.54383814  0.82317294 -0.16317591]
- [-0.20487413  0.31879578  0.92541658]]
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 <p><strong>問題2. DCMの性質の確認（直交性、行列式）</strong><br>
 問題1で求めたDCMに対し、その転置が逆行列になっているか（直交性）および行列式が+1であるかを確認するコードを書け。</p>
@@ -700,9 +693,14 @@ document.write(`
 <ul class="simple">
 <li><p>NumPyで転置、逆行列、行列式の計算を行う。</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">check_dcm_properties</span><span class="p">(</span><span class="n">C</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">check_dcm_properties</span><span class="p">(</span><span class="n">C</span><span class="p">):</span>
     <span class="c1"># 直交性: C^T * C ≈ I</span>
     <span class="n">orthogonality</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">C</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">C</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
     
@@ -722,13 +720,7 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>直交性保持: True
-逆行列が転置と一致: True
-行列式: 1.0
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 <p><strong>問題3. DCMの合成</strong><br>
 2つの回転（それぞれ異なるオイラー角セットで定義）に対するDCMを求め、それらを合成（乗算）して得られる全体のDCMを求めよ。</p>
@@ -737,9 +729,14 @@ document.write(`
 <li><p>個別のDCMを計算し、行列乗算で合成する。</p></li>
 <li><p>合成後のDCMも直交性と行列式+1を持つことを確認する。</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2組のオイラー角（3-2-1シーケンス）を定義</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2組のオイラー角（3-2-1シーケンス）を定義</span>
 <span class="n">roll1</span><span class="p">,</span> <span class="n">pitch1</span><span class="p">,</span> <span class="n">yaw1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
 <span class="n">roll2</span><span class="p">,</span> <span class="n">pitch2</span><span class="p">,</span> <span class="n">yaw2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">([</span><span class="mi">15</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">])</span>
 
@@ -759,21 +756,11 @@ document.write(`
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>合成したDCM:
- [[ 0.64308782 -0.70295768  0.30379032]
- [ 0.74524684  0.48320897 -0.45947387]
- [ 0.17619648  0.52188083  0.83462279]]
-合成後の直交性保持: True
-合成後の逆行列が転置と一致: True
-合成後の行列式: 0.9999999999999996
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 </section>
 <section id="kinematic-differential-equation-of-dcm">
-<h3>2.2.3) Kinematic differential equation of DCM<a class="headerlink" href="#kinematic-differential-equation-of-dcm" title="Link to this heading">#</a></h3>
+<h3>2.2.3) Kinematic differential equation of DCM<a class="headerlink" href="#kinematic-differential-equation-of-dcm" title="Permalink to this heading">#</a></h3>
 <p>Kinematic differential equation of DCMを和訳すると、方向余弦行列の運動学的微分方程式となるだろうか。これは、剛体の回転運動に基づく運動を理解する上で極めて重要である。「キネマティクス」という側面は物体の位置（および姿勢）の記述に関係し、「微分方程式」という部分はその時間変化率を表す。</p>
 <p>DCMを <span class="math notranslate nohighlight">\([C]\)</span> と表すとき、その運動学的微分方程式は、物体の角速度と姿勢変化率との基本的な関係式である。</p>
 <div class="math notranslate nohighlight">
@@ -875,7 +862,7 @@ x_3 &amp; 0 &amp; -x_1 \\
 <p>が得られる。これにより、DCMの直交性が時間とともに保存されることが示され、剛体運動学において極めて重要な性質である。</p>
 </section>
 <section id="id4">
-<h3>2.2.4) DCM計算の手順<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<h3>2.2.4) DCM計算の手順<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>ここまで、DCMの概要とその性質、運動学微分方程式について扱ってきた。以上をまとめ、実用上の手順をStep by stepで確認していこう。</p>
 <p><strong><em>Step 1: 座標系の定義</em></strong><br></p>
 <ul class="simple">
@@ -934,17 +921,22 @@ x_3 &amp; 0 &amp; -x_1 \\
 <li><p>歪対称行列の生成関数を実装する。</p></li>
 <li><p>小刻みな時間間隔でDCMを更新する。</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">skew_symmetric</span><span class="p">(</span><span class="n">omega</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">skew_symmetric</span><span class="p">(</span><span class="n">omega</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; 3次元ベクトル omega から斜対称行列を作成 &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">omega</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">omega</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
                      <span class="p">[</span><span class="n">omega</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">omega</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span>
                      <span class="p">[</span><span class="o">-</span><span class="n">omega</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">omega</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">]])</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">integrate_dcm_rk4</span><span class="p">(</span><span class="n">C0</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">integrate_dcm_rk4</span><span class="p">(</span><span class="n">C0</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    初期DCM C0 と固定角速度 omega に対して、RK4法で運動学的微分方程式</span>
 <span class="sd">    dC/dt = -[tilde(omega)] * C を積分する。</span>
@@ -974,22 +966,14 @@ x_3 &amp; 0 &amp; -x_1 \\
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>積分後のDCM (RK4法):
- [[-0.69492056 -0.19200697  0.69297817]
- [ 0.71352099 -0.30378504  0.6313497 ]
- [ 0.08929286  0.93319235  0.34810748]]
-積分後の行列式: 0.9999999999999616
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 </section>
 </section>
 <section id="id5">
-<h2>2.3) オイラー角<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<h2>2.3) オイラー角<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
 <section id="id6">
-<h3>2.3.1) - オイラー角とは<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<h3>2.3.1) - オイラー角とは<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
 <p>特定の軸周りに3回連続して回転を行うことで、物体の角度位置を表現する手法であり、その名はスイスの数学者<a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%83%AC%E3%82%AA%E3%83%B3%E3%83%8F%E3%83%AB%E3%83%88%E3%83%BB%E3%82%AA%E3%82%A4%E3%83%A9%E3%83%BC">レオンハルト・オイラー</a>に由来する。オイラー角は、ロボット工学、航空宇宙、コンピュータグラフィックス、物理学など、物体の回転や向きを扱う多くの分野で広く利用されている。</p>
 <p>オイラー角は、3次元空間における剛体の向きを表現する方法であり、通常は以下の3つの角度から構成される。</p>
 <ul class="simple">
@@ -999,10 +983,9 @@ x_3 &amp; 0 &amp; -x_1 \\
 </ul>
 </section>
 <section id="id7">
-<h3>2.3.2) - 回転行列<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<h3>2.3.2) - 回転行列<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
 <figure class="align-default" id="ypr">
-<a class="reference internal image-reference" href="../../_images/yaw_pitch_roll.png"><img alt="../../_images/yaw_pitch_roll.png" src="../../_images/yaw_pitch_roll.png" style="height: 400px;" />
-</a>
+<a class="reference internal image-reference" href="../../_images/yaw_pitch_roll.png"><img alt="../../_images/yaw_pitch_roll.png" src="../../_images/yaw_pitch_roll.png" style="height: 400px;" /></a>
 </figure>
 <p>まずは、<span class="math notranslate nohighlight">\(X,Y,Z\)</span>各軸周りの3次元空間における回転行列を考えてみよう。</p>
 <div class="note admonition">
@@ -1041,7 +1024,7 @@ R_3(\psi) = \begin{bmatrix}
 このように、回転行列の積は回転の適用順序の逆順となるため、正しい複合回転行列を得るためには、乗算順序に十分注意する必要がある。具体例を挙げながら、理解を深めていこう。</p>
 </section>
 <section id="id8">
-<h3>2.3.3) 回転順序<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<h3>2.3.3) 回転順序<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
 <p>オイラー角の回転シーケンスには対称および非対称の組み合わせがあり、合計で12種類のシーケンスが存在する。</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(X\)</span>軸周りの回転：1</p></li>
@@ -1052,7 +1035,7 @@ R_3(\psi) = \begin{bmatrix}
 <p>このとき、計12種類の回転シーケンスは次のように整理される。</p>
 <div class="note admonition">
 <p class="admonition-title">回転シーケンス/Rotation Sequence</p>
-<div class="pst-scrollable-table-container"><table class="table">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p><strong>分類</strong></p></th>
 <th class="head"><p><strong>シーケンス</strong></p></th>
@@ -1067,7 +1050,6 @@ R_3(\psi) = \begin{bmatrix}
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 <p>例えば「3-2-1」シーケンスを考えてみよう。これは、<span class="math notranslate nohighlight">\(Z\)</span>軸周り→<span class="math notranslate nohighlight">\(Y\)</span>軸周り→<span class="math notranslate nohighlight">\(X\)</span>軸周りの順で回転を行うシーケンスである。先ほどの単一軸周りの回転行列を用いることで、最終的な回転行列は以下のように表される。</p>
 <div class="math notranslate nohighlight">
@@ -1114,7 +1096,7 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 <p>ただし、実用上は逆正接関数の特異点に気をつけて処理する必要がある。</p>
 </section>
 <section id="id9">
-<h3>2.3.4) - 特異点とジンバルロック<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<h3>2.3.4) - 特異点とジンバルロック<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
 <p>剛体の姿勢を 3つの回転角で直感的に表現できるため、航空機、人工衛星、惑星探査機の姿勢制御に広く利用されるオイラー角であるが、大きな制限が存在する。それが、<strong>ジンバルロック</strong>と呼ばれる現象である。ジンバルロックとは、オイラー回転の3つの軸のうち2つが一致し、1つの自由度が失われることで発生する。つまり、本来3自由度あるはずの姿勢が2自由度になっていますことを意味する。この結果、揃った軸まわりの回転を区別できなくなり、実質的にシステムが「ロック」される。</p>
 <p>具体例を挙げると、例えば第2回転角（ピッチ角）が ±90度になると、ロール軸とヨー軸が重なり、独立した回転操作が不可能になる。
 つまり、オイラー角を使う以上、常に特異点（計算が不安定になる状態）から90度以内にいることになる。たとえジンバルロックが発生しても、物体の姿勢自体は正しく表現できる。しかし、特定の回転軸を自由に制御することができなくなるため、実際の制御や操作には大きな制約が生じる。
@@ -1123,10 +1105,9 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 <p>この問題を回避するため、クォータニオン（四元数）などの代替的な姿勢表現が広く採用されている。ジンバルロックは、オイラー角が姿勢を最小の3パラメータ用いて表現していることに起因する。正規化された4つのパラメータで姿勢を表現する<strong>クォータニオン</strong>を使えば、ジンバルロックの影響を受けず、スムーズな回転制御が可能になる。クォータニオンについては、別の章で確認しよう。</p>
 </section>
 <section id="id10">
-<h3>2.3.5) - オイラー角の微分方程式<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<h3>2.3.5) - オイラー角の微分方程式<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
 <figure class="align-default" id="axis">
-<a class="reference internal image-reference" href="../../_images/3axis.jpg"><img alt="../../_images/3axis.jpg" src="../../_images/3axis.jpg" style="height: 400px;" />
-</a>
+<a class="reference internal image-reference" href="../../_images/3axis.jpg"><img alt="../../_images/3axis.jpg" src="../../_images/3axis.jpg" style="height: 400px;" /></a>
 </figure>
 <p>DCMと同様に、オイラー角についても微分方程式を数値積分することで、その時間変化を見ることが出来る。
 オイラー角 <span class="math notranslate nohighlight">\(\psi\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span>, <span class="math notranslate nohighlight">\(\phi\)</span> の微分方程式を求めるまでの手順をstep by stepで見ていこう。</p>
@@ -1237,11 +1218,16 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 各軸（X、Y、Z）に対する回転行列を関数として実装
 3つの回転行列を組み合わせて、オイラー角に基づく回転を実装
 3Dベクトルを与え、その回転後の結果を確認する</p>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">R_x</span><span class="p">(</span><span class="n">phi</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">R_x</span><span class="p">(</span><span class="n">phi</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; X軸回りの回転行列を計算 &quot;&quot;&quot;</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">phi</span><span class="p">))</span>
@@ -1251,7 +1237,7 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
     <span class="p">])</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">R_y</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">R_y</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Y軸回りの回転行列を計算 &quot;&quot;&quot;</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
@@ -1261,7 +1247,7 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
         <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
     <span class="p">])</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">R_z</span><span class="p">(</span><span class="n">psi</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">R_z</span><span class="p">(</span><span class="n">psi</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Z軸回りの回転行列を計算 &quot;&quot;&quot;</span>
     <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">psi</span><span class="p">))</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">psi</span><span class="p">))</span>
@@ -1271,7 +1257,7 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
     <span class="p">])</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">apply_rotation</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">apply_rotation</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; 指定されたオイラー角に基づいて(3-2-1)でベクトルvを回転させる &quot;&quot;&quot;</span>
     <span class="n">R</span> <span class="o">=</span> <span class="n">R_x</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">@</span> <span class="n">R_y</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">@</span> <span class="n">R_z</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">R</span> <span class="o">@</span> <span class="n">v</span>
@@ -1284,11 +1270,7 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.61237244 0.78033009 0.12682648]
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 <p><strong>問題：回転順序の確認</strong><br>
 オイラー角の回転順序（例えば、XYZとZYX）の違いが最終的な回転結果にどのように影響を与えるかを確認してください。異なる回転順序を指定して、同じオイラー角（例えば、30度、45度、60度）で回転したときの最終的な結果を比較してください。</p>
@@ -1297,9 +1279,14 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 <li><p>回転順序を変更できるように関数を改良</p></li>
 <li><p>同じオイラー角で異なる順序（例えばXYZ、ZYX）で回転を適用し、その結果を比較</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">apply_rotation_with_order</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;XYZ&#39;</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">apply_rotation_with_order</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;XYZ&#39;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; 指定された回転順序でベクトルvを回転させる &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">order</span> <span class="o">==</span> <span class="s1">&#39;XYZ&#39;</span><span class="p">:</span>
         <span class="n">R</span> <span class="o">=</span> <span class="n">R_z</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span> <span class="o">@</span> <span class="n">R_y</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">@</span> <span class="n">R_x</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
@@ -1321,12 +1308,7 @@ c \phi s \theta c \psi+s \phi s \psi &amp; c \phi s \theta s \psi-s \phi c \psi 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>XYZ順序で回転後: [ 0.35355339  0.61237244 -0.70710678]
-ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 <p><strong>オイラー角の特異点（ジンバルロック）の確認</strong><br>
 課題内容：
@@ -1337,9 +1319,14 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
 <li><p>その時点でロールとヨーの回転軸が一致することを確認</p></li>
 <li><p>実際に回転した結果が予想通りかどうかを視覚化</p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ピッチ角が90度になるとジンバルロックが発生することを確認</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ピッチ角が90度になるとジンバルロックが発生することを確認</span>
 <span class="n">theta</span> <span class="o">=</span> <span class="mi">90</span>  <span class="c1"># ピッチ角を90度に設定</span>
 <span class="n">phi_1</span><span class="p">,</span> <span class="n">psi_1</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span>  <span class="c1"># 和の等しいロール、ヨーのペアを設定</span>
 <span class="n">phi_2</span><span class="p">,</span> <span class="n">psi_2</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span>  
@@ -1351,20 +1338,20 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 5.30287619e-17  9.84807753e-01 -1.73648178e-01]
-[ 5.75395780e-17  9.84807753e-01 -1.73648178e-01]
-</pre></div>
+</details>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># 回転行列を計算する関数</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">rotation_matrix_x</span><span class="p">(</span><span class="n">phi</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">rotation_matrix_x</span><span class="p">(</span><span class="n">phi</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; X軸回りの回転行列 &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
         <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
@@ -1372,7 +1359,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">phi</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">phi</span><span class="p">))]</span>
     <span class="p">])</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">rotation_matrix_y</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">rotation_matrix_y</span><span class="p">(</span><span class="n">theta</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Y軸回りの回転行列 &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
         <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">))],</span>
@@ -1380,7 +1367,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
         <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">theta</span><span class="p">))]</span>
     <span class="p">])</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">rotation_matrix_z</span><span class="p">(</span><span class="n">psi</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">rotation_matrix_z</span><span class="p">(</span><span class="n">psi</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Z軸回りの回転行列 &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
         <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">psi</span><span class="p">)),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">psi</span><span class="p">)),</span> <span class="mi">0</span><span class="p">],</span>
@@ -1389,7 +1376,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
     <span class="p">])</span>
 
 <span class="c1"># DCMを計算する関数</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">euler_to_dcm</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">euler_to_dcm</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; オイラー角からDCMへの変換 &quot;&quot;&quot;</span>
     <span class="n">R_x</span> <span class="o">=</span> <span class="n">rotation_matrix_x</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
     <span class="n">R_y</span> <span class="o">=</span> <span class="n">rotation_matrix_y</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
@@ -1398,7 +1385,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
     <span class="c1"># 回転行列の順番はZ-X&#39;-Z&#39;&#39;（ヨー、ピッチ、ロール）</span>
     <span class="k">return</span> <span class="n">R_z</span> <span class="o">@</span> <span class="n">R_y</span> <span class="o">@</span> <span class="n">R_x</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">dcm_to_euler</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">dcm_to_euler</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; DCMからオイラー角への変換 &quot;&quot;&quot;</span>
     <span class="c1"># ピッチ角の計算（アークサイン）</span>
     <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="o">-</span><span class="n">R</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>  <span class="c1"># ピッチ角（θ）</span>
@@ -1416,7 +1403,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">phi</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">psi</span><span class="p">)</span>
 
 <span class="c1"># 角速度からオイラー角の時間微分を計算</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">euler_angle_derivatives</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">euler_angle_derivatives</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; オイラー角の時間微分（角速度ベクトル）を計算 &quot;&quot;&quot;</span>
     <span class="n">omega_1</span><span class="p">,</span> <span class="n">omega_2</span><span class="p">,</span> <span class="n">omega_3</span> <span class="o">=</span> <span class="n">omega</span>
     
@@ -1428,7 +1415,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dphi</span><span class="p">,</span> <span class="n">dtheta</span><span class="p">,</span> <span class="n">dpsi</span><span class="p">])</span>
 
 <span class="c1"># 4次のRunge-Kutta法でオイラー角を積分</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">runge_kutta_4</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">runge_kutta_4</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; 4次のRunge-Kutta法でオイラー角を積分 &quot;&quot;&quot;</span>
     <span class="n">k1</span> <span class="o">=</span> <span class="n">euler_angle_derivatives</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
     <span class="n">k2</span> <span class="o">=</span> <span class="n">euler_angle_derivatives</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">phi</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">k1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">theta</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">k1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">psi</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">k1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">dt</span><span class="p">)</span>
@@ -1442,7 +1429,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
     <span class="k">return</span> <span class="n">phi</span> <span class="o">+</span> <span class="n">dphi</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">theta</span> <span class="o">+</span> <span class="n">dtheta</span> <span class="o">*</span> <span class="n">dt</span><span class="p">,</span> <span class="n">psi</span> <span class="o">+</span> <span class="n">dpsi</span> <span class="o">*</span> <span class="n">dt</span>
 
 <span class="c1"># シミュレーションを実行</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">simulate_rotation</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">phi_init</span><span class="p">,</span> <span class="n">theta_init</span><span class="p">,</span> <span class="n">psi_init</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">simulate_rotation</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="n">phi_init</span><span class="p">,</span> <span class="n">theta_init</span><span class="p">,</span> <span class="n">psi_init</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">steps</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot; Runge-Kutta法でオイラー角を積分し、DCMを用いて姿勢を追跡 &quot;&quot;&quot;</span>
     <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span> <span class="o">=</span> <span class="n">phi_init</span><span class="p">,</span> <span class="n">theta_init</span><span class="p">,</span> <span class="n">psi_init</span>
     <span class="n">phi_list</span><span class="p">,</span> <span class="n">theta_list</span><span class="p">,</span> <span class="n">psi_list</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
@@ -1486,15 +1473,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../../_images/b16d162ca12a4a241cd1a4d69180d456db7e42f34b35f3489f3652bd3970501e.png" src="../../_images/b16d162ca12a4a241cd1a4d69180d456db7e42f34b35f3489f3652bd3970501e.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>最終DCM行列:
-[[ 0.7763151  -0.47713633  0.41191721]
- [ 0.51409048  0.85739255  0.02426927]
- [-0.3647545   0.19292211  0.91089802]]
-</pre></div>
-</div>
-</div>
+</details>
 </div>
 </section>
 </section>
@@ -1527,7 +1506,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1556,7 +1535,6 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -1594,7 +1572,7 @@ ZYX順序で回転後: [0.35355339 0.9267767  0.12682648]
   <div class="footer-item">
     
 <p class="component-author">
-By Hal Ohki/Yuto Nakagawa/Sho Nishimura
+By Sho Nishimura
 </p>
 
   </div>
@@ -1604,7 +1582,7 @@ By Hal Ohki/Yuto Nakagawa/Sho Nishimura
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2025.
       <br/>
     
   </p>
@@ -1628,8 +1606,8 @@ By Hal Ohki/Yuto Nakagawa/Sho Nishimura
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>
